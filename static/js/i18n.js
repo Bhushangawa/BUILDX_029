@@ -286,6 +286,15 @@ function setLanguage(lang) {
   const select = document.getElementById("langSelect");
   if (select) select.value = lang;
 
+  // Update language buttons active state
+  document.querySelectorAll(".gov-lang-btn, .lang-pill").forEach(btn => {
+    if (btn.getAttribute("data-lang") === lang) {
+      btn.classList.add("active");
+    } else {
+      btn.classList.remove("active");
+    }
+  });
+
   if (typeof window.updateThemeUI === "function") {
     window.updateThemeUI();
   }
@@ -300,3 +309,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const saved = localStorage.getItem("sentinel_lang") || "en";
   setLanguage(saved);
 });
+
+window.setLanguage = setLanguage;
+window.t = t;
+

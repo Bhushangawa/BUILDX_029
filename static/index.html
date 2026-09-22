@@ -37,7 +37,14 @@
         <span id="themeText">Night Vision</span>
       </button>
       <span>•</span>
-      <!-- Language Selector -->
+      <!-- Direct Language Buttons (English, Marathi, Hindi) -->
+      <div class="gov-lang-group">
+        <button class="gov-lang-btn active" data-lang="en" onclick="setLanguage('en')" title="Switch to English">English</button>
+        <button class="gov-lang-btn" data-lang="hi" onclick="setLanguage('hi')" title="हिंदी मध्ये बदला">हिंदी</button>
+        <button class="gov-lang-btn" data-lang="mr" onclick="setLanguage('mr')" title="मराठीत बदला">मराठी</button>
+      </div>
+      <span>•</span>
+      <!-- Language Selector Dropdown -->
       <select id="langSelect" class="gov-lang-select" onchange="setLanguage(this.value)">
         <option value="en">English (EN)</option>
         <option value="hi">हिंदी (Hindi)</option>
@@ -97,6 +104,12 @@
         <button class="role-pill" data-role="SECURITY_STAFF" title="Field Security Staff">Security</button>
         <button class="role-pill" data-role="VOLUNTEER" title="Community Volunteer">Volunteer</button>
         <button class="role-pill" data-role="CITIZEN" title="Nagpur Resident">Citizen</button>
+
+        <!-- Direct Language Switcher in Nav -->
+        <span style="color: #cbd5e1; font-size: 11px; margin-left: 6px; margin-right: 2px;">🌐 Lang:</span>
+        <button class="role-pill lang-pill active" data-lang="en" onclick="setLanguage('en')" title="English">English</button>
+        <button class="role-pill lang-pill" data-lang="hi" onclick="setLanguage('hi')" title="हिंदी">हिंदी</button>
+        <button class="role-pill lang-pill" data-lang="mr" onclick="setLanguage('mr')" title="मराठी">मराठी</button>
 
         <!-- Emergency Alert Button -->
         <button class="gov-demo-btn" onclick="openDemoModal()" title="Emergency Alert Simulation & Scenario">

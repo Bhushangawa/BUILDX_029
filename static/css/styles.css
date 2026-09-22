@@ -87,6 +87,63 @@ body {
   background: rgba(255,255,255,0.15);
 }
 
+.gov-lang-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  background: rgba(0, 0, 0, 0.25);
+  padding: 2px 4px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.gov-lang-btn {
+  background: transparent;
+  color: #e2e8f0;
+  border: none;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.gov-lang-btn:hover {
+  background: rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+}
+
+.gov-lang-btn.active {
+  background: var(--gov-saffron);
+  color: #ffffff;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+}
+
+.role-pill.lang-pill {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.25);
+  font-weight: 700;
+  padding: 3px 8px;
+}
+
+.role-pill.lang-pill:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.role-pill.lang-pill.active {
+  background: #3b82f6;
+  border-color: #60a5fa;
+  color: #ffffff;
+  font-weight: 800;
+  box-shadow: 0 0 8px rgba(59, 130, 246, 0.4);
+}
+
+body.night-vision .gov-lang-btn.active {
+  background: #2563eb;
+  color: #ffffff;
+}
+
 .gov-lang-select {
   background: #091a29;
   color: white;
