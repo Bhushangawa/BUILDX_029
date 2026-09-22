@@ -1,19 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import {
-  Users,
-  AlertTriangle,
-  Shield,
-  Activity,
-  Flame,
-  CheckCircle,
-  ArrowUpRight,
-  TrendingUp,
-  Sliders,
-  Radio,
-  RefreshCw,
-} from "lucide-react";
+import { Users, AlertTriangle, Shield, Flame, CheckCircle, RefreshCw } from "lucide-react";
 
 export default function CrowdMonitoringPage() {
   const [zones, setZones] = useState<any[]>([]);
@@ -23,19 +11,12 @@ export default function CrowdMonitoringPage() {
 
   const fetchZones = async () => {
     try {
-      const [czRes, rtRes] = await Promise.all([
-        fetch("/api/crowd-zones"),
-        fetch("/api/response-teams"),
-      ]);
+      const [czRes, rtRes] = await Promise.all([fetch("/api/crowd-zones"), fetch("/api/response-teams")]);
       const [czData, rtData] = await Promise.all([czRes.json(), rtRes.json()]);
-
       if (czData.zones) setZones(czData.zones);
       if (rtData.teams) setTeams(rtData.teams);
-    } catch (e) {
-      console.error(e);
-    } finally {
-      setLoading(false);
-    }
+    } catch (e) { console.error(e); }
+    finally { setLoading(false); }
   };
 
   useEffect(() => {
@@ -50,20 +31,12 @@ export default function CrowdMonitoringPage() {
       const res = await fetch("/api/crowd-zones", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          zoneId,
-          surgeSimulation: true,
-        }),
+        body: JSON.stringify({ zoneId, surgeSimulation: true }),
       });
       const data = await res.json();
-      if (data.success) {
-        await fetchZones();
-      }
-    } catch (e: any) {
-      alert("Surge error: " + e.message);
-    } finally {
-      setIsSimulating(false);
-    }
+      if (data.success) await fetchZones();
+    } catch (e: any) { alert("Surge error: " + e.message); }
+    finally { setIsSimulating(false); }
   };
 
   const handleAdjustCount = async (zoneId: string, newCount: number) => {
@@ -74,9 +47,7 @@ export default function CrowdMonitoringPage() {
         body: JSON.stringify({ zoneId, newCount }),
       });
       await fetchZones();
-    } catch (e) {
-      console.error(e);
-    }
+    } catch (e) { console.error(e); }
   };
 
   const handleAssignCrowdTeam = async (zoneId: string, teamId: string) => {
@@ -87,165 +58,139 @@ export default function CrowdMonitoringPage() {
         body: JSON.stringify({ zoneId, assignedTeamId: teamId }),
       });
       await fetchZones();
-    } catch (e) {
-      console.error(e);
-    }
+    } catch (e) { console.error(e); }
   };
 
+  const alertZone = zones.find((z) => z.alertActive);
+
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-5 bg-[#0c1322] min-h-screen text-slate-100">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 bg-[#111b2f] p-4 rounded-xl border border-[#243656] shadow-sm">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-4 min-h-screen">
+
+      {/* Page Header */}
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 bg-[#111d30] border border-[#1e3151] rounded-xl px-5 py-3.5">
         <div>
-          <div className="flex items-center gap-2">
-            <Users className="w-5 h-5 text-amber-400" />
-            <h1 className="text-lg sm:text-xl font-black text-white uppercase tracking-wider">
-              Perimeter Crowd Density & Surge Management
-            </h1>
-          </div>
-          <p className="text-xs text-slate-400 mt-0.5">
-            Real-time optical/turnstile capacity tracking across entrances, exits, and main stages. Critical alert generated when threshold &gt; 85%.
+          <h1 className="text-[15px] font-semibold text-white flex items-center gap-2">
+            <Users className="w-4 h-4 text-amber-400" />
+            Perimeter Crowd Density &amp; Surge Management
+          </h1>
+          <p className="text-[12px] text-[#64748b] mt-0.5">
+            Real-time optical/turnstile tracking. Threshold alert at &gt;85% capacity.
           </p>
         </div>
-
         <button
           onClick={fetchZones}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-[#16233b] hover:bg-[#1e2d48] text-slate-300 hover:text-white border border-[#243656] text-xs font-semibold transition-all"
+          className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-[#172338] hover:bg-[#1c2e4a] text-[#94a3b8] hover:text-white border border-[#1e3151] text-[12px] font-medium transition-all"
         >
-          <RefreshCw className="w-3.5 h-3.5" />
-          <span>Sync Sensors</span>
+          <RefreshCw className="w-3.5 h-3.5 text-amber-400" />
+          Sync Sensors
         </button>
       </div>
 
-      {/* Critical Surge Warning Banner */}
-      {zones.some((z) => z.alertActive) && (
-        <div className="p-3.5 rounded-lg bg-amber-950/25 border border-amber-500/50 text-amber-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-md">
-          <div className="flex items-center gap-2.5">
-            <span className="p-1.5 rounded bg-amber-500/20 text-amber-400">
-              <AlertTriangle className="w-4 h-4" />
-            </span>
+      {/* Alert Banner */}
+      {alertZone && (
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 p-4 rounded-xl bg-amber-500/8 border border-amber-500/40 animate-fade-in">
+          <div className="flex items-center gap-3">
+            <div className="p-2 rounded-lg bg-amber-500/15 border border-amber-500/30">
+              <AlertTriangle className="w-4 h-4 text-amber-400" />
+            </div>
             <div>
-              <div className="font-bold text-xs text-white">Capacity Threshold Alert Triggered</div>
-              <p className="text-[11px] text-amber-300">
-                {zones.find((z) => z.alertActive)?.alertMessage}
-              </p>
+              <p className="text-[13px] font-semibold text-amber-300">Capacity Threshold Alert Triggered</p>
+              <p className="text-[12px] text-[#94a3b8] mt-0.5">{alertZone.alertMessage}</p>
             </div>
           </div>
-
-          <span className="text-[10px] px-2.5 py-0.5 rounded bg-amber-500/20 text-amber-300 font-bold border border-amber-500/40 uppercase">
-            Active Warning
-          </span>
+          <span className="badge badge-high border">Active Warning</span>
         </div>
       )}
 
-      {/* Grid of Crowd Zones */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {zones.map((zone) => {
-          const densityPercent = Math.round(zone.densityRatio * 100);
-          const isCritical = zone.riskLevel === "CRITICAL";
-          const isHigh = zone.riskLevel === "HIGH";
+      {/* Zone Grid */}
+      {loading ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {Array.from({ length: 6 }).map((_, i) => <div key={i} className="h-48 rounded-xl skeleton" />)}
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {zones.map((zone) => {
+            const densityPercent = Math.round(zone.densityRatio * 100);
+            const isCritical = zone.riskLevel === "CRITICAL";
+            const isHigh = zone.riskLevel === "HIGH";
 
-          return (
-            <div
-              key={zone.id}
-              className={`p-4 rounded-lg border text-left flex flex-col justify-between transition-all ${
-                isCritical
-                  ? "bg-[#16233b] border-red-500/60"
-                  : isHigh
-                  ? "bg-[#16233b] border-amber-500/50"
-                  : "bg-[#111b2f] border-[#243656]"
-              }`}
-            >
-              <div>
-                <div className="flex items-center justify-between gap-2 mb-1.5">
-                  <span className="font-mono text-xs font-bold text-slate-400">
-                    {zone.zoneCode}
-                  </span>
-                  <span
-                    className={`text-[9px] font-bold px-1.5 py-0.2 rounded uppercase ${
-                      isCritical
-                        ? "bg-red-500/20 text-red-400 border border-red-500/40"
-                        : isHigh
-                        ? "bg-amber-500/20 text-amber-400 border border-amber-500/40"
-                        : "bg-[#0c1322] text-slate-300 border border-[#243656]"
-                    }`}
-                  >
-                    {zone.riskLevel} DENSITY
+            return (
+              <div
+                key={zone.id}
+                className={`bg-[#111d30] rounded-xl border text-left flex flex-col transition-all ${
+                  isCritical ? "border-red-500/40" : isHigh ? "border-amber-500/35" : "border-[#1e3151]"
+                }`}
+              >
+                {/* Zone Header */}
+                <div className="flex items-center justify-between px-4 pt-4 pb-3 border-b border-[#1e3151]">
+                  <div>
+                    <span className="font-mono text-[10px] text-[#475569]">{zone.zoneCode}</span>
+                    <h3 className="text-[13px] font-semibold text-white mt-0.5">{zone.name}</h3>
+                    <span className="text-[11px] text-[#64748b]">{zone.category}</span>
+                  </div>
+                  <span className={`badge border ${isCritical ? "badge-critical" : isHigh ? "badge-high" : "badge-resolved"}`}>
+                    {zone.riskLevel}
                   </span>
                 </div>
 
-                <h3 className="font-bold text-sm text-white mb-0.5">{zone.name}</h3>
-                <div className="text-[11px] text-slate-400 mb-3">
-                  Zone Class: <strong className="text-slate-300">{zone.category}</strong>
-                </div>
-
-                {/* Progress Density Meter */}
-                <div className="space-y-1 mb-3.5">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="text-slate-400 text-[11px]">Occupancy</span>
-                    <span className={`font-mono font-bold text-xs ${isCritical ? "text-red-400" : isHigh ? "text-amber-400" : "text-emerald-400"}`}>
-                      {densityPercent}% ({zone.currentCount.toLocaleString()} / {zone.capacity.toLocaleString()})
-                    </span>
+                <div className="p-4 space-y-3 flex-1">
+                  {/* Density Meter */}
+                  <div>
+                    <div className="flex items-center justify-between text-[12px] mb-1.5">
+                      <span className="text-[#64748b]">Occupancy</span>
+                      <span className={`font-mono font-bold ${isCritical ? "text-red-400" : isHigh ? "text-amber-400" : "text-emerald-400"}`}>
+                        {densityPercent}% &bull; {zone.currentCount.toLocaleString()} / {zone.capacity.toLocaleString()}
+                      </span>
+                    </div>
+                    <div className="density-track">
+                      <div
+                        className={`density-fill ${isCritical ? "bg-red-500" : isHigh ? "bg-amber-500" : "bg-emerald-500"}`}
+                        style={{ width: `${Math.min(densityPercent, 100)}%` }}
+                      />
+                    </div>
                   </div>
-                  <div className="w-full h-2 rounded-full bg-[#0c1322] border border-[#243656] overflow-hidden">
-                    <div
-                      className={`h-full rounded-full transition-all duration-300 ${
-                        isCritical
-                          ? "bg-red-500"
-                          : isHigh
-                          ? "bg-amber-500"
-                          : "bg-emerald-500"
-                      }`}
-                      style={{ width: `${Math.min(densityPercent, 100)}%` }}
-                    />
-                  </div>
-                </div>
 
-                {/* Assigned Team */}
-                <div className="text-xs p-2 rounded bg-[#0c1322] border border-[#243656] mb-3">
-                  <span className="text-slate-500 block text-[10px]">Assigned Unit:</span>
-                  <div className="flex items-center justify-between mt-1">
-                    <span className="font-semibold text-emerald-400 text-[11px]">
-                      {zone.assignedTeam ? zone.assignedTeam.name : "None assigned"}
-                    </span>
+                  {/* Assigned Team */}
+                  <div className="flex items-center justify-between gap-2 p-2.5 bg-[#0a1120] rounded-lg border border-[#1e3151]">
+                    <div>
+                      <span className="section-label block mb-0.5">Assigned Unit</span>
+                      <span className={`text-[12px] font-medium ${zone.assignedTeam ? "text-emerald-400" : "text-[#475569]"}`}>
+                        {zone.assignedTeam ? zone.assignedTeam.name : "None assigned"}
+                      </span>
+                    </div>
                     <select
                       value={zone.assignedTeamId || ""}
                       onChange={(e) => handleAssignCrowdTeam(zone.id, e.target.value)}
-                      className="text-[10px] bg-[#16233b] border border-[#243656] rounded px-1.5 py-0.5 text-slate-200"
+                      className="soc-input text-[11px] w-32 py-1"
                     >
                       <option value="">Reassign</option>
-                      {teams.map((t) => (
-                        <option key={t.id} value={t.id}>
-                          {t.name}
-                        </option>
-                      ))}
+                      {teams.map((t) => <option key={t.id} value={t.id}>{t.name}</option>)}
                     </select>
                   </div>
                 </div>
-              </div>
 
-              {/* Action Controls */}
-              <div className="pt-2.5 border-t border-[#243656] flex items-center justify-between gap-2">
-                <button
-                  onClick={() => handleTriggerSurge(zone.id)}
-                  disabled={isSimulating}
-                  className="px-2.5 py-1 rounded bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border border-amber-500/30 font-semibold text-[11px] flex items-center gap-1 transition-all"
-                >
-                  <Flame className="w-3 h-3 text-amber-400" />
-                  <span>Simulate Surge (90%+)</span>
-                </button>
-
-                <button
-                  onClick={() => handleAdjustCount(zone.id, Math.round(zone.capacity * 0.35))}
-                  className="px-2 py-1 rounded bg-[#16233b] hover:bg-[#1e2d48] text-slate-400 hover:text-slate-200 border border-[#243656] text-[11px]"
-                >
-                  Reset
-                </button>
+                {/* Action Row */}
+                <div className="flex items-center gap-2 px-4 py-3 border-t border-[#1e3151]">
+                  <button
+                    onClick={() => handleTriggerSurge(zone.id)}
+                    disabled={isSimulating}
+                    className="flex-1 flex items-center justify-center gap-1.5 py-1.5 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 border border-amber-500/25 font-semibold text-[11px] transition-all disabled:opacity-50"
+                  >
+                    <Flame className="w-3.5 h-3.5" />
+                    Simulate Surge
+                  </button>
+                  <button
+                    onClick={() => handleAdjustCount(zone.id, Math.round(zone.capacity * 0.35))}
+                    className="px-3 py-1.5 rounded-lg bg-[#172338] hover:bg-[#1c2e4a] text-[#64748b] hover:text-[#94a3b8] border border-[#1e3151] text-[11px] transition-all"
+                  >
+                    Reset
+                  </button>
+                </div>
               </div>
-            </div>
-          );
-        })}
-      </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }

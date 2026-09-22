@@ -34,14 +34,20 @@ export default function RootLayout({
   return (
     <html lang={lang} className="dark">
       <head>
-        <title>SENTINEL — Smart Security & Emergency Coordination Platform</title>
+        <title>SENTINEL — Smart Security &amp; Emergency Coordination Platform</title>
         <meta
           name="description"
           content="AI-assisted smart security, crowd control, missing-person coordination, and emergency response platform for events and modern cities."
         />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+          rel="stylesheet"
+        />
       </head>
-      <body className="min-h-screen bg-[#080e1e] text-slate-100 flex flex-col antialiased selection:bg-sky-500 selection:text-white">
+      <body className="min-h-screen bg-[#0d1526] text-soc-textPrimary flex flex-col antialiased selection:bg-sky-500/30 selection:text-white">
         <Navbar
           currentLang={lang}
           onLanguageChange={setLang}

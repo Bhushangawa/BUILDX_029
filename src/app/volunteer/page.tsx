@@ -85,9 +85,9 @@ export default function VolunteerPage() {
   });
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
-      {/* Top Operations Header */}
-      <div className="relative overflow-hidden rounded-2xl bg-[#111b2f] border border-[#243656] p-6 shadow-xl">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-5 min-h-screen">
+      {/* Header */}
+      <div className="relative overflow-hidden rounded-2xl bg-[#111d30] border border-[#1e3151] p-5 shadow-xl">
         <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-sky-500/10 via-transparent to-transparent pointer-events-none rounded-full blur-3xl" />
         
         <div className="relative flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
@@ -116,7 +116,7 @@ export default function VolunteerPage() {
           </div>
 
           {/* Volunteer Credential Badge */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 bg-[#16233b] border border-[#243656] p-3.5 rounded-xl">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 bg-[#172338] border border-[#1e3151] p-3.5 rounded-xl">
             <div className="w-10 h-10 rounded-lg bg-sky-500/20 border border-sky-500/40 flex items-center justify-center text-sky-400 font-bold text-sm">
               VJ
             </div>
@@ -138,28 +138,27 @@ export default function VolunteerPage() {
           </div>
         </div>
 
-        {/* Quick Metrics Bar */}
-        <div className="mt-6 pt-5 border-t border-[#243656]/60 grid grid-cols-2 sm:grid-cols-4 gap-3 text-left">
-          <div className="bg-[#0c1322]/80 border border-[#243656]/70 rounded-xl p-3">
-            <span className="text-[11px] font-mono text-slate-400 block uppercase">Active Search Missions</span>
+        <div className="mt-5 pt-4 border-t border-[#1e3151]/60 grid grid-cols-2 sm:grid-cols-4 gap-3 text-left">
+          <div className="bg-[#0a1120] border border-[#1e3151] rounded-xl p-3">
+            <span className="section-label block mb-0.5">Active Search Missions</span>
             <span className="text-xl font-bold text-white font-mono">{activeCases.length}</span>
           </div>
-          <div className="bg-[#0c1322]/80 border border-[#243656]/70 rounded-xl p-3">
-            <span className="text-[11px] font-mono text-slate-400 block uppercase">Priority Children</span>
+          <div className="bg-[#0a1120] border border-[#1e3151] rounded-xl p-3">
+            <span className="section-label block mb-0.5">Priority Children</span>
             <span className="text-xl font-bold text-amber-400 font-mono">
               {activeCases.filter((c) => c.type === "CHILD").length}
             </span>
           </div>
-          <div className="bg-[#0c1322]/80 border border-[#243656]/70 rounded-xl p-3">
-            <span className="text-[11px] font-mono text-slate-400 block uppercase">Elderly / Vulnerable</span>
+          <div className="bg-[#0a1120] border border-[#1e3151] rounded-xl p-3">
+            <span className="section-label block mb-0.5">Elderly / Vulnerable</span>
             <span className="text-xl font-bold text-sky-400 font-mono">
               {activeCases.filter((c) => c.type === "ELDERLY").length}
             </span>
           </div>
-          <div className="bg-[#0c1322]/80 border border-[#243656]/70 rounded-xl p-3">
-            <span className="text-[11px] font-mono text-slate-400 block uppercase">Field Team Status</span>
-            <span className="text-sm font-bold text-emerald-400 flex items-center gap-1.5 mt-1">
-              <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+          <div className="bg-[#0a1120] border border-[#1e3151] rounded-xl p-3">
+            <span className="section-label block mb-0.5">Field Team Status</span>
+            <span className="text-[13px] font-bold text-emerald-400 flex items-center gap-1.5 mt-1">
+              <span className="w-2 h-2 rounded-full bg-emerald-500" />
               Synchronized Live
             </span>
           </div>
@@ -179,7 +178,7 @@ export default function VolunteerPage() {
             </div>
 
             {/* Filter Tabs */}
-            <div className="flex items-center gap-1 bg-[#111b2f] p-1 rounded-xl border border-[#243656]">
+            <div className="flex items-center gap-1 bg-[#0a1120] p-1 rounded-xl border border-[#1e3151]">
               {(["ALL", "CHILD", "ELDERLY"] as const).map((t) => (
                 <button
                   key={t}

@@ -69,11 +69,11 @@ export default function QuickReportModal({ isOpen, onClose, onSuccess }: QuickRe
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#0a0f1d]/85 backdrop-blur-sm">
-      <div className="bg-[#111b2f] border border-[#243656] rounded-xl max-w-lg w-full p-5 shadow-2xl text-slate-100 relative">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-fade-in">
+      <div className="bg-[#111d30] border border-[#1e3151] rounded-2xl max-w-lg w-full p-5 shadow-modal text-slate-100 relative animate-slide-up">
         <button
           onClick={handleResetForm}
-          className="absolute top-4 right-4 p-1 rounded-md text-slate-400 hover:text-white hover:bg-[#16233b]"
+          className="absolute top-4 right-4 p-1.5 rounded-md text-slate-400 hover:text-white hover:bg-[#172338] transition-all"
         >
           <X className="w-4 h-4" />
         </button>
@@ -93,7 +93,7 @@ export default function QuickReportModal({ isOpen, onClose, onSuccess }: QuickRe
             </div>
 
             {/* AI Incident Intelligence Review */}
-            <div className="bg-[#16233b] border border-[#243656] rounded-lg p-3.5 space-y-2.5 text-xs">
+              <div className="p-4 rounded-xl bg-[#0a1120] border border-[#1e3151] space-y-2.5 text-xs">
               <div className="flex items-center justify-between pb-1 border-b border-[#243656]/60">
                 <div className="flex items-center gap-1.5 font-bold text-[#38bdf8]">
                   <Cpu className="w-3.5 h-3.5" />
@@ -161,7 +161,7 @@ export default function QuickReportModal({ isOpen, onClose, onSuccess }: QuickRe
                 required
                 rows={3}
                 placeholder="E.g. 'Gate 3 ke paas bohot bheed ho rahi hai' or 'Two men on bike snatched a necklace near Food Court'..."
-                className="w-full px-3 py-2 bg-[#0c1322] border border-[#243656] rounded-md text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-[#0ea5e9]"
+                className="soc-input text-[12px]"
               />
             </div>
 
@@ -174,7 +174,7 @@ export default function QuickReportModal({ isOpen, onClose, onSuccess }: QuickRe
               <select
                 value={locationName}
                 onChange={(e) => setLocationName(e.target.value)}
-                className="w-full px-3 py-2 bg-[#0c1322] border border-[#243656] rounded-md text-xs text-slate-100 focus:outline-none focus:border-[#0ea5e9]"
+                className="soc-input text-[12px]"
               >
                 {PRESET_LOCATIONS.map((loc) => (
                   <option key={loc.name} value={loc.name}>
@@ -220,7 +220,7 @@ export default function QuickReportModal({ isOpen, onClose, onSuccess }: QuickRe
             </div>
 
             {/* Anonymous Toggle */}
-            <div className="flex items-center justify-between p-2.5 bg-[#0c1322] rounded-md border border-[#243656]">
+            <div className="flex items-center justify-between p-3 bg-[#0a1120] rounded-lg border border-[#1e3151]">
               <div className="flex items-center gap-2">
                 <UserX className="w-4 h-4 text-[#38bdf8]" />
                 <div>

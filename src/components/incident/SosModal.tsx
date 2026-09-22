@@ -62,11 +62,11 @@ export default function SosModal({ isOpen, onClose, onEmergencyTriggered }: SosM
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#0a0f1d]/85 backdrop-blur-sm">
-      <div className="bg-[#111b2f] border border-[#243656] rounded-xl max-w-md w-full p-5 shadow-2xl text-slate-100 relative">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-fade-in">
+      <div className="bg-[#111d30] border border-red-500/40 rounded-2xl max-w-md w-full p-5 shadow-modal text-slate-100 relative animate-slide-up">
         <button
           onClick={handleClose}
-          className="absolute top-4 right-4 p-1 rounded-md text-slate-400 hover:text-white hover:bg-[#16233b]"
+          className="absolute top-4 right-4 p-1.5 rounded-md text-slate-400 hover:text-white hover:bg-[#172338] transition-all"
         >
           <X className="w-4 h-4" />
         </button>
@@ -87,7 +87,7 @@ export default function SosModal({ isOpen, onClose, onEmergencyTriggered }: SosM
               </div>
             </div>
 
-            <div className="bg-[#16233b] p-3 rounded-lg border border-[#243656] text-xs space-y-2 text-slate-300">
+            <div className="bg-[#0a1120] p-3.5 rounded-xl border border-[#1e3151] text-xs space-y-2 text-slate-300">
               <div className="flex items-center gap-2 text-emerald-400 font-semibold">
                 <CheckCircle className="w-4 h-4" />
                 <span>Command Center Dispatched Rapid Response Unit</span>
@@ -143,10 +143,10 @@ export default function SosModal({ isOpen, onClose, onEmergencyTriggered }: SosM
                       key={opt.id}
                       type="button"
                       onClick={() => setEmergencyType(opt.id)}
-                      className={`flex items-center gap-2.5 p-2.5 rounded-md border text-left text-xs font-semibold transition-all ${
+                      className={`flex items-center gap-2.5 p-2.5 rounded-lg border text-left text-xs font-semibold transition-all ${
                         isSelected
-                          ? "ring-1 ring-red-500 border-red-500 bg-red-950/30 text-white"
-                          : "bg-[#0c1322] border-[#243656] text-slate-300 hover:border-slate-500"
+                          ? "ring-1 ring-red-500 border-red-500/60 bg-red-500/8 text-white"
+                          : "bg-[#0a1120] border-[#1e3151] text-slate-300 hover:border-[#2a4166]"
                       }`}
                     >
                       <Icon className="w-4 h-4 flex-shrink-0 text-red-400" />

@@ -57,7 +57,7 @@ export default function AnalyticsPage() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
       {/* Top Header Panel */}
-      <div className="relative overflow-hidden rounded-2xl bg-[#111b2f] border border-[#243656] p-6 shadow-xl">
+      <div className="relative overflow-hidden rounded-2xl bg-[#111d30] border border-[#1e3151] p-5 shadow-xl">
         <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-indigo-500/10 via-transparent to-transparent pointer-events-none rounded-full blur-3xl" />
 
         <div className="relative flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
@@ -88,7 +88,7 @@ export default function AnalyticsPage() {
           <button
             onClick={fetchAnalytics}
             disabled={refreshing}
-            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#16233b] hover:bg-[#1c2d4a] text-slate-200 hover:text-white border border-[#243656] text-xs font-semibold shadow transition-all"
+            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#172338] hover:bg-[#1c2e4a] text-slate-200 hover:text-white border border-[#1e3151] text-xs font-semibold shadow transition-all"
           >
             <RefreshCw className={`w-3.5 h-3.5 text-sky-400 ${refreshing ? "animate-spin" : ""}`} />
             <span>{refreshing ? "Refreshing..." : "Refresh Telemetry"}</span>
@@ -147,7 +147,7 @@ export default function AnalyticsPage() {
       {/* Row 1: Categories Breakdown & Hourly Trend */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Category Breakdown Panel */}
-        <div className="bg-[#111b2f] border border-[#243656] rounded-2xl p-6 shadow-xl text-left space-y-4">
+        <div className="bg-[#111d30] border border-[#1e3151] rounded-2xl p-5 shadow-xl text-left space-y-4">
           <div className="flex items-center justify-between pb-3 border-b border-[#243656]">
             <h3 className="font-bold text-sm text-white flex items-center gap-2">
               <PieChart className="w-4 h-4 text-sky-400" />
@@ -195,7 +195,7 @@ export default function AnalyticsPage() {
             </span>
           </div>
 
-          <div className="flex items-end justify-between gap-2 h-48 pt-6 pb-2 px-2 bg-[#0c1322]/60 rounded-xl border border-[#243656]/60">
+          <div className="flex items-end justify-between gap-1 h-44 pt-4 pb-2 px-2 bg-[#0a1120]/60 rounded-xl border border-[#1e3151]/60">
             {hourlyData?.map((item: any) => {
               const barHeight = Math.max(item.incidents * 12, 12);
               return (
