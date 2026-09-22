@@ -97,9 +97,9 @@
         <button class="role-pill" data-role="VOLUNTEER" title="Community Volunteer">Volunteer</button>
         <button class="role-pill" data-role="CITIZEN" title="Nagpur Resident">Citizen</button>
 
-        <!-- 5-Minute Demo Button -->
-        <button class="gov-demo-btn" onclick="openDemoModal()">
-          ⚡ <span data-i18n="nav_demo">5-Min Demo</span>
+        <!-- Emergency Alert Button -->
+        <button class="gov-demo-btn" onclick="openDemoModal()" title="Emergency Alert Simulation & Scenario">
+          🚨 <span data-i18n="nav_demo">Emergency Alert</span>
         </button>
 
         <!-- Day / Night Vision Nav Pill -->
@@ -163,7 +163,7 @@
               🛡️ Open Security Command Center
             </button>
             <button class="btn btn-warning" onclick="openDemoModal()" data-i18n="hero_cta_demo">
-              ⚡ 5-Minute Hackathon Demo
+              🚨 Emergency Alert
             </button>
           </div>
         </div>
@@ -310,7 +310,12 @@
             <div class="gov-panel-title">
               <span>📋</span> <span data-i18n="live_ops_title">Live Operations & Incident Feed</span>
             </div>
-            <button class="btn btn-secondary btn-sm" onclick="loadCommandCenter()">↻ Refresh</button>
+            <div style="display: flex; gap: 8px; align-items: center;">
+              <button class="gov-demo-btn" onclick="openDemoModal()" style="font-size: 11px; padding: 4px 10px;">
+                🚨 <span data-i18n="admin_emergency_alert">Emergency Alert</span>
+              </button>
+              <button class="btn btn-secondary btn-sm" onclick="loadCommandCenter()">↻ Refresh</button>
+            </div>
           </div>
 
           <!-- Multi-filter bar -->
