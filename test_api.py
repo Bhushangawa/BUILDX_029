@@ -14,11 +14,11 @@ def test_endpoint(name, url, method='GET', data=None):
 
 print("--- RUNNING SENTINEL BACKEND API TESTS ---")
 # 1. Test Incidents list
-inc = test_endpoint('Incidents List', 'http://localhost:8000/api/incidents')
+inc = test_endpoint('Incidents List', 'http://127.0.0.1:8000/api/incidents')
 print(f"   Found {len(inc.get('incidents', []))} incidents")
 
 # 2. Test Quick Incident Report (Marathi/Hindi keywords)
-new_inc = test_endpoint('Report Incident', 'http://localhost:8000/api/incidents', method='POST', data={
+new_inc = test_endpoint('Report Incident', 'http://127.0.0.1:8000/api/incidents', method='POST', data={
     'title': 'Suspicious object at Sitabuldi station',
     'incident_type': 'Suspicious activity',
     'location_name': 'Sitabuldi Interchange',
@@ -27,23 +27,23 @@ new_inc = test_endpoint('Report Incident', 'http://localhost:8000/api/incidents'
 print(f"   Created: {new_inc['incident_id']} with priority: {new_inc['priority']}")
 
 # 3. Test SOS Trigger
-sos_res = test_endpoint('SOS Emergency', 'http://localhost:8000/api/sos', method='POST', data={
+sos_res = test_endpoint('SOS Emergency', 'http://127.0.0.1:8000/api/sos', method='POST', data={
     'location_name': 'Wardha Road, Nagpur',
     'sos_type': 'Street Harassment Alert'
 })
 print(f"   SOS Broadcasted: {sos_res['incident_id']}")
 
 # 4. Test Missing Persons List
-mp_res = test_endpoint('Missing Persons', 'http://localhost:8000/api/missing-persons')
+mp_res = test_endpoint('Missing Persons', 'http://127.0.0.1:8000/api/missing-persons')
 print(f"   Found {len(mp_res.get('missing_persons', []))} missing person cases")
 
 # 5. Test Nearest Team Recommendation
-rec_res = test_endpoint('Team Recommendation', 'http://localhost:8000/api/teams/recommend?lat=21.1278&lng=79.0683&team_type=CROWD_CONTROL_TEAM')
+rec_res = test_endpoint('Team Recommendation', 'http://127.0.0.1:8000/api/teams/recommend?lat=21.1278&lng=79.0683&team_type=CROWD_CONTROL_TEAM')
 top_team = rec_res.get('recommendations', [])[0]
 print(f"   Top recommended unit: {top_team['team']['name']} (distance: {top_team['distance_km']} km)")
 
 # 6. Test Static Web Server
-with urllib.request.urlopen('http://localhost:8000/') as res:
+with urllib.request.urlopen('http://127.0.0.1:8000/') as res:
     html = res.read().decode('utf-8')
     assert 'RAKSHAK' in html
     assert 'NAGPUR' in html
