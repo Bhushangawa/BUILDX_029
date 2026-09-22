@@ -16,7 +16,7 @@ const TRANSLATIONS = {
     hero_badge: "BUILT FOR NAGPUR CITY ONLY",
     hero_title: "AI-Assisted Smart Security & Emergency Coordination Platform",
     hero_subtitle: "One platform. One command center. Faster coordination across Nagpur Citizens, Help Desks, Response Teams, and Control Room.",
-    hero_cta_report: "Report Incident in Nagpur",
+    hero_cta_report: "🚨 Emergency Report (Nagpur)",
     hero_cta_command: "Open Command Center",
     hero_cta_demo: "Run 5-Min Hackathon Demo",
 
@@ -59,12 +59,12 @@ const TRANSLATIONS = {
     start_journey_btn: "Start Monitored Journey",
     simulate_deviation_btn: "Simulate Route Deviation",
 
-    quick_report_title: "Quick Incident Report (Nagpur)",
+    quick_report_title: "🚨 Emergency & Incident Report (Nagpur)",
     input_incident_type: "Incident Type",
     input_location: "Nagpur Landmark / Area",
     input_description: "Describe what happened...",
     input_anonymous: "File as Anonymous Citizen (Protects Identity)",
-    submit_report_btn: "Submit Incident to Command Center",
+    submit_report_btn: "Submit Emergency Report to Command Center",
 
     missing_report_title: "Report Missing Person (Child / Elderly)",
     mp_name: "Full Name",
@@ -101,7 +101,7 @@ const TRANSLATIONS = {
     hero_badge: "केवळ नागपूर शहरासाठी समर्पित",
     hero_title: "एआय-सक्षम स्मार्ट सुरक्षा आणि आणीबाणी समन्वय मंच",
     hero_subtitle: "एक व्यासपीठ. एक नियंत्रण कक्ष. नागपूरचे नागरिक, मदत डेस्क, सुरक्षा पथके आणि नियंत्रण कक्ष यांच्यात जलद समन्वय.",
-    hero_cta_report: "नागपुरात घटनेची तक्रार करा",
+    hero_cta_report: "🚨 आणीबाणी तक्रार नोंदणी (Emergency Report)",
     hero_cta_command: "कमांड सेंटर उघडा",
     hero_cta_demo: "५-मिनिट हॅकॅथॉन डेमो चालवा",
 
@@ -144,12 +144,12 @@ const TRANSLATIONS = {
     start_journey_btn: "सुरक्षित प्रवास सुरू करा",
     simulate_deviation_btn: "मार्ग विचलनाची चाचणी घ्या",
 
-    quick_report_title: "त्वरित घटना तक्रार (नागपूर)",
+    quick_report_title: "🚨 आणीबाणी व घटना तक्रार (नागपूर)",
     input_incident_type: "घटनेचा प्रकार",
     input_location: "नागपूर परिसराचे नाव / लँडमार्क",
     input_description: "काय घडले ते सविस्तर लिहा...",
     input_anonymous: "अनामिक नागरिक म्हणून तक्रार करा (गोपनीयता सुरक्षित)",
-    submit_report_btn: "कमांड सेंटरला तक्रार पाठवा",
+    submit_report_btn: "कमांड सेंटरला आणीबाणी तक्रार पाठवा",
 
     missing_report_title: "हरवलेल्या व्यक्तीची नोंद (मुलगा / वृद्ध)",
     mp_name: "पूर्ण नाव",
@@ -186,7 +186,7 @@ const TRANSLATIONS = {
     hero_badge: "केवळ नागपूर शहरासाठी समर्पित",
     hero_title: "एआय-सक्षम नागपूर स्मार्ट सुरक्षा आणि आपत्कालीन समन्वय प्रणाली",
     hero_subtitle: "एकच नियंत्रण कक्ष. जलद सुरक्षा समन्वय. नागपूरचे नागरिक, मदत कक्ष, स्वयंसेवक आणि पोलीस पथके एकत्र.",
-    hero_cta_report: "नागपूर घटना नोंदवा",
+    hero_cta_report: "🚨 आपत्कालीन तक्रार नोंदवा (Emergency Report)",
     hero_cta_command: "कमांड सेंटर पहा",
     hero_cta_demo: "५-मिनिटांचा थेट डेमो सुरू करा",
 
@@ -229,12 +229,12 @@ const TRANSLATIONS = {
     start_journey_btn: "प्रवास सुरू करा",
     simulate_deviation_btn: "मार्ग विचलन चाचणी",
 
-    quick_report_title: "त्वरित घटना नोंदणी (नागपूर)",
+    quick_report_title: "🚨 आपत्कालीन व त्वरित घटना नोंदणी (नागपूर)",
     input_incident_type: "घटनेचा प्रकार",
     input_location: "नागपूर परिसराचे नाव",
     input_description: "सविस्तर माहिती लिहा...",
     input_anonymous: "नाव गुप्त ठेवा (गोपनीयता नियम)",
-    submit_report_btn: "कंट्रोल रूमकडे नोंदवा",
+    submit_report_btn: "कंट्रोल रूमकडे आपत्कालीन तक्रार नोंदवा",
 
     missing_report_title: "हरवलेल्या व्यक्तीची तक्रार (मुलगा / ज्येष्ठ नागरिक)",
     mp_name: "पूर्ण नाव",
