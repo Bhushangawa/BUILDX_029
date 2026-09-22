@@ -1679,16 +1679,360 @@ body.night-vision .cyber-resp-impact {
   color: #cbd5e1;
 }
 
+/* =========================================================
+   20. COMPREHENSIVE RESPONSIVE DESIGN & MOBILE-FIRST SYSTEM
+   ========================================================= */
+
+/* Ensure smooth scrolling & responsive wrappers */
+html {
+  box-sizing: border-box;
+  -webkit-text-size-adjust: 100%;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+img, svg, video, canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+.table-responsive,
+.cyber-table-container,
+.ops-table-container {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: 1rem;
+}
+
+.gov-table,
+.cyber-incidents-table,
+.cyber-events-table {
+  width: 100%;
+  min-width: 600px;
+}
+
+/* --- Breakpoint: Large Tablets & Laptops (<= 1200px) --- */
+@media (max-width: 1200px) {
+  .gov-nav-inner {
+    padding: 0 1rem;
+  }
+  .gov-kpis-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .cyber-kpis-row {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .cyber-pipeline-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .cyber-scenario-cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* --- Breakpoint: Medium Tablets & Small Laptops (<= 992px) --- */
 @media (max-width: 992px) {
+  .gov-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 1rem;
+    gap: 0.85rem;
+  }
+
+  .gov-brand {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5rem;
+  }
+
+  .gov-title-block h1 {
+    font-size: 1.35rem;
+  }
+
+  .gov-helpline-box {
+    width: 100%;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px dashed var(--border-light);
+  }
+
+  .helpline-item {
+    text-align: center;
+  }
+
+  .gov-nav-inner {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0.5rem;
+    gap: 8px;
+  }
+
+  .gov-nav-links {
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+    width: 100%;
+  }
+  .gov-nav-links::-webkit-scrollbar {
+    display: none;
+  }
+
+  .gov-nav-btn {
+    padding: 0.65rem 0.95rem;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+  }
+
+  .gov-role-controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+    padding: 6px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    width: 100%;
+  }
+
+  .gov-hero-banner {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 1.5rem 1.25rem;
+  }
+
+  .gov-hero-banner .hero-left h2 {
+    font-size: 1.65rem;
+  }
+
+  .ops-split-view,
+  .citizen-split-view,
+  .cyber-soc-split-grid,
+  .analytics-grid,
+  .crowd-split-grid,
+  .security-split-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .map-container,
+  #nagpurMapContainer {
+    height: 380px;
+    width: 100%;
+  }
+
   .cyber-pipeline-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-  .cyber-soc-split-grid {
-    grid-template-columns: 1fr;
+
+  .cyber-scenario-cards {
+    grid-template-columns: repeat(2, 1fr);
   }
+
+  .cyber-assets-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
   .protection-metrics-row {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  .gov-services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
+
+/* --- Breakpoint: Mobile Phones & Phablets (<= 768px) --- */
+@media (max-width: 768px) {
+  .gov-utility-bar {
+    flex-direction: column;
+    gap: 6px;
+    padding: 6px 1rem;
+    text-align: center;
+  }
+
+  .gov-utility-left,
+  .gov-utility-right {
+    justify-content: center;
+    flex-wrap: wrap;
+    font-size: 11px;
+    gap: 6px;
+  }
+
+  .gov-main-container {
+    padding: 1rem 0.65rem;
+  }
+
+  .gov-ticker {
+    flex-direction: column;
+    text-align: center;
+    gap: 6px;
+    padding: 6px 1rem;
+  }
+
+  .gov-kpis-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .gov-kpi-card {
+    padding: 0.75rem 0.5rem;
+  }
+
+  .gov-kpi-num {
+    font-size: 1.4rem;
+  }
+
+  .gov-kpi-label {
+    font-size: 11px;
+  }
+
+  .cyber-kpis-row {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .cyber-console-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .cyber-console-actions {
+    flex-wrap: wrap;
+    justify-content: stretch;
+    gap: 8px;
+  }
+
+  .cyber-console-actions .btn {
+    flex: 1 1 calc(50% - 8px);
+    justify-content: center;
+    font-size: 12px;
+    padding: 8px 10px;
+  }
+
+  .cyber-pipeline-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .cyber-pipe-step {
+    padding: 10px 12px;
+  }
+
+  .protection-metrics-row {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .cyber-assets-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .gov-services-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-cta-group {
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .hero-cta-group .btn {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+  }
+
+  /* Modals on Mobile */
+  .modal-dialog,
+  .cyber-forensic-modal-dialog {
+    width: 95vw !important;
+    max-width: 95vw !important;
+    margin: 15px auto !important;
+    padding: 1rem !important;
+    max-height: 90vh !important;
+    overflow-y: auto !important;
+  }
+
+  /* Notification Drawer on Mobile */
+  .notif-drawer {
+    width: calc(100vw - 20px) !important;
+    right: 10px !important;
+    top: 60px !important;
+  }
+
+  /* Footer on Mobile */
+  .gov-footer-inner {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 1.5rem 1rem;
+    text-align: left;
+  }
+
+  .gov-footer-bottom {
+    padding: 1rem;
+    font-size: 11px;
+    text-align: center;
+  }
+}
+
+/* --- Breakpoint: Small Mobile Phones (<= 480px) --- */
+@media (max-width: 480px) {
+  .gov-title-block h1 {
+    font-size: 1.15rem;
+  }
+
+  .gov-emblem-badge {
+    width: 44px;
+    height: 44px;
+    font-size: 20px;
+  }
+
+  .gov-kpis-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+
+  .cyber-kpis-row {
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+
+  .cyber-scenario-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .protection-metrics-row {
+    grid-template-columns: 1fr;
+  }
+
+  .cyber-console-actions .btn {
+    flex: 1 1 100%;
+  }
+
+  .map-container,
+  #nagpurMapContainer {
+    height: 300px;
+  }
+
+  .btn {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+
+  .role-pill {
+    padding: 4px 8px;
+    font-size: 10px;
+  }
+}
+
 
 
