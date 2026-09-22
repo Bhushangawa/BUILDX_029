@@ -516,7 +516,7 @@ def seed_data(conn):
 
     # 10. Seed Audit Logs
     audit_data = [
-        ("Inspector Rajesh Shinde", "ADMIN", "SYSTEM_STARTUP", "SENTINEL Security Coordination Engine booted for Nagpur City zone.", t_minus(600)),
+        ("Inspector Rajesh Shinde", "ADMIN", "SYSTEM_STARTUP", "RAKSHAK Security Coordination Engine booted for Nagpur City zone.", t_minus(600)),
         ("Inspector Rajesh Shinde", "ADMIN", "TEAM_ASSIGNMENT", "Assigned TEAM-NGP-01 to INC-NGP-2026-000101.", t_minus(70)),
         ("Officer Amit Deshmukh", "SECURITY_STAFF", "STATUS_UPDATE", "Updated INC-NGP-2026-000101 to IN_PROGRESS.", t_minus(30))
     ]

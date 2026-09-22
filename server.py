@@ -1033,7 +1033,7 @@ def run_server():
     server_address = ('', PORT)
     httpd = socketserver.ThreadingTCPServer(server_address, SentinelHandler)
     httpd.allow_reuse_address = True
-    print(f"SENTINEL Server running on http://localhost:{PORT}")
+    print(f"RAKSHAK Server running on http://localhost:{PORT}")
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:
