@@ -2,7 +2,7 @@
 
 const TRANSLATIONS = {
   en: {
-    brand_title: "SENTINEL",
+    brand_title: "RAKSHAK",
     brand_subtitle: "NAGPUR CITY SMART SECURITY",
     nav_home: "Overview",
     nav_command: "Command Center",
@@ -89,7 +89,7 @@ const TRANSLATIONS = {
   },
 
   hi: {
-    brand_title: "सेंटिनल (SENTINEL)",
+    brand_title: "रक्षक (RAKSHAK)",
     brand_subtitle: "नागपूर शहर स्मार्ट सुरक्षा प्रणाली",
     nav_home: "अवलोकन",
     nav_command: "कमांड सेंटर",
@@ -176,7 +176,7 @@ const TRANSLATIONS = {
   },
 
   mr: {
-    brand_title: "सेंटिनेल (SENTINEL)",
+    brand_title: "रक्षक (RAKSHAK)",
     brand_subtitle: "नागपूर शहर स्मार्ट सुरक्षा समन्वय",
     nav_home: "मुख्य पान",
     nav_command: "कमांड सेंटर",

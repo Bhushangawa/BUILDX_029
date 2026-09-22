@@ -45,7 +45,7 @@ print(f"   Top recommended unit: {top_team['team']['name']} (distance: {top_team
 # 6. Test Static Web Server
 with urllib.request.urlopen('http://localhost:8000/') as res:
     html = res.read().decode('utf-8')
-    assert 'SENTINEL' in html
+    assert 'RAKSHAK' in html
     assert 'NAGPUR' in html
     print(f"[PASS] [GET] Static Index HTML served successfully ({len(html)} bytes)")
 

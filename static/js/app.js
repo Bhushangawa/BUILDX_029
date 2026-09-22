@@ -1237,7 +1237,7 @@ function renderCyberAiThreatCard(incident, sim) {
     if (affectedAsset) affectedAsset.innerText = incident.target_asset_name || incident.target_asset_id;
     if (sourceIP) sourceIP.innerText = incident.source_ip || "198.51.100.42";
     if (mitre) mitre.innerText = incident.mitre_technique || "T1486 Data Encrypted for Impact";
-    if (reasoning) reasoning.innerText = incident.analysis_summary || "Attack classified by Sentinel Autonomous Defense Engine.";
+    if (reasoning) reasoning.innerText = incident.analysis_summary || "Attack classified by Rakshak Autonomous Defense Engine.";
     if (recommended) recommended.innerText = incident.mitigation_plan || "Automated safe containment triggered.";
     if (execStatus) {
       execStatus.innerText = incident.status === "RESOLVED" ? "✓ Playbook Executed & Threat Confined" : "Playbook Executing";
@@ -1275,7 +1275,7 @@ function renderCyberProtectionMonitor(kpis, sim) {
     if (sim.status === "RUNNING") {
       badge.className = "badge badge-success";
       badge.innerText = "ZERO CITIZEN DOWNTIME";
-      banner.innerHTML = `<strong>🛡️ Active Shield Protection:</strong> Sentinel isolated attacker payload while 1,420 legitimate citizens continue accessing Nagpur City Services uninterrupted.`;
+      banner.innerHTML = `<strong>🛡️ Active Shield Protection:</strong> Rakshak isolated attacker payload while 1,420 legitimate citizens continue accessing Nagpur City Services uninterrupted.`;
     } else {
       badge.className = "badge badge-success";
       badge.innerText = "PROTECTED (100%)";
@@ -1637,7 +1637,7 @@ function downloadForensicJSON(incidentId) {
     jurisdiction: "Nagpur Smart City Security Command",
     incident_id: incidentId || "INC-CYBER-LATEST",
     timestamp: new Date().toISOString(),
-    engine: "Sentinel AI Autonomous Cyber Defense",
+    engine: "Rakshak AI Autonomous Cyber Defense",
     status: "MITIGATED",
     citizen_protection: "1,420 Active Users Verified Safe",
     packet_loss_legitimate: 0.0,
