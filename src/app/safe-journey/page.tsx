@@ -154,47 +154,47 @@ export default function SafeJourneyPage() {
   };
 
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-5 bg-[#0c1322] min-h-screen text-slate-100">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-slate-900/60 p-5 rounded-2xl border border-slate-800">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 bg-[#111b2f] p-4 rounded-xl border border-[#243656] shadow-sm">
         <div>
           <div className="flex items-center gap-2">
-            <Compass className="w-5 h-5 text-purple-400" />
-            <h1 className="text-xl sm:text-2xl font-black text-white">
-              Safe Journey Mode (Women & Commuter Safety)
+            <Compass className="w-5 h-5 text-[#38bdf8]" />
+            <h1 className="text-lg sm:text-xl font-black text-white uppercase tracking-wider">
+              Safe Journey Commuter Protection
             </h1>
           </div>
-          <p className="text-xs text-slate-400 mt-1">
-            Real-time transit monitoring in auto-rickshaws, cabs, or walking. Automatically detects route deviations and alerts trusted contacts & dispatch.
+          <p className="text-xs text-slate-400 mt-0.5">
+            Active GPS telemetry & route deviation detection for women and vulnerable commuters in auto-rickshaws, cabs, or walking.
           </p>
         </div>
 
-        <div className="flex items-center gap-2 text-xs font-semibold px-3 py-1.5 rounded-xl bg-purple-500/10 border border-purple-500/30 text-purple-300">
-          <Shield className="w-4 h-4" />
-          <span>Active Escort Protocol</span>
+        <div className="flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded bg-[#16233b] border border-[#243656] text-slate-300">
+          <Shield className="w-3.5 h-3.5 text-emerald-400" />
+          <span>Escort Telemetry Active</span>
         </div>
       </div>
 
-      {/* Panic Activated Alert Banner if Panic was triggered */}
+      {/* Emergency Intercept Banner if Panic was triggered */}
       {journey?.status === "PANIC_TRIGGERED" && (
-        <div className="p-5 rounded-2xl bg-red-950/50 border-2 border-red-600 text-red-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-2xl animate-pulse">
+        <div className="p-4 rounded-xl bg-[#16233b] border-2 border-red-500 text-red-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-md">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-full bg-red-600 text-white">
-              <AlertOctagon className="w-6 h-6" />
+            <div className="p-2 rounded bg-red-600 text-white flex-shrink-0">
+              <AlertOctagon className="w-5 h-5" />
             </div>
             <div>
-              <div className="font-black text-base text-white uppercase tracking-wider">
-                EMERGENCY INTERCEPT IN PROGRESS
+              <div className="font-bold text-xs text-white uppercase tracking-wider">
+                Emergency Intercept Dispatched
               </div>
               <p className="text-xs text-red-200 mt-0.5">
-                Central Command Center has locked coordinates (19.0885, 72.8685). Alpha Rapid Security Patrol unit en route.
+                Central Command has locked telemetry coordinates (19.0885° N, 72.8685° E). Alpha Rapid Patrol unit dispatched.
               </p>
             </div>
           </div>
 
           <button
             onClick={handleCompleteJourney}
-            className="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-700 text-xs font-bold"
+            className="px-3 py-1.5 rounded bg-[#111b2f] hover:bg-[#0c1322] text-slate-200 border border-[#243656] text-xs font-semibold whitespace-nowrap"
           >
             End Emergency / Stand Down
           </button>
@@ -202,54 +202,54 @@ export default function SafeJourneyPage() {
       )}
 
       {/* Main Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-5 items-start">
         {/* Left: Journey Controller (7 Cols) */}
-        <div className="md:col-span-7 bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-5">
+        <div className="md:col-span-7 bg-[#111b2f] border border-[#243656] rounded-xl p-5 shadow-sm space-y-4">
           {journey ? (
             <>
-              <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+              <div className="flex items-center justify-between pb-3 border-b border-[#243656]">
                 <div>
-                  <span className="text-[10px] uppercase font-bold px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 border border-purple-500/30">
-                    Live Journey Active
+                  <span className="text-[9px] uppercase font-mono font-bold px-1.5 py-0.2 rounded bg-[#0ea5e9]/20 text-[#38bdf8] border border-[#0ea5e9]/30">
+                    Live Escort Active
                   </span>
-                  <h3 className="font-black text-lg text-white mt-1">
+                  <h3 className="font-bold text-base text-white mt-1">
                     Commuter: {journey.userName}
                   </h3>
                 </div>
 
-                <div className="flex items-center gap-1.5 text-xs text-slate-400">
-                  <Car className="w-4 h-4 text-sky-400" />
-                  <span className="font-semibold">{journey.transportMode}</span>
+                <div className="flex items-center gap-1 text-xs text-slate-400 font-mono">
+                  <Car className="w-3.5 h-3.5 text-[#38bdf8]" />
+                  <span>{journey.transportMode}</span>
                 </div>
               </div>
 
               {/* Waypoints Visualizer */}
-              <div className="p-4 rounded-xl bg-slate-950/80 border border-slate-800 space-y-3 text-xs">
+              <div className="p-3.5 rounded-lg bg-[#0c1322] border border-[#243656] space-y-2 text-xs">
                 <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded-full bg-emerald-500 ring-4 ring-emerald-500/20"></div>
+                  <div className="w-2.5 h-2.5 rounded-full bg-emerald-500"></div>
                   <div>
-                    <span className="text-slate-500 block text-[10px]">Start Location:</span>
+                    <span className="text-slate-500 block text-[10px]">Origin:</span>
                     <span className="font-semibold text-slate-200">{journey.startLocation}</span>
                   </div>
                 </div>
 
-                <div className="w-0.5 h-6 bg-slate-800 ml-1.5"></div>
+                <div className="w-0.5 h-4 bg-[#243656] ml-1"></div>
 
                 <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded-full bg-sky-500 ring-4 ring-sky-500/20 animate-ping"></div>
+                  <div className="w-2.5 h-2.5 rounded-full bg-[#0ea5e9] animate-pulse"></div>
                   <div>
                     <span className="text-slate-500 block text-[10px]">Current Telemetry:</span>
-                    <span className="font-mono text-sky-300">
+                    <span className="font-mono text-[#38bdf8]">
                       Lat {journey.lastKnownLat?.toFixed(4)}, Lng {journey.lastKnownLng?.toFixed(4)}
                     </span>
                     <span className="text-[10px] text-slate-400 block">Near Eastern Link Corridor</span>
                   </div>
                 </div>
 
-                <div className="w-0.5 h-6 bg-slate-800 ml-1.5"></div>
+                <div className="w-0.5 h-4 bg-[#243656] ml-1"></div>
 
                 <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded-full bg-purple-500 ring-4 ring-purple-500/20"></div>
+                  <div className="w-2.5 h-2.5 rounded-full bg-[#ea580c]"></div>
                   <div>
                     <span className="text-slate-500 block text-[10px]">Destination:</span>
                     <span className="font-semibold text-slate-200">{journey.destinationLocation}</span>
@@ -258,24 +258,24 @@ export default function SafeJourneyPage() {
               </div>
 
               {/* Action Buttons */}
-              <div className="space-y-2 pt-2">
-                <div className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">
-                  Interactive Commuter Tests:
+              <div className="space-y-2 pt-1">
+                <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                  Interactive Route Tests:
                 </div>
 
-                <div className="flex flex-wrap gap-3">
+                <div className="flex flex-wrap gap-2.5">
                   <button
                     onClick={handleSimulateDeviation}
                     disabled={journey.status === "PANIC_TRIGGERED"}
-                    className="flex-1 py-3 px-4 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 font-bold text-xs flex items-center justify-center gap-2 transition-all"
+                    className="flex-1 py-2 px-3 rounded-md bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border border-amber-500/40 font-bold text-xs flex items-center justify-center gap-1.5 transition-all"
                   >
-                    <AlertTriangle className="w-4 h-4 text-amber-400" />
+                    <AlertTriangle className="w-3.5 h-3.5 text-amber-400" />
                     <span>Simulate Route Deviation</span>
                   </button>
 
                   <button
                     onClick={handleCompleteJourney}
-                    className="py-3 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 font-semibold text-xs"
+                    className="py-2 px-3 rounded-md bg-[#16233b] hover:bg-[#1e2d48] text-slate-300 border border-[#243656] font-semibold text-xs"
                   >
                     Complete Journey Safely
                   </button>
@@ -283,10 +283,10 @@ export default function SafeJourneyPage() {
               </div>
             </>
           ) : (
-            <div className="space-y-4">
-              <h3 className="text-base font-bold text-white">Start a Safe Journey</h3>
+            <div className="space-y-3.5">
+              <h3 className="text-sm font-bold text-white uppercase tracking-wider">Start a Safe Journey</h3>
               <p className="text-xs text-slate-400">
-                Register your commute to activate continuous GPS route deviation sensing and safety check-ins.
+                Register commute to activate continuous GPS route deviation sensing and automated check-in pings.
               </p>
 
               <div>
@@ -295,16 +295,16 @@ export default function SafeJourneyPage() {
                   type="text"
                   value={destination}
                   onChange={(e) => setDestination(e.target.value)}
-                  className="w-full px-3 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-xs text-slate-100"
+                  className="w-full px-3 py-2 bg-[#0c1322] border border-[#243656] rounded-md text-xs text-slate-100"
                 />
               </div>
 
               <div>
-                <label className="text-xs font-semibold text-slate-300 block mb-1">Transport Vehicle:</label>
+                <label className="text-xs font-semibold text-slate-300 block mb-1">Transport Mode:</label>
                 <select
                   value={transportMode}
                   onChange={(e) => setTransportMode(e.target.value)}
-                  className="w-full px-3 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-xs text-slate-100"
+                  className="w-full px-3 py-2 bg-[#0c1322] border border-[#243656] rounded-md text-xs text-slate-100"
                 >
                   <option value="AUTO">Auto Rickshaw</option>
                   <option value="CAB">Ride-Share Cab</option>
@@ -315,30 +315,30 @@ export default function SafeJourneyPage() {
 
               <button
                 onClick={handleStartJourney}
-                className="w-full py-3.5 rounded-xl bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-400 hover:to-indigo-500 text-white font-bold text-xs shadow-lg shadow-purple-500/25 flex items-center justify-center gap-2 transition-all"
+                className="w-full py-2.5 rounded-md bg-[#0ea5e9] hover:bg-[#0284c7] text-white font-bold text-xs shadow-sm flex items-center justify-center gap-1.5 transition-all"
               >
-                <Navigation className="w-4 h-4" />
+                <Navigation className="w-3.5 h-3.5" />
                 <span>Commence Safe Journey Monitoring</span>
               </button>
             </div>
           )}
         </div>
 
-        {/* Right: Trusted Contacts & Safety Check-in (5 Cols) */}
-        <div className="md:col-span-5 bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-5">
-          <div className="flex items-center justify-between pb-3 border-b border-slate-800">
-            <h3 className="font-bold text-sm text-white flex items-center gap-2">
-              <Phone className="w-4 h-4 text-emerald-400" />
-              <span>Notified Trusted Contacts</span>
+        {/* Right: Trusted Contacts (5 Cols) */}
+        <div className="md:col-span-5 bg-[#111b2f] border border-[#243656] rounded-xl p-5 shadow-sm space-y-4">
+          <div className="flex items-center justify-between pb-2 border-b border-[#243656]">
+            <h3 className="font-bold text-xs uppercase tracking-wider text-white flex items-center gap-1.5">
+              <Phone className="w-3.5 h-3.5 text-emerald-400" />
+              <span>Notified Contacts</span>
             </h3>
-            <span className="text-[10px] text-slate-500">Auto-SMS Protocol</span>
+            <span className="text-[10px] text-slate-500 font-mono">SMS Integration</span>
           </div>
 
-          <div className="space-y-2.5">
+          <div className="space-y-2">
             {contacts.map((c) => (
               <div
                 key={c.id}
-                className="p-3 rounded-xl bg-slate-950/60 border border-slate-800 text-xs flex items-center justify-between"
+                className="p-2.5 rounded-md bg-[#0c1322] border border-[#243656] text-xs flex items-center justify-between"
               >
                 <div>
                   <div className="font-bold text-slate-200">{c.name}</div>
@@ -347,7 +347,7 @@ export default function SafeJourneyPage() {
                   </div>
                 </div>
                 {c.isPrimary && (
-                  <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                  <span className="text-[9px] font-bold px-1.5 py-0.2 rounded bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
                     Primary
                   </span>
                 )}
@@ -355,17 +355,17 @@ export default function SafeJourneyPage() {
             ))}
           </div>
 
-          {/* Safety Check-in countdown simulation */}
-          <div className="p-4 rounded-xl bg-slate-950/80 border border-slate-800 text-xs space-y-2">
+          {/* Safety Check-in countdown */}
+          <div className="p-3 rounded-md bg-[#0c1322] border border-[#243656] text-xs space-y-1">
             <div className="flex items-center justify-between font-bold text-slate-200">
-              <span className="flex items-center gap-1.5">
-                <Clock className="w-3.5 h-3.5 text-sky-400" />
+              <span className="flex items-center gap-1">
+                <Clock className="w-3.5 h-3.5 text-[#38bdf8]" />
                 <span>Recurring Safety Check-in</span>
               </span>
-              <span className="text-sky-400 font-mono">08:45 remaining</span>
+              <span className="text-[#38bdf8] font-mono text-xs">08:45</span>
             </div>
             <p className="text-[11px] text-slate-400">
-              If check-in prompt is unacknowledged, system automatically escalates coordinates to Central Command.
+              If check-in prompt is unanswered, telemetry escalates to Central Command.
             </p>
           </div>
         </div>
@@ -373,28 +373,30 @@ export default function SafeJourneyPage() {
 
       {/* ROUTE DEVIATION PROMPT MODAL (Exact scenario requirement) */}
       {showDeviationModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
-          <div className="bg-slate-900 border-2 border-amber-500 rounded-3xl max-w-md w-full p-6 shadow-2xl text-center space-y-5">
-            <div className="w-16 h-16 rounded-full bg-amber-500/20 border-2 border-amber-500 text-amber-400 mx-auto flex items-center justify-center animate-bounce">
-              <AlertTriangle className="w-9 h-9" />
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#0a0f1d]/85 backdrop-blur-sm">
+          <div className="bg-[#111b2f] border-2 border-amber-500/80 rounded-xl max-w-md w-full p-5 shadow-2xl text-left space-y-4">
+            <div className="flex items-center gap-3 pb-3 border-b border-[#243656]">
+              <div className="w-10 h-10 rounded-md bg-amber-500/15 border border-amber-500/40 text-amber-400 flex items-center justify-center flex-shrink-0">
+                <AlertTriangle className="w-6 h-6" />
+              </div>
+              <div>
+                <h2 className="text-sm font-bold text-white uppercase tracking-wider">
+                  Route Deviation Detected!
+                </h2>
+                <p className="text-xs font-semibold text-amber-300">
+                  &ldquo;Route deviation detected. Are you safe?&rdquo;
+                </p>
+              </div>
             </div>
 
-            <div>
-              <h2 className="text-xl font-black text-white">
-                Route Deviation Detected!
-              </h2>
-              <p className="text-sm font-semibold text-amber-300 mt-1">
-                &ldquo;Route deviation detected. Are you safe?&rdquo;
-              </p>
-              <p className="text-xs text-slate-400 mt-2">
-                Vehicle has turned 650m off the registered route into an isolated lane. Please confirm your safety status immediately.
-              </p>
-            </div>
+            <p className="text-xs text-slate-300 leading-relaxed">
+              Vehicle has turned 650m away from the expected route into an isolated service lane. Please confirm your status immediately.
+            </p>
 
-            <div className="grid grid-cols-2 gap-3 pt-2">
+            <div className="grid grid-cols-2 gap-2.5 pt-1">
               <button
                 onClick={handleConfirmSafe}
-                className="py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-lg shadow-emerald-600/20 transition-all"
+                className="py-2.5 px-3 rounded-md bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-sm transition-all text-center"
               >
                 I AM SAFE
                 <span className="block text-[10px] font-normal opacity-80">Continue Journey</span>
@@ -402,7 +404,7 @@ export default function SafeJourneyPage() {
 
               <button
                 onClick={handleTriggerPanic}
-                className="py-3 px-4 rounded-xl bg-red-600 hover:bg-red-500 text-white font-black text-xs shadow-lg shadow-red-600/30 transition-all uppercase animate-pulse"
+                className="py-2.5 px-3 rounded-md bg-red-600 hover:bg-red-500 text-white font-bold text-xs shadow-sm transition-all uppercase text-center"
               >
                 NEED HELP!
                 <span className="block text-[10px] font-normal opacity-90">Alert Dispatch & Family</span>

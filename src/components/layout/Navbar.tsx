@@ -17,6 +17,8 @@ import {
   CheckCircle2,
   X,
   Compass,
+  AlertOctagon,
+  ChevronDown,
 } from "lucide-react";
 import { translations } from "@/lib/translations";
 import { Language, UserRole } from "@/lib/types";
@@ -47,7 +49,6 @@ export default function Navbar({
 
   const t = translations[lang] || translations.en;
 
-  // Sync state
   useEffect(() => {
     setLang(currentLang);
   }, [currentLang]);
@@ -56,7 +57,6 @@ export default function Navbar({
     setRole(activeRole);
   }, [activeRole]);
 
-  // Fetch notifications
   const fetchAlerts = async () => {
     try {
       const res = await fetch("/api/alerts");
@@ -94,54 +94,59 @@ export default function Navbar({
   };
 
   const navItems = [
-    { href: "/command-center", label: t.nav.commandCenter, icon: Radio, roleAccess: ["ADMIN", "SECURITY_STAFF"] },
-    { href: "/incidents", label: t.nav.incidents, icon: AlertTriangle, roleAccess: ["ALL"] },
-    { href: "/missing-persons", label: t.nav.missingPersons, icon: Eye, roleAccess: ["ALL"] },
-    { href: "/crowd-monitoring", label: t.nav.crowd, icon: Users, roleAccess: ["ALL"] },
-    { href: "/safe-journey", label: t.nav.safeJourney, icon: Compass, roleAccess: ["ALL"] },
-    { href: "/responder", label: t.nav.responder, icon: Shield, roleAccess: ["SECURITY_STAFF", "ADMIN"] },
-    { href: "/volunteer", label: t.nav.volunteer, icon: Activity, roleAccess: ["VOLUNTEER", "ADMIN"] },
-    { href: "/analytics", label: t.nav.analytics, icon: Activity, roleAccess: ["ADMIN"] },
+    { href: "/command-center", label: t.nav.commandCenter, icon: Radio },
+    { href: "/incidents", label: t.nav.incidents, icon: AlertTriangle },
+    { href: "/missing-persons", label: t.nav.missingPersons, icon: Eye },
+    { href: "/crowd-monitoring", label: t.nav.crowd, icon: Users },
+    { href: "/safe-journey", label: t.nav.safeJourney, icon: Compass },
+    { href: "/responder", label: t.nav.responder, icon: Shield },
+    { href: "/volunteer", label: t.nav.volunteer, icon: Activity },
+    { href: "/analytics", label: t.nav.analytics, icon: Activity },
   ];
 
   return (
-    <header className="sticky top-0 z-50 bg-slate-950/90 backdrop-blur-md border-b border-slate-800 text-slate-100">
-      {/* Top Demo Bar for Judges */}
-      <div className="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 px-4 py-1.5 border-b border-indigo-500/20 text-xs flex flex-wrap items-center justify-between gap-2">
+    <header className="sticky top-0 z-50 bg-[#0f172a]/95 backdrop-blur-md border-b border-[#243656] text-slate-100 shadow-lg shadow-black/20">
+      {/* Top Tactical Status Bar */}
+      <div className="bg-[#0a0f1d] border-b border-[#1e2d48] px-4 py-1.5 text-xs flex flex-wrap items-center justify-between gap-3">
+        {/* Left: Role Switcher with clear badge styling */}
         <div className="flex items-center gap-2">
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 font-semibold border border-indigo-500/30">
-            <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-ping"></span>
-            BUILD-X Hackathon Preview
-          </span>
-          <span className="text-slate-400 hidden sm:inline">Active Testing Role:</span>
-          <div className="flex items-center gap-1 bg-slate-900/80 p-0.5 rounded border border-slate-700/80">
+          <div className="flex items-center gap-1.5 text-[#38bdf8] font-mono text-[11px] font-semibold">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#38bdf8] animate-pulse"></span>
+            <span>SIMULATION PERSPECTIVE:</span>
+          </div>
+          <div className="flex items-center gap-1 bg-[#16233b] p-0.5 rounded border border-[#243656]">
             {(["CITIZEN", "VOLUNTEER", "SECURITY_STAFF", "ADMIN"] as UserRole[]).map((r) => (
               <button
                 key={r}
                 onClick={() => handleRoleSelect(r)}
-                className={`px-2 py-0.5 rounded font-medium transition-all text-[11px] ${
+                className={`px-2 py-0.5 rounded text-[11px] font-medium transition-all ${
                   role === r
-                    ? "bg-sky-500 text-white shadow-sm font-semibold"
+                    ? "bg-[#0ea5e9] text-white font-bold shadow-sm"
                     : "text-slate-400 hover:text-slate-200"
                 }`}
               >
-                {r === "CITIZEN" ? "Citizen" : r === "VOLUNTEER" ? "Volunteer" : r === "SECURITY_STAFF" ? "Security Staff" : "Admin / Control"}
+                {r === "CITIZEN" ? "Citizen" : r === "VOLUNTEER" ? "Volunteer" : r === "SECURITY_STAFF" ? "Security Staff" : "Admin / SOC"}
               </button>
             ))}
           </div>
         </div>
 
-        {/* Language Switcher */}
-        <div className="flex items-center gap-2">
-          <Globe className="w-3.5 h-3.5 text-slate-400" />
-          <div className="flex items-center gap-1 bg-slate-900/80 p-0.5 rounded border border-slate-700/80">
+        {/* Right: Language Selector & Live Link Indicator */}
+        <div className="flex items-center gap-3">
+          <div className="hidden sm:flex items-center gap-1.5 text-[11px] text-emerald-400 font-mono">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+            <span>SECURE GATEWAY &bull; 24/7 ACTIVE</span>
+          </div>
+
+          <div className="flex items-center gap-1 bg-[#16233b] p-0.5 rounded border border-[#243656]">
+            <Globe className="w-3 h-3 text-slate-400 ml-1" />
             {(["en", "hi", "mr"] as Language[]).map((l) => (
               <button
                 key={l}
                 onClick={() => handleLangSelect(l)}
                 className={`px-1.5 py-0.5 rounded text-[11px] font-medium transition-all ${
                   lang === l
-                    ? "bg-emerald-500 text-white font-semibold"
+                    ? "bg-[#243656] text-[#38bdf8] font-bold border border-[#38bdf8]/40"
                     : "text-slate-400 hover:text-slate-200"
                 }`}
               >
@@ -153,31 +158,29 @@ export default function Navbar({
       </div>
 
       {/* Main Navbar */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+      <div className="max-w-[1650px] mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between gap-4">
         {/* Brand */}
-        <Link href="/" className="flex items-center gap-3 group">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-sky-500 to-indigo-600 p-0.5 shadow-lg shadow-sky-500/20 group-hover:scale-105 transition-transform">
-            <div className="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center">
-              <Shield className="w-5 h-5 text-sky-400" />
-            </div>
+        <Link href="/" className="flex items-center gap-2.5 group flex-shrink-0">
+          <div className="w-8 h-8 rounded-lg bg-[#16233b] border border-[#243656] flex items-center justify-center text-[#38bdf8] group-hover:border-[#0ea5e9] transition-all">
+            <Shield className="w-4 h-4" />
           </div>
           <div>
-            <div className="flex items-center gap-1.5">
-              <span className="font-extrabold text-lg tracking-wider bg-gradient-to-r from-sky-400 via-indigo-300 to-emerald-400 bg-clip-text text-transparent">
-                {t.appTitle}
+            <div className="flex items-center gap-2">
+              <span className="font-extrabold text-base tracking-wider text-white">
+                SENTINEL
               </span>
-              <span className="text-[10px] uppercase font-bold tracking-widest px-1.5 py-0.2 rounded bg-sky-500/20 text-sky-300 border border-sky-500/30">
-                PRO
+              <span className="text-[10px] font-bold uppercase tracking-widest px-1.5 py-0.2 rounded bg-[#0ea5e9]/10 text-[#38bdf8] border border-[#0ea5e9]/30">
+                SOC v2.4
               </span>
             </div>
-            <p className="text-[11px] text-slate-400 font-medium hidden sm:block">
-              {t.tagline}
+            <p className="text-[10px] text-slate-400 font-medium hidden sm:block">
+              Smart Security Operations & Coordination
             </p>
           </div>
         </Link>
 
         {/* Navigation links */}
-        <nav className="hidden md:flex items-center gap-1">
+        <nav className="hidden lg:flex items-center gap-1">
           {navItems.map((item) => {
             const isActive = pathname === item.href;
             const Icon = item.icon;
@@ -185,10 +188,10 @@ export default function Navbar({
               <Link
                 key={item.href}
                 href={item.href}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-all ${
                   isActive
-                    ? "bg-slate-800 text-sky-400 border border-slate-700 shadow-sm"
-                    : "text-slate-300 hover:text-white hover:bg-slate-900"
+                    ? "bg-[#1e2d48] text-[#38bdf8] font-semibold border-b-2 border-[#0ea5e9]"
+                    : "text-slate-300 hover:text-white hover:bg-[#16233b]"
                 }`}
               >
                 <Icon className="w-3.5 h-3.5" />
@@ -198,35 +201,36 @@ export default function Navbar({
           })}
         </nav>
 
-        {/* Actions */}
+        {/* Actions Strip */}
         <div className="flex items-center gap-2.5">
-          {/* Quick Incident Report */}
+          {/* Quick Report Button */}
           <button
             onClick={onOpenReport}
-            className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-semibold transition-all shadow-sm"
+            className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-[#16233b] hover:bg-[#1e2d48] text-slate-200 border border-[#243656] text-xs font-medium transition-all hover:border-slate-500"
           >
             <AlertTriangle className="w-3.5 h-3.5 text-amber-400" />
-            <span>{t.hero.reportBtn}</span>
+            <span>Quick Report</span>
           </button>
 
-          {/* Emergency SOS Button */}
+          {/* Emergency SOS Button (Disciplined, authoritative) */}
           <button
             onClick={onOpenSos}
-            className="relative inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-red-600 hover:bg-red-500 text-white font-bold text-xs tracking-wider uppercase transition-all shadow-lg shadow-red-600/30 hover:scale-105"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-red-600/90 hover:bg-red-500 text-white font-bold text-xs uppercase tracking-wider transition-all shadow-sm border border-red-500 hover:scale-[1.02] active:scale-95"
           >
-            <span className="w-2 h-2 rounded-full bg-white animate-ping"></span>
-            <span>SOS</span>
+            <AlertOctagon className="w-3.5 h-3.5" />
+            <span>SOS EMERGENCY</span>
           </button>
 
-          {/* Notification Bell */}
+          {/* Notifications Bell */}
           <div className="relative">
             <button
               onClick={() => setShowNotifications(!showNotifications)}
-              className="relative p-2 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 hover:text-white transition-all"
+              className="relative p-2 rounded-md bg-[#16233b] hover:bg-[#1e2d48] border border-[#243656] text-slate-300 hover:text-white transition-all"
+              title="Notifications"
             >
               <Bell className="w-4 h-4" />
               {unreadCount > 0 && (
-                <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-red-500 text-[10px] font-bold text-white flex items-center justify-center animate-bounce">
+                <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-red-500 text-[9px] font-bold text-white flex items-center justify-center">
                   {unreadCount}
                 </span>
               )}
@@ -234,9 +238,9 @@ export default function Navbar({
 
             {/* Notifications Dropdown */}
             {showNotifications && (
-              <div className="absolute right-0 mt-2 w-80 sm:w-96 bg-slate-900 border border-slate-800 rounded-xl shadow-2xl z-[2000] p-3 text-xs">
-                <div className="flex items-center justify-between pb-2 border-b border-slate-800 mb-2">
-                  <span className="font-bold text-slate-200">Alert Center ({alerts.length})</span>
+              <div className="absolute right-0 mt-2 w-80 sm:w-96 bg-[#111b2f] border border-[#243656] rounded-lg shadow-2xl z-[2000] p-3 text-xs">
+                <div className="flex items-center justify-between pb-2 border-b border-[#1e2d48] mb-2">
+                  <span className="font-bold text-slate-200">System Notifications ({alerts.length})</span>
                   <button
                     onClick={() => setShowNotifications(false)}
                     className="text-slate-400 hover:text-white"
@@ -244,28 +248,28 @@ export default function Navbar({
                     <X className="w-4 h-4" />
                   </button>
                 </div>
-                <div className="max-h-64 overflow-y-auto space-y-2">
+                <div className="max-h-64 overflow-y-auto space-y-1.5">
                   {alerts.length === 0 ? (
                     <p className="text-slate-500 text-center py-4">No active notifications</p>
                   ) : (
                     alerts.slice(0, 6).map((a) => (
                       <div
                         key={a.id}
-                        className={`p-2 rounded-lg border text-left transition-all ${
+                        className={`p-2.5 rounded border text-left transition-all ${
                           a.priority === "CRITICAL"
-                            ? "bg-red-950/40 border-red-800/60 text-red-200"
+                            ? "bg-red-950/30 border-red-800/60 text-red-200"
                             : a.priority === "HIGH"
-                            ? "bg-amber-950/40 border-amber-800/60 text-amber-200"
-                            : "bg-slate-800/60 border-slate-700/60 text-slate-300"
+                            ? "bg-amber-950/30 border-amber-800/60 text-amber-200"
+                            : "bg-[#16233b] border-[#243656] text-slate-300"
                         }`}
                       >
                         <div className="font-bold text-xs flex items-center justify-between">
                           <span>{a.title}</span>
-                          <span className="text-[10px] opacity-75 font-mono">
+                          <span className="text-[10px] text-slate-400 font-mono">
                             {new Date(a.createdAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
                           </span>
                         </div>
-                        <p className="text-[11px] mt-1 line-clamp-2 text-slate-300">{a.message}</p>
+                        <p className="text-[11px] mt-0.5 line-clamp-2 text-slate-300">{a.message}</p>
                       </div>
                     ))
                   )}

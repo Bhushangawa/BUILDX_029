@@ -51,7 +51,7 @@ export default function SecurityMap({
 
     L.control.zoom({ position: "bottomright" }).addTo(map);
 
-    // Dark sleek OpenStreetMap tiles (CartoDB Dark Matter)
+    // High-contrast clean dark tile layer
     L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png", {
       attribution: '&copy; <a href="https://carto.com/">CARTO</a> & OpenStreetMap',
       subdomains: "abcd",
@@ -84,104 +84,108 @@ export default function SecurityMap({
     });
 
     filteredMarkers.forEach((item) => {
-      let pinColor = "#38bdf8"; // default blue
+      let pinColor = "#0284c7"; // default blue
       let badgeLabel: string = item.type;
-      let isPulsing = false;
+      let isCriticalPulse = false;
 
       switch (item.type) {
         case "INCIDENT_CRITICAL":
           pinColor = "#ef4444"; // RED
           badgeLabel = "CRITICAL";
-          isPulsing = true;
+          isCriticalPulse = true;
           break;
         case "INCIDENT":
-          pinColor = item.priority === "HIGH" ? "#f97316" : "#eab308";
-          badgeLabel = "INCIDENT";
+          pinColor = item.priority === "HIGH" ? "#f59e0b" : "#0ea5e9";
+          badgeLabel = item.priority === "HIGH" ? "HIGH" : "INCIDENT";
           break;
         case "MISSING_PERSON":
-          pinColor = "#f97316"; // ORANGE
+          pinColor = "#ea580c"; // ORANGE
           badgeLabel = "MISSING";
-          isPulsing = true;
           break;
         case "CROWD_ZONE":
-          pinColor = "#eab308"; // YELLOW
-          badgeLabel = "CROWD";
+          pinColor = "#d97706"; // AMBER
+          badgeLabel = "CROWD ZONE";
           break;
         case "HELP_DESK":
-          pinColor = "#3b82f6"; // BLUE
+          pinColor = "#0284c7"; // BLUE
           badgeLabel = "HELP DESK";
           break;
         case "RESPONSE_TEAM":
           pinColor = "#10b981"; // GREEN
-          badgeLabel = "TEAM";
+          badgeLabel = "UNIT";
           break;
         case "RESTRICTED":
-          pinColor = "#a855f7"; // PURPLE
+          pinColor = "#9333ea"; // PURPLE
           badgeLabel = "RESTRICTED";
           break;
       }
 
-      // Custom HTML Marker with SVG icon and beacon
+      const isSelected = selectedId === item.id;
+
+      // Professional Tactical SVG Marker
       const customIcon = L.divIcon({
-        className: "custom-map-pin",
+        className: "tactical-map-pin",
         html: `
-          <div style="position: relative; display: flex; align-items: center; justify-content: center; width: 34px; height: 34px; cursor: pointer;">
-            ${isPulsing ? `<div style="position: absolute; width: 44px; height: 44px; border-radius: 50%; background-color: ${pinColor}; opacity: 0.35; animation: pulse-ring 2s infinite;"></div>` : ""}
+          <div style="position: relative; display: flex; align-items: center; justify-content: center; width: 30px; height: 30px; cursor: pointer;">
+            ${isCriticalPulse ? `<div style="position: absolute; width: 38px; height: 38px; border-radius: 50%; background-color: rgba(239, 68, 68, 0.25); border: 1px solid #ef4444; animation: beacon-subtle 2s infinite;"></div>` : ""}
             <div style="
-              width: 32px; 
-              height: 32px; 
-              border-radius: 50%; 
+              width: 26px; 
+              height: 26px; 
+              border-radius: 6px; 
               background-color: ${pinColor}; 
-              border: 2.5px solid #ffffff; 
-              box-shadow: 0 4px 12px rgba(0,0,0,0.4); 
+              border: 2px solid ${isSelected ? "#38bdf8" : "#ffffff"}; 
+              box-shadow: 0 2px 8px rgba(0,0,0,0.5); 
               display: flex; 
               align-items: center; 
               justify-content: center; 
               color: white; 
+              font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
               font-weight: 700; 
-              font-size: 13px;
-              transform: ${selectedId === item.id ? "scale(1.25)" : "scale(1.0)"};
-              transition: transform 0.2s;
+              font-size: 11px;
+              transform: ${isSelected ? "scale(1.2)" : "scale(1.0)"};
+              transition: transform 0.15s ease;
             ">
-              ${item.type === "RESPONSE_TEAM" ? "T" : item.type === "MISSING_PERSON" ? "M" : item.type === "CROWD_ZONE" ? "C" : "!"}
+              ${item.type === "RESPONSE_TEAM" ? "U" : item.type === "MISSING_PERSON" ? "M" : item.type === "CROWD_ZONE" ? "C" : "!"}
             </div>
           </div>
         `,
-        iconSize: [34, 34],
-        iconAnchor: [17, 17],
-        popupAnchor: [0, -18],
+        iconSize: [30, 30],
+        iconAnchor: [15, 15],
+        popupAnchor: [0, -16],
       });
 
       const marker = L.marker([item.lat, item.lng], { icon: customIcon });
 
-      // Search radius or crowd radius circle overlay
+      // Search perimeter or crowd zone boundary
       if (item.radiusMeters && item.radiusMeters > 0) {
         const circle = L.circle([item.lat, item.lng], {
           radius: item.radiusMeters,
           color: pinColor,
           fillColor: pinColor,
-          fillOpacity: 0.12,
+          fillOpacity: 0.10,
           weight: 1.5,
-          dashArray: item.type === "MISSING_PERSON" ? "4, 6" : undefined,
+          dashArray: item.type === "MISSING_PERSON" ? "4, 4" : undefined,
         });
         circle.addTo(layerGroupRef.current!);
       }
 
-      // Leaflet Popup
+      // High-density operational popup
       const popupHtml = `
-        <div style="font-family: inherit; min-width: 200px;">
-          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
+        <div style="font-family: inherit; min-width: 210px;">
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 6px; padding-bottom: 4px; border-bottom: 1px solid #243656;">
             <span style="font-size: 10px; font-weight: 700; text-transform: uppercase; padding: 2px 6px; border-radius: 4px; background-color: ${pinColor}; color: white;">
               ${badgeLabel}
             </span>
-            ${item.status ? `<span style="font-size: 11px; color: #94a3b8; font-weight: 600;">${item.status}</span>` : ""}
+            ${item.status ? `<span style="font-size: 10px; color: #94a3b8; font-weight: 600; text-transform: uppercase;">${item.status}</span>` : ""}
           </div>
-          <div style="font-weight: 700; font-size: 13px; color: #f8fafc; margin-bottom: 4px;">
+          <div style="font-weight: 600; font-size: 12px; color: #f8fafc; margin-bottom: 4px; line-height: 1.3;">
             ${item.title}
           </div>
-          ${item.assignedTeam ? `<div style="font-size: 11px; color: #38bdf8; margin-bottom: 4px;">Assigned: ${item.assignedTeam}</div>` : ""}
-          ${item.radiusMeters ? `<div style="font-size: 11px; color: #cbd5e1; margin-bottom: 6px;">Radius: ${item.radiusMeters}m</div>` : ""}
-          <div style="font-size: 10px; color: #94a3b8;">Click marker to inspect full dossier</div>
+          ${item.assignedTeam ? `<div style="font-size: 11px; color: #38bdf8; margin-bottom: 3px;">Unit: <strong>${item.assignedTeam}</strong></div>` : ""}
+          ${item.radiusMeters ? `<div style="font-size: 11px; color: #cbd5e1; margin-bottom: 5px;">Perimeter: ${item.radiusMeters}m radius</div>` : ""}
+          <div style="font-size: 10px; color: #64748b; margin-top: 4px; border-top: 1px dashed #243656; padding-top: 4px;">
+            Click pin to inspect operational dossier
+          </div>
         </div>
       `;
 
@@ -196,35 +200,44 @@ export default function SecurityMap({
   }, [markers, selectedId, activeFilter, onSelectMarker]);
 
   return (
-    <div className="relative w-full h-full min-h-[450px] rounded-xl overflow-hidden border border-slate-800 shadow-2xl">
+    <div className="relative w-full h-full min-h-[460px] rounded-lg overflow-hidden border border-[#243656] bg-[#0c1322] shadow-lg">
+      {/* Map Surface */}
       <div ref={mapContainerRef} className="w-full h-full" />
-      
-      {/* Legend overlay */}
-      <div className="absolute top-3 right-3 z-[1000] bg-slate-900/90 backdrop-blur-md px-3 py-2.5 rounded-lg border border-slate-700/60 shadow-xl text-xs space-y-1.5 pointer-events-auto">
-        <div className="font-semibold text-slate-200 text-[11px] uppercase tracking-wider mb-1">Live Map Legend</div>
-        <div className="flex items-center gap-2 text-slate-300">
-          <span className="w-2.5 h-2.5 rounded-full bg-red-500 shadow-sm shadow-red-500/50"></span>
-          <span>Red: Critical / Emergency SOS</span>
+
+      {/* Top HUD Coordinates Badge */}
+      <div className="absolute top-2.5 left-2.5 z-[1000] bg-[#0f172a]/95 backdrop-blur-sm px-2.5 py-1 rounded border border-[#243656] text-[10px] font-mono text-slate-300 pointer-events-none flex items-center gap-2">
+        <span className="w-1.5 h-1.5 rounded-full bg-[#0ea5e9]"></span>
+        <span>GRID: 19.0760° N, 72.8777° E &bull; SECTOR METRO-HUB</span>
+      </div>
+
+      {/* Disciplined Legend Overlay */}
+      <div className="absolute top-2.5 right-2.5 z-[1000] bg-[#0f172a]/95 backdrop-blur-sm px-3 py-2 rounded-lg border border-[#243656] text-[11px] space-y-1 pointer-events-auto shadow-md">
+        <div className="font-semibold text-slate-300 text-[10px] uppercase tracking-wider mb-1 pb-1 border-b border-[#243656]">
+          Tactical Layer Key
         </div>
         <div className="flex items-center gap-2 text-slate-300">
-          <span className="w-2.5 h-2.5 rounded-full bg-orange-500 shadow-sm shadow-orange-500/50"></span>
-          <span>Orange: Missing Person (Radius)</span>
+          <span className="w-2.5 h-2.5 rounded-sm bg-red-500 flex-shrink-0"></span>
+          <span>Critical Emergency / SOS</span>
         </div>
         <div className="flex items-center gap-2 text-slate-300">
-          <span className="w-2.5 h-2.5 rounded-full bg-amber-400 shadow-sm shadow-amber-400/50"></span>
-          <span>Yellow: Crowd Alert Zone</span>
+          <span className="w-2.5 h-2.5 rounded-sm bg-[#ea580c] flex-shrink-0"></span>
+          <span>Missing Person (Search Radius)</span>
         </div>
         <div className="flex items-center gap-2 text-slate-300">
-          <span className="w-2.5 h-2.5 rounded-full bg-blue-500 shadow-sm shadow-blue-500/50"></span>
-          <span>Blue: Help Desk & Police Hub</span>
+          <span className="w-2.5 h-2.5 rounded-sm bg-[#d97706] flex-shrink-0"></span>
+          <span>Crowd Surge Alert Zone</span>
         </div>
         <div className="flex items-center gap-2 text-slate-300">
-          <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-sm shadow-emerald-500/50"></span>
-          <span>Green: Response Patrol Team</span>
+          <span className="w-2.5 h-2.5 rounded-sm bg-[#0284c7] flex-shrink-0"></span>
+          <span>Police / Help Desk Hub</span>
         </div>
         <div className="flex items-center gap-2 text-slate-300">
-          <span className="w-2.5 h-2.5 rounded-full bg-purple-500 shadow-sm shadow-purple-500/50"></span>
-          <span>Purple: Restricted Perimeter</span>
+          <span className="w-2.5 h-2.5 rounded-sm bg-emerald-500 flex-shrink-0"></span>
+          <span>Response Unit Patrol</span>
+        </div>
+        <div className="flex items-center gap-2 text-slate-300">
+          <span className="w-2.5 h-2.5 rounded-sm bg-[#9333ea] flex-shrink-0"></span>
+          <span>Restricted Perimeter</span>
         </div>
       </div>
     </div>

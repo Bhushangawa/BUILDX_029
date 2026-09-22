@@ -1,17 +1,17 @@
 "use client";
 
 import React, { useState } from "react";
-import { Play, RotateCcw, CheckCircle, ArrowRight, Sparkles, AlertCircle } from "lucide-react";
+import { Play, RotateCcw, CheckCircle2, ArrowRight, Activity, ChevronUp, ChevronDown } from "lucide-react";
 
 const DEMO_STEPS = [
-  { id: "STEP_1_CHILD_MISSING", label: "1. Missing Child Report", desc: "Aarav (6yo) lost at North Lawn. AI calculates 850m search radius." },
-  { id: "STEP_2_DISPATCH_SEARCH", label: "2. Dispatch Search K9", desc: "Admin dispatches Delta K9 unit with coordinated search grid." },
-  { id: "STEP_3_CROWD_SURGE", label: "3. Exit Gate Crowd Surge", desc: "Exit Gate B capacity jumps to 93%. Critical alert triggered." },
-  { id: "STEP_4_DISPATCH_CROWD", label: "4. Deploy Crowd Squad", desc: "Bravo Squad deployed to open secondary exit lane." },
-  { id: "STEP_5_SAFE_JOURNEY_DEVIATION", label: "5. Safe Journey Deviation", desc: "Priya's auto diverts into dark lane. 'Are you safe?' prompt pops up." },
-  { id: "STEP_6_DUPLICATE_REPORT", label: "6. AI Duplicate Detection", desc: "Second witness reports bike snatching. AI clusters with 94% confidence." },
-  { id: "STEP_7_CHILD_SIGHTING_FOUND", label: "7. Sighting Verified & Reunited", desc: "Volunteer sighting verified by police. Child reunited safe!" },
-  { id: "STEP_8_RESOLVE_ALL", label: "8. Normalize & Live Analytics", desc: "Bottlenecks cleared, incidents marked resolved, analytics updated." },
+  { id: "STEP_1_CHILD_MISSING", label: "1. Missing Child Report", desc: "Aarav (6yo) reported lost; 850m radius generated." },
+  { id: "STEP_2_DISPATCH_SEARCH", label: "2. Dispatch Search Unit", desc: "Delta K9 unit tasked to North Lawn sector." },
+  { id: "STEP_3_CROWD_SURGE", label: "3. Exit Gate Surge", desc: "Exit Gate B jumps to 93% capacity alarm." },
+  { id: "STEP_4_DISPATCH_CROWD", label: "4. Deploy Crowd Squad", desc: "Bravo Squad opens secondary exit lanes." },
+  { id: "STEP_5_SAFE_JOURNEY_DEVIATION", label: "5. Safe Journey Deviation", desc: "Vehicle deviates; 'Are you safe?' prompt pops up." },
+  { id: "STEP_6_DUPLICATE_REPORT", label: "6. AI Duplicate Clustering", desc: "Witness 2 report clustered with 94% confidence." },
+  { id: "STEP_7_CHILD_SIGHTING_FOUND", label: "7. Sighting Verified & Reunited", desc: "Volunteer sighting verified; child reunited safe." },
+  { id: "STEP_8_RESOLVE_ALL", label: "8. Normalize & Analytics", desc: "Bottlenecks cleared, incidents marked resolved." },
 ];
 
 export default function DemoTourBar({ onStepCompleted }: { onStepCompleted?: () => void }) {
@@ -56,7 +56,7 @@ export default function DemoTourBar({ onStepCompleted }: { onStepCompleted?: () 
         body: JSON.stringify({ step: "RESET" }),
       });
       setCurrentStepIndex(0);
-      setLastMessage("Database reseeded to initial event state.");
+      setLastMessage("Event database reset to baseline scenario.");
       if (onStepCompleted) onStepCompleted();
     } catch (e: any) {
       setLastMessage("Reset error: " + e.message);
@@ -66,50 +66,55 @@ export default function DemoTourBar({ onStepCompleted }: { onStepCompleted?: () 
   };
 
   return (
-    <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 w-full max-w-4xl px-4 pointer-events-none">
-      <div className="bg-slate-900/95 backdrop-blur-xl border-2 border-indigo-500/40 rounded-2xl p-3.5 shadow-2xl shadow-indigo-950/80 pointer-events-auto text-slate-100">
-        <div className="flex items-center justify-between gap-3 mb-2">
+    <div className="fixed bottom-3 left-1/2 -translate-x-1/2 z-50 w-full max-w-4xl px-3 pointer-events-none">
+      <div className="bg-[#111b2f]/95 backdrop-blur-md border border-[#243656] rounded-xl p-3 shadow-xl pointer-events-auto text-slate-100">
+        <div className="flex items-center justify-between gap-3 mb-2 pb-1.5 border-b border-[#1e2d48]">
           <div className="flex items-center gap-2">
-            <span className="flex h-2.5 w-2.5 rounded-full bg-emerald-400 animate-ping"></span>
-            <span className="font-extrabold text-xs uppercase tracking-wider bg-gradient-to-r from-sky-400 to-indigo-300 bg-clip-text text-transparent flex items-center gap-1.5">
-              <Sparkles className="w-3.5 h-3.5 text-sky-400" />
-              5-Minute Guided Hackathon Demonstration Tour
+            <span className="flex h-2 w-2 rounded-full bg-[#0ea5e9]"></span>
+            <span className="font-mono font-bold text-xs uppercase tracking-wider text-slate-200 flex items-center gap-1.5">
+              <Activity className="w-3.5 h-3.5 text-[#0ea5e9]" />
+              Guided Hackathon Scenario Tour
             </span>
+            <span className="text-[10px] text-slate-400 font-mono hidden sm:inline">&bull; 8 Real-Time Operational Stages</span>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5">
             <button
               onClick={() => setIsExpanded(!isExpanded)}
-              className="text-[11px] text-slate-400 hover:text-white px-2 py-0.5 rounded bg-slate-800"
+              className="text-[11px] text-slate-400 hover:text-white px-2 py-0.5 rounded bg-[#16233b] border border-[#243656] flex items-center gap-1"
             >
-              {isExpanded ? "Minimize" : "Expand Steps"}
+              {isExpanded ? (
+                <><span>Collapse</span><ChevronDown className="w-3 h-3" /></>
+              ) : (
+                <><span>Expand Steps</span><ChevronUp className="w-3 h-3" /></>
+              )}
             </button>
             <button
               onClick={handleReset}
               disabled={isRunning}
-              className="inline-flex items-center gap-1 text-[11px] font-semibold text-slate-300 hover:text-white px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 transition-all"
-              title="Reseed database back to baseline"
+              className="inline-flex items-center gap-1 text-[11px] font-semibold text-slate-300 hover:text-white px-2.5 py-0.5 rounded bg-[#16233b] hover:bg-[#1e2d48] border border-[#243656] transition-all"
+              title="Reset scenario data to baseline"
             >
               <RotateCcw className="w-3 h-3" />
-              Reset Demo
+              <span>Reset</span>
             </button>
           </div>
         </div>
 
-        {/* Steps buttons */}
+        {/* Step buttons */}
         {isExpanded && (
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 mb-3">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 mb-2.5">
             {DEMO_STEPS.map((s, idx) => (
               <button
                 key={s.id}
                 onClick={() => runStep(s.id, idx)}
                 disabled={isRunning}
-                className={`text-left p-1.5 rounded-lg border text-[11px] transition-all ${
+                className={`text-left p-1.5 rounded-md border text-[11px] transition-all ${
                   idx === currentStepIndex
-                    ? "bg-indigo-600/30 border-indigo-400 text-white font-semibold ring-1 ring-indigo-400"
+                    ? "bg-[#0ea5e9]/15 border-[#0ea5e9] text-white font-semibold"
                     : idx < currentStepIndex
-                    ? "bg-slate-800/40 border-slate-700/60 text-slate-400"
-                    : "bg-slate-900/60 border-slate-800 text-slate-500 hover:text-slate-300 hover:border-slate-700"
+                    ? "bg-[#16233b]/60 border-[#243656] text-slate-400"
+                    : "bg-[#0c1322]/50 border-[#1e2d48] text-slate-500 hover:text-slate-300 hover:border-[#243656]"
                 }`}
               >
                 <div className="font-semibold line-clamp-1">{s.label}</div>
@@ -119,17 +124,17 @@ export default function DemoTourBar({ onStepCompleted }: { onStepCompleted?: () 
           </div>
         )}
 
-        {/* Active step controller & status */}
-        <div className="flex flex-wrap items-center justify-between gap-3 pt-1 border-t border-slate-800/80">
+        {/* Action Controller */}
+        <div className="flex flex-wrap items-center justify-between gap-2.5 pt-1">
           <div className="flex-1 min-w-[200px] text-xs">
             {lastMessage ? (
               <div className="text-emerald-400 font-medium flex items-center gap-1.5">
-                <CheckCircle className="w-3.5 h-3.5 flex-shrink-0" />
+                <CheckCircle2 className="w-3.5 h-3.5 flex-shrink-0" />
                 <span className="line-clamp-1">{lastMessage}</span>
               </div>
             ) : (
-              <div className="text-slate-400">
-                Current: <span className="text-slate-200 font-semibold">{DEMO_STEPS[currentStepIndex].label}</span>
+              <div className="text-slate-400 text-[11px]">
+                Stage: <strong className="text-slate-200">{DEMO_STEPS[currentStepIndex].label}</strong>
               </div>
             )}
           </div>
@@ -137,12 +142,12 @@ export default function DemoTourBar({ onStepCompleted }: { onStepCompleted?: () 
           <button
             onClick={handleNext}
             disabled={isRunning}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-xl bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-400 hover:to-indigo-500 text-white text-xs font-bold shadow-lg shadow-sky-500/25 transition-all hover:scale-105 active:scale-95 disabled:opacity-50"
+            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-md bg-[#0ea5e9] hover:bg-[#0284c7] text-white text-xs font-bold transition-all shadow-sm disabled:opacity-50"
           >
             {isRunning ? (
               <div className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
             ) : (
-              <Play className="w-3.5 h-3.5 fill-current" />
+              <Play className="w-3 h-3 fill-current" />
             )}
             <span>Execute: {DEMO_STEPS[currentStepIndex].label}</span>
             <ArrowRight className="w-3.5 h-3.5" />

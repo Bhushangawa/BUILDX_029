@@ -5,7 +5,7 @@ import {
   AlertTriangle,
   Plus,
   Filter,
-  Sparkles,
+  Cpu,
   MapPin,
   Clock,
   Shield,
@@ -14,6 +14,7 @@ import {
   UserX,
   Layers,
   ChevronRight,
+  RefreshCw,
 } from "lucide-react";
 import QuickReportModal from "@/components/incident/QuickReportModal";
 
@@ -64,27 +65,27 @@ export default function IncidentsPage() {
   });
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
-      {/* Top Header */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-slate-900/60 p-5 rounded-2xl border border-slate-800">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-5 bg-[#0c1322] min-h-screen text-slate-100">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 bg-[#111b2f] p-4 rounded-xl border border-[#243656] shadow-sm">
         <div>
           <div className="flex items-center gap-2">
             <AlertTriangle className="w-5 h-5 text-amber-400" />
-            <h1 className="text-xl sm:text-2xl font-black text-white">
-              Incident Management & AI Triage
+            <h1 className="text-lg sm:text-xl font-black text-white uppercase tracking-wider">
+              Operational Incident Records & Triage
             </h1>
           </div>
-          <p className="text-xs text-slate-400 mt-1">
-            Real-time reporting, natural-language entity extraction, duplicate deduplication, and SLA tracking.
+          <p className="text-xs text-slate-400 mt-0.5">
+            Log, track, and correlate public safety events across festival grounds with automated AI deduplication.
           </p>
         </div>
 
         <button
           onClick={() => setIsReportOpen(true)}
-          className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-400 hover:to-indigo-500 text-slate-950 font-bold text-xs shadow-lg shadow-sky-500/25 flex items-center gap-2"
+          className="px-3.5 py-1.5 rounded-md bg-[#0ea5e9] hover:bg-[#0284c7] text-white font-bold text-xs shadow-sm flex items-center gap-1.5 transition-all"
         >
           <Plus className="w-4 h-4" />
-          <span>Report New Incident</span>
+          <span>Report Incident</span>
         </button>
       </div>
 
@@ -97,19 +98,19 @@ export default function IncidentsPage() {
             placeholder="Search by keywords, ID, landmark..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-9 pr-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-sky-500"
+            className="w-full pl-9 pr-3 py-1.5 bg-[#111b2f] border border-[#243656] rounded-md text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-[#0ea5e9]"
           />
         </div>
 
         <select
           value={selectedCategory}
           onChange={(e) => setSelectedCategory(e.target.value)}
-          className="px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-100 focus:outline-none focus:border-sky-500"
+          className="px-3 py-1.5 bg-[#111b2f] border border-[#243656] rounded-md text-xs text-slate-100 focus:outline-none focus:border-[#0ea5e9]"
         >
           <option value="ALL">All Categories</option>
           <option value="THEFT">Theft</option>
           <option value="CHAIN_SNATCHING">Chain Snatching</option>
-          <option value="CROWD_ISSUE">Crowd Management</option>
+          <option value="CROWD_ISSUE">Crowd Issue</option>
           <option value="PERSONAL_SAFETY">Personal Safety</option>
           <option value="SUSPICIOUS_ACTIVITY">Suspicious Activity</option>
           <option value="EMERGENCY">Emergency / Medical</option>
@@ -118,10 +119,10 @@ export default function IncidentsPage() {
         <select
           value={selectedStatus}
           onChange={(e) => setSelectedStatus(e.target.value)}
-          className="px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-100 focus:outline-none focus:border-sky-500"
+          className="px-3 py-1.5 bg-[#111b2f] border border-[#243656] rounded-md text-xs text-slate-100 focus:outline-none focus:border-[#0ea5e9]"
         >
           <option value="ALL">All Statuses</option>
-          <option value="REPORTED">Reported (In Triage)</option>
+          <option value="REPORTED">Reported (In Queue)</option>
           <option value="VERIFIED">Verified</option>
           <option value="ASSIGNED">Assigned</option>
           <option value="ACKNOWLEDGED">Acknowledged</option>
@@ -131,12 +132,12 @@ export default function IncidentsPage() {
       </div>
 
       {/* Main Grid: Incident List (Left) & Active Dossier (Right) */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
         {/* Incident List */}
-        <div className="lg:col-span-6 space-y-3">
+        <div className="lg:col-span-6 space-y-2.5">
           {filteredIncidents.length === 0 ? (
-            <div className="p-12 text-center bg-slate-900/40 rounded-2xl border border-slate-800 text-slate-500 text-xs">
-              No incidents found matching criteria.
+            <div className="p-8 text-center bg-[#111b2f] rounded-xl border border-[#243656] text-slate-500 text-xs">
+              No incidents found matching specified criteria.
             </div>
           ) : (
             filteredIncidents.map((inc) => {
@@ -147,46 +148,46 @@ export default function IncidentsPage() {
                 <div
                   key={inc.id}
                   onClick={() => setActiveDossier(inc)}
-                  className={`p-4 rounded-2xl border text-left cursor-pointer transition-all ${
+                  className={`p-3.5 rounded-lg border text-left cursor-pointer transition-all ${
                     isSelected
-                      ? "bg-slate-800/90 border-sky-500 ring-1 ring-sky-500 shadow-xl"
-                      : "bg-slate-900/70 border-slate-800 hover:border-slate-700"
+                      ? "bg-[#1b2b48] border-[#0ea5e9] ring-1 ring-[#0ea5e9]"
+                      : "bg-[#111b2f] border-[#243656] hover:border-[#38bdf8]/40"
                   }`}
                 >
-                  <div className="flex items-center justify-between gap-2 mb-2">
-                    <div className="flex items-center gap-2">
-                      <span className="font-mono text-xs font-bold text-sky-400">
+                  <div className="flex items-center justify-between gap-2 mb-1.5">
+                    <div className="flex items-center gap-1.5">
+                      <span className="font-mono text-xs font-bold text-[#38bdf8]">
                         {inc.incidentNumber}
                       </span>
-                      <span className="text-[10px] uppercase font-bold px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700">
+                      <span className="text-[10px] uppercase font-bold px-1.5 py-0.2 rounded bg-[#16233b] text-slate-300 border border-[#243656]">
                         {inc.category.replace(/_/g, " ")}
                       </span>
                       <span
-                        className={`text-[10px] uppercase font-bold px-2 py-0.5 rounded ${
+                        className={`text-[9px] uppercase font-bold px-1.5 py-0.2 rounded ${
                           isCritical
-                            ? "bg-red-500/20 text-red-400 border border-red-500/30"
+                            ? "bg-red-500/20 text-red-400 border border-red-500/40"
                             : inc.priority === "HIGH"
-                            ? "bg-orange-500/20 text-orange-400"
-                            : "bg-slate-800 text-slate-300"
+                            ? "bg-amber-500/20 text-amber-400 border border-amber-500/40"
+                            : "bg-[#0c1322] text-slate-300 border border-[#243656]"
                         }`}
                       >
                         {inc.priority}
                       </span>
                     </div>
 
-                    <span className="text-[11px] font-semibold text-slate-400 uppercase">
+                    <span className="text-[10px] font-mono font-semibold text-slate-400 uppercase">
                       {inc.status}
                     </span>
                   </div>
 
-                  <h3 className="font-bold text-sm text-slate-100 mb-1">{inc.title}</h3>
-                  <p className="text-xs text-slate-400 line-clamp-2 mb-3">
+                  <h3 className="font-bold text-xs text-slate-100 mb-1">{inc.title}</h3>
+                  <p className="text-[11px] text-slate-400 line-clamp-2 mb-2 leading-relaxed">
                     {inc.description}
                   </p>
 
-                  <div className="flex flex-wrap items-center justify-between text-xs text-slate-400 pt-2 border-t border-slate-800/80 gap-2">
-                    <span className="flex items-center gap-1.5">
-                      <MapPin className="w-3.5 h-3.5 text-slate-500" />
+                  <div className="flex flex-wrap items-center justify-between text-[11px] text-slate-400 pt-2 border-t border-[#243656]/60 gap-2">
+                    <span className="flex items-center gap-1">
+                      <MapPin className="w-3 h-3 text-slate-500" />
                       <span>{inc.locationName}</span>
                     </span>
 
@@ -196,14 +197,14 @@ export default function IncidentsPage() {
                         <span>{inc.assignedTeam.name}</span>
                       </span>
                     ) : (
-                      <span className="text-amber-400 text-[11px] font-medium">Pending Assignment</span>
+                      <span className="text-amber-400 text-[10px]">Pending Assignment</span>
                     )}
                   </div>
 
                   {inc.reports?.length > 0 && (
-                    <div className="mt-2.5 px-2.5 py-1 rounded bg-indigo-950/40 border border-indigo-800/40 text-[11px] text-indigo-300 flex items-center justify-between">
-                      <span>{inc.reports.length} duplicate witness reports consolidated</span>
-                      <span className="font-semibold text-indigo-200">Merged</span>
+                    <div className="mt-2 px-2 py-1 rounded bg-[#16233b] border border-[#243656] text-[10px] text-slate-300 flex items-center justify-between">
+                      <span>{inc.reports.length} duplicate witness reports clustered</span>
+                      <span className="font-semibold text-[#38bdf8]">Merged</span>
                     </div>
                   )}
                 </div>
@@ -213,23 +214,23 @@ export default function IncidentsPage() {
         </div>
 
         {/* Selected Incident Dossier */}
-        <div className="lg:col-span-6 bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-5 sticky top-24">
+        <div className="lg:col-span-6 bg-[#111b2f] border border-[#243656] rounded-xl p-5 shadow-xl space-y-4 sticky top-20">
           {activeDossier ? (
             <>
-              <div className="flex items-start justify-between gap-4 pb-3 border-b border-slate-800">
+              <div className="flex items-start justify-between gap-4 pb-3 border-b border-[#243656]">
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="font-mono text-xs font-bold text-sky-400">
+                    <span className="font-mono text-xs font-bold text-[#38bdf8]">
                       {activeDossier.incidentNumber}
                     </span>
-                    <span className="text-xs font-bold px-2 py-0.5 rounded bg-slate-800 text-slate-200 border border-slate-700 uppercase">
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-[#16233b] text-slate-300 border border-[#243656] uppercase">
                       {activeDossier.category}
                     </span>
-                    <span className="text-xs font-bold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
                       {activeDossier.status}
                     </span>
                   </div>
-                  <h2 className="text-lg font-black text-white mt-2">
+                  <h2 className="text-base font-bold text-white mt-1">
                     {activeDossier.title}
                   </h2>
                 </div>
@@ -237,67 +238,94 @@ export default function IncidentsPage() {
 
               {/* Description */}
               <div className="space-y-1">
-                <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block">
-                  Incident Narrative
+                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">
+                  Incident Narrative & Witness Log
                 </span>
-                <p className="text-xs text-slate-200 bg-slate-950/60 p-3 rounded-xl border border-slate-800 leading-relaxed">
+                <p className="text-xs text-slate-200 bg-[#0c1322] p-3 rounded-md border border-[#243656] leading-relaxed">
                   {activeDossier.description}
                 </p>
               </div>
 
-              {/* AI Intelligence Card */}
-              <div className="p-4 rounded-xl bg-slate-950/80 border border-slate-800 space-y-2 text-xs">
-                <div className="flex items-center gap-1.5 font-bold text-sky-400">
-                  <Sparkles className="w-4 h-4" />
-                  <span>AI Incident Intelligence Breakdown</span>
+              {/* AI Assistant Card */}
+              <div className="p-3.5 rounded-lg bg-[#16233b] border border-[#243656] space-y-2 text-xs">
+                <div className="flex items-center justify-between pb-1 border-b border-[#243656]">
+                  <div className="flex items-center gap-1.5 font-bold text-[#38bdf8]">
+                    <Cpu className="w-3.5 h-3.5" />
+                    <span>AI Incident Triage Analysis</span>
+                  </div>
+                  <span className="text-[10px] text-slate-400 font-mono">Advisory</span>
                 </div>
-                <p className="text-slate-300 italic bg-slate-900/60 p-2.5 rounded border border-slate-800">
+                <p className="text-slate-300 text-[11px] italic bg-[#0c1322] p-2 rounded border border-[#243656]">
                   &ldquo;{activeDossier.aiSummary || "Telemetry analyzed."}&rdquo;
                 </p>
-                <div className="grid grid-cols-2 gap-2 text-slate-400 pt-1">
+                <div className="grid grid-cols-2 gap-2 text-slate-400 text-[11px] pt-1">
                   <div>
-                    <span className="text-slate-500 block">AI Category Suggestion:</span>
+                    <span className="text-slate-500 block">Category Assessed:</span>
                     <span className="font-semibold text-slate-200">{activeDossier.aiCategorySuggestion || "N/A"}</span>
                   </div>
                   <div>
-                    <span className="text-slate-500 block">AI Priority Assessment:</span>
+                    <span className="text-slate-500 block">Priority Urgency:</span>
                     <span className="font-semibold text-slate-200">{activeDossier.aiPrioritySuggestion || "N/A"}</span>
                   </div>
                 </div>
               </div>
 
-              {/* Witness & Metadata */}
-              <div className="grid grid-cols-2 gap-3 text-xs">
-                <div className="p-3 bg-slate-950/60 rounded-xl border border-slate-800">
-                  <span className="text-slate-500 block">Reporter Identity:</span>
+              {/* Metadata */}
+              <div className="grid grid-cols-2 gap-2.5 text-xs">
+                <div className="p-2.5 bg-[#0c1322] rounded-md border border-[#243656]">
+                  <span className="text-slate-500 block text-[10px]">Reporter Identity:</span>
                   <span className="font-semibold text-slate-200">
-                    {activeDossier.isAnonymous ? "Anonymous Witness (Identity Protected)" : activeDossier.reporterName || "Citizen"}
+                    {activeDossier.isAnonymous ? "Anonymous Witness" : activeDossier.reporterName || "Citizen"}
                   </span>
                   {activeDossier.reporterPhone && !activeDossier.isAnonymous && (
-                    <span className="text-[11px] text-slate-400 block mt-0.5">{activeDossier.reporterPhone}</span>
+                    <span className="text-[10px] text-slate-400 block mt-0.5">{activeDossier.reporterPhone}</span>
                   )}
                 </div>
 
-                <div className="p-3 bg-slate-950/60 rounded-xl border border-slate-800">
-                  <span className="text-slate-500 block">Assigned Unit:</span>
+                <div className="p-2.5 bg-[#0c1322] rounded-md border border-[#243656]">
+                  <span className="text-slate-500 block text-[10px]">Assigned Tactical Unit:</span>
                   <span className="font-semibold text-emerald-400">
                     {activeDossier.assignedTeam?.name || "Unassigned"}
                   </span>
                   {activeDossier.assignedTeam && (
-                    <span className="text-[11px] text-slate-400 block mt-0.5">{activeDossier.assignedTeam.contactRadio}</span>
+                    <span className="text-[10px] text-slate-400 block mt-0.5">{activeDossier.assignedTeam.contactRadio}</span>
                   )}
                 </div>
               </div>
 
-              {/* Timeline */}
-              <div className="space-y-2">
-                <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block">
-                  Case Lifecycle Timeline
+              {/* Lifecycle Progress Bar */}
+              <div className="space-y-1.5 pt-1">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">
+                  Incident Lifecycle Status
                 </span>
-                <div className="space-y-2 max-h-48 overflow-y-auto pr-1">
+                <div className="flex items-center gap-1 text-[10px] font-mono text-slate-400 overflow-x-auto pb-1">
+                  {["REPORTED", "VERIFIED", "ASSIGNED", "ACKNOWLEDGED", "IN_PROGRESS", "RESOLVED"].map((st, idx) => {
+                    const isCurrent = activeDossier.status === st;
+                    return (
+                      <span
+                        key={st}
+                        className={`px-1.5 py-0.5 rounded ${
+                          isCurrent
+                            ? "bg-[#0ea5e9] text-white font-bold"
+                            : "bg-[#0c1322] text-slate-500 border border-[#243656]"
+                        }`}
+                      >
+                        {st}
+                      </span>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Timeline */}
+              <div className="space-y-1.5">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">
+                  Chronological Event Log
+                </span>
+                <div className="space-y-2 max-h-40 overflow-y-auto pr-1">
                   {activeDossier.timelineEvents?.map((evt: any) => (
-                    <div key={evt.id} className="relative pl-3.5 border-l-2 border-slate-800 text-xs">
-                      <div className="absolute -left-[5px] top-1 w-2 h-2 rounded-full bg-sky-400"></div>
+                    <div key={evt.id} className="relative pl-3 border-l-2 border-[#243656] text-[11px]">
+                      <div className="absolute -left-[5px] top-1 w-2 h-2 rounded-full bg-[#0ea5e9]"></div>
                       <div className="text-slate-300 font-medium">{evt.description}</div>
                       <div className="text-[10px] text-slate-500">
                         {evt.actorName} ({evt.actorRole}) &bull;{" "}
@@ -309,8 +337,8 @@ export default function IncidentsPage() {
               </div>
             </>
           ) : (
-            <div className="p-12 text-center text-slate-500 text-xs">
-              Select an incident to view full dossier
+            <div className="p-10 text-center text-slate-500 text-xs">
+              Select an incident record to inspect dossier
             </div>
           )}
         </div>

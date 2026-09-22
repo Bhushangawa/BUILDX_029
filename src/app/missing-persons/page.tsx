@@ -27,7 +27,7 @@ export default function MissingPersonsPage() {
   const [selectedCase, setSelectedCase] = useState<any | null>(null);
   const [sightingModalCase, setSightingModalCase] = useState<any | null>(null);
 
-  // New report form state
+  // Form state
   const [fullName, setFullName] = useState("");
   const [age, setAge] = useState("");
   const [gender, setGender] = useState("Male");
@@ -39,7 +39,7 @@ export default function MissingPersonsPage() {
   const [contactPhone, setContactPhone] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Sighting form state
+  // Sighting state
   const [sightingLocation, setSightingLocation] = useState(PRESET_LOCATIONS[0].name);
   const [sightingDesc, setSightingDesc] = useState("");
   const [sightingReporter, setSightingReporter] = useState("");
@@ -160,7 +160,7 @@ export default function MissingPersonsPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           status: "FOUND_SAFE",
-          actorName: "Help Desk Central Lead",
+          actorName: "Central Help Desk Lead",
           actorRole: "ADMIN",
         }),
       });
@@ -179,18 +179,18 @@ export default function MissingPersonsPage() {
   });
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
-      {/* Top Header */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-slate-900/60 p-5 rounded-2xl border border-slate-800">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-5 bg-[#0c1322] min-h-screen text-slate-100">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 bg-[#111b2f] p-4 rounded-xl border border-[#243656] shadow-sm">
         <div>
           <div className="flex items-center gap-2">
-            <Eye className="w-5 h-5 text-orange-400" />
-            <h1 className="text-xl sm:text-2xl font-black text-white">
-              Missing Person Assistance & Search Grid
+            <Eye className="w-5 h-5 text-[#ea580c]" />
+            <h1 className="text-lg sm:text-xl font-black text-white uppercase tracking-wider">
+              Missing Person Case Management
             </h1>
           </div>
-          <p className="text-xs text-slate-400 mt-1">
-            Privacy-governed coordination for separated children and vulnerable elderly. Eliminates false sightings & paper delays.
+          <p className="text-xs text-slate-400 mt-0.5">
+            Privacy-governed coordination for separated children and vulnerable elderly individuals with search grid mapping.
           </p>
         </div>
 
@@ -200,7 +200,7 @@ export default function MissingPersonsPage() {
               setReportType("CHILD");
               setIsReportModalOpen(true);
             }}
-            className="px-4 py-2 rounded-xl bg-orange-500 hover:bg-orange-400 text-slate-950 font-bold text-xs shadow-lg shadow-orange-500/20 flex items-center gap-1.5"
+            className="px-3.5 py-1.5 rounded-md bg-[#ea580c] hover:bg-[#c2410c] text-white font-bold text-xs shadow-sm flex items-center gap-1.5 transition-all"
           >
             <Plus className="w-4 h-4" />
             <span>Report Missing Child</span>
@@ -210,28 +210,28 @@ export default function MissingPersonsPage() {
               setReportType("ELDERLY");
               setIsReportModalOpen(true);
             }}
-            className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-semibold text-xs flex items-center gap-1.5"
+            className="px-3.5 py-1.5 rounded-md bg-[#16233b] hover:bg-[#1e2d48] text-slate-200 border border-[#243656] font-semibold text-xs flex items-center gap-1.5 transition-all"
           >
             <Plus className="w-4 h-4" />
-            <span>Report Elderly Person</span>
+            <span>Report Missing Elderly</span>
           </button>
         </div>
       </div>
 
       {/* Tabs & Privacy Notice */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-        <div className="flex items-center gap-2 bg-slate-900 p-1 rounded-xl border border-slate-800 text-xs">
+        <div className="flex items-center gap-1.5 bg-[#111b2f] p-1 rounded-md border border-[#243656] text-xs">
           {[
             { id: "ALL", label: "All Active Cases" },
-            { id: "CHILD", label: "Separated Children (Protected)" },
+            { id: "CHILD", label: "Separated Children (Privacy Masked)" },
             { id: "ELDERLY", label: "Missing Elderly" },
           ].map((t) => (
             <button
               key={t.id}
               onClick={() => setActiveTab(t.id)}
-              className={`px-3 py-1.5 rounded-lg font-semibold transition-all ${
+              className={`px-3 py-1 rounded font-semibold transition-all ${
                 activeTab === t.id
-                  ? "bg-orange-500 text-slate-950 font-bold"
+                  ? "bg-[#ea580c] text-white font-bold"
                   : "text-slate-400 hover:text-slate-200"
               }`}
             >
@@ -240,22 +240,21 @@ export default function MissingPersonsPage() {
           ))}
         </div>
 
-        <div className="flex items-center gap-2 text-xs text-slate-400 bg-slate-900/60 px-3 py-1.5 rounded-xl border border-slate-800">
-          <Lock className="w-3.5 h-3.5 text-sky-400" />
+        <div className="flex items-center gap-2 text-xs text-slate-400 bg-[#111b2f] px-3 py-1.5 rounded-md border border-[#243656]">
+          <Lock className="w-3.5 h-3.5 text-[#38bdf8]" />
           <span>
             {isAuthorizedViewer
-              ? "Authorized Officer Access Active &bull; Sensitive Dossiers Unlocked"
-              : "Citizen Privacy Filter Active &bull; Sensitive Child Marks Masked"}
+              ? "Authorized Police/Staff Role &bull; Unlocked Coordinates"
+              : "Citizen Privacy Filter Active &bull; Child Contact Data Masked"}
           </span>
         </div>
       </div>
 
       {/* Main Grid: Cases List (Left) & Case Dossier (Right) */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-        {/* Case Cards */}
-        <div className="lg:col-span-6 space-y-4">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+        {/* Cases List */}
+        <div className="lg:col-span-6 space-y-3">
           {filteredCases.map((c) => {
-            const isChild = c.type === "CHILD";
             const isFound = c.status === "FOUND_SAFE";
             const isSelected = selectedCase?.id === c.id;
 
@@ -263,32 +262,32 @@ export default function MissingPersonsPage() {
               <div
                 key={c.id}
                 onClick={() => setSelectedCase(c)}
-                className={`p-5 rounded-2xl border text-left cursor-pointer transition-all ${
+                className={`p-4 rounded-lg border text-left cursor-pointer transition-all ${
                   isSelected
-                    ? "bg-slate-800/90 border-orange-500 ring-1 ring-orange-500 shadow-xl"
-                    : "bg-slate-900/70 border-slate-800 hover:border-slate-700"
+                    ? "bg-[#1b2b48] border-[#ea580c] ring-1 ring-[#ea580c]"
+                    : "bg-[#111b2f] border-[#243656] hover:border-[#ea580c]/40"
                 }`}
               >
-                <div className="flex items-start justify-between gap-3 mb-3">
+                <div className="flex items-start justify-between gap-3 mb-2.5">
                   <div className="flex items-center gap-3">
                     <img
                       src={c.photoUrl}
                       alt={c.fullName}
-                      className="w-14 h-14 rounded-xl object-cover border border-slate-700 shadow-md"
+                      className="w-12 h-12 rounded-md object-cover border border-[#243656] flex-shrink-0"
                     />
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="font-mono text-xs font-bold text-orange-400">
+                        <span className="font-mono text-xs font-bold text-[#ea580c]">
                           {c.caseNumber}
                         </span>
-                        <span className="text-[10px] uppercase font-bold px-2 py-0.5 rounded bg-slate-800 text-slate-300">
+                        <span className="text-[10px] uppercase font-bold px-1.5 py-0.2 rounded bg-[#16233b] text-slate-300 border border-[#243656]">
                           {c.type} &bull; {c.age} yrs
                         </span>
                       </div>
-                      <h3 className="font-bold text-base text-slate-100 mt-0.5">
+                      <h3 className="font-bold text-sm text-slate-100 mt-0.5">
                         {c.fullName}
                       </h3>
-                      <div className="text-xs text-slate-400 flex items-center gap-1 mt-0.5">
+                      <div className="text-[11px] text-slate-400 flex items-center gap-1 mt-0.5">
                         <MapPin className="w-3 h-3 text-slate-500" />
                         <span>Last Seen: {c.lastSeenLocation}</span>
                       </div>
@@ -296,26 +295,25 @@ export default function MissingPersonsPage() {
                   </div>
 
                   <span
-                    className={`text-xs font-bold px-2.5 py-1 rounded-full uppercase ${
+                    className={`text-[10px] font-bold px-2 py-0.5 rounded uppercase ${
                       isFound
                         ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30"
-                        : "bg-orange-500/20 text-orange-400 border border-orange-500/30"
+                        : "bg-[#ea580c]/20 text-[#ea580c] border border-[#ea580c]/30"
                     }`}
                   >
                     {c.status.replace(/_/g, " ")}
                   </span>
                 </div>
 
-                {/* Clothing details */}
-                <div className="text-xs bg-slate-950/60 p-2.5 rounded-xl border border-slate-800/80 mb-3 text-slate-300">
-                  <span className="text-slate-500 font-semibold block mb-0.5">Clothing:</span>
+                <div className="text-xs bg-[#0c1322] p-2.5 rounded-md border border-[#243656] mb-2.5 text-slate-300 leading-relaxed">
+                  <span className="text-slate-500 font-semibold block text-[10px] mb-0.5">Clothing Description:</span>
                   {c.clothingDescription}
                 </div>
 
-                <div className="flex flex-wrap items-center justify-between text-xs text-slate-400 pt-2 border-t border-slate-800/80 gap-2">
-                  <span className="flex items-center gap-1.5">
+                <div className="flex flex-wrap items-center justify-between text-xs text-slate-400 pt-2 border-t border-[#243656]/60 gap-2">
+                  <span className="flex items-center gap-1">
                     <Clock className="w-3.5 h-3.5 text-slate-500" />
-                    <span>Search Radius: <strong className="text-orange-400">{c.searchRadiusMeters}m</strong></span>
+                    <span>Search Radius: <strong className="text-[#ea580c]">{c.searchRadiusMeters}m</strong></span>
                   </span>
 
                   <button
@@ -323,7 +321,7 @@ export default function MissingPersonsPage() {
                       e.stopPropagation();
                       setSightingModalCase(c);
                     }}
-                    className="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-semibold text-xs"
+                    className="px-2.5 py-1 rounded bg-[#16233b] hover:bg-[#1e2d48] text-slate-200 border border-[#243656] font-semibold text-xs"
                   >
                     + Submit Sighting
                   </button>
@@ -334,20 +332,20 @@ export default function MissingPersonsPage() {
         </div>
 
         {/* Selected Dossier & Sightings Verification */}
-        <div className="lg:col-span-6 bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-5 sticky top-24">
+        <div className="lg:col-span-6 bg-[#111b2f] border border-[#243656] rounded-xl p-5 shadow-xl space-y-4 sticky top-20">
           {selectedCase ? (
             <>
-              <div className="flex items-start justify-between gap-4 pb-3 border-b border-slate-800">
+              <div className="flex items-start justify-between gap-4 pb-3 border-b border-[#243656]">
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="font-mono text-xs font-bold text-orange-400">
+                    <span className="font-mono text-xs font-bold text-[#ea580c]">
                       {selectedCase.caseNumber}
                     </span>
-                    <span className="text-xs font-bold px-2 py-0.5 rounded bg-orange-500/20 text-orange-300 border border-orange-500/30 uppercase">
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-[#ea580c]/20 text-[#ea580c] border border-[#ea580c]/30 uppercase">
                       {selectedCase.type} CASE
                     </span>
                   </div>
-                  <h2 className="text-xl font-black text-white mt-1.5">
+                  <h2 className="text-base font-bold text-white mt-1">
                     {selectedCase.fullName} ({selectedCase.age} years old)
                   </h2>
                 </div>
@@ -355,34 +353,34 @@ export default function MissingPersonsPage() {
                 {selectedCase.status !== "FOUND_SAFE" && (
                   <button
                     onClick={() => handleMarkFoundSafe(selectedCase.id)}
-                    className="px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-lg shadow-emerald-600/20 flex items-center gap-1"
+                    className="px-3 py-1.5 rounded-md bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-sm flex items-center gap-1.5"
                   >
                     <CheckCircle className="w-3.5 h-3.5" />
-                    <span>Mark Safe & Reunited</span>
+                    <span>Mark Reunited & Safe</span>
                   </button>
                 )}
               </div>
 
-              {/* Photos & Identifying Characteristics */}
+              {/* Photo & Search Perimeter Specs */}
               <div className="grid grid-cols-3 gap-3">
                 <img
                   src={selectedCase.photoUrl}
                   alt={selectedCase.fullName}
-                  className="w-full h-32 rounded-xl object-cover border border-slate-700 shadow-md"
+                  className="w-full h-28 rounded-md object-cover border border-[#243656]"
                 />
                 <div className="col-span-2 space-y-2 text-xs">
-                  <div className="p-2.5 bg-slate-950/60 rounded-xl border border-slate-800">
-                    <span className="text-slate-500 block">Search Grid Radius:</span>
-                    <span className="font-bold text-orange-400 text-sm">
+                  <div className="p-2.5 bg-[#0c1322] rounded-md border border-[#243656]">
+                    <span className="text-slate-500 block text-[10px]">Calculated Search Perimeter:</span>
+                    <span className="font-mono font-bold text-[#ea580c] text-sm">
                       {selectedCase.searchRadiusMeters} meters
                     </span>
-                    <span className="text-[11px] text-slate-500 block">
-                      Calculated from last seen point ({selectedCase.lastSeenLocation})
+                    <span className="text-[10px] text-slate-500 block mt-0.5">
+                      Centered on {selectedCase.lastSeenLocation}
                     </span>
                   </div>
 
-                  <div className="p-2.5 bg-slate-950/60 rounded-xl border border-slate-800">
-                    <span className="text-slate-500 block">Emergency Contact:</span>
+                  <div className="p-2 bg-[#0c1322] rounded-md border border-[#243656]">
+                    <span className="text-slate-500 block text-[10px]">Family / Guardian Contact:</span>
                     <span className="font-semibold text-slate-200">
                       {selectedCase.contactPersonName} &bull; {selectedCase.contactPhone}
                     </span>
@@ -390,68 +388,68 @@ export default function MissingPersonsPage() {
                 </div>
               </div>
 
-              {/* Protected Identifying Notes */}
-              <div className="p-3 bg-slate-950/60 rounded-xl border border-slate-800 text-xs space-y-1">
-                <span className="text-slate-500 font-semibold block">Identifying Marks / Medical Notes:</span>
+              {/* Identifying Details */}
+              <div className="p-2.5 bg-[#0c1322] rounded-md border border-[#243656] text-xs space-y-1">
+                <span className="text-slate-500 font-semibold block text-[10px]">Identifying Features:</span>
                 <p className="text-slate-300">
-                  {selectedCase.identifyingFeatures || "No identifying marks reported."}
+                  {selectedCase.identifyingFeatures || "No distinguishing marks recorded."}
                 </p>
                 {selectedCase.medicalConditions && (
-                  <p className="text-amber-400 font-medium">
+                  <p className="text-amber-400 text-[11px] font-medium">
                     Medical Condition: {selectedCase.medicalConditions}
                   </p>
                 )}
               </div>
 
-              {/* Vetted Sightings Section */}
-              <div className="space-y-3 pt-2 border-t border-slate-800">
+              {/* Vetted Sightings */}
+              <div className="space-y-2.5 pt-2 border-t border-[#243656]">
                 <div className="flex items-center justify-between">
-                  <h4 className="text-xs font-bold text-slate-200 uppercase tracking-wider">
+                  <h4 className="text-[11px] font-bold text-slate-200 uppercase tracking-wider">
                     Vetted Field Sightings ({selectedCase.sightings?.length || 0})
                   </h4>
                   <button
                     onClick={() => setSightingModalCase(selectedCase)}
-                    className="text-xs text-orange-400 hover:text-orange-300 font-semibold"
+                    className="text-xs text-[#ea580c] hover:underline font-semibold"
                   >
-                    + Submit New Sighting
+                    + Submit Sighting
                   </button>
                 </div>
 
-                <div className="space-y-2 max-h-48 overflow-y-auto pr-1">
+                <div className="space-y-2 max-h-40 overflow-y-auto pr-1">
                   {selectedCase.sightings?.length === 0 ? (
-                    <p className="text-xs text-slate-500 italic">No sightings logged yet for this search grid.</p>
+                    <p className="text-xs text-slate-500 italic">No sightings logged for this perimeter grid yet.</p>
                   ) : (
                     selectedCase.sightings?.map((s: any) => (
                       <div
                         key={s.id}
-                        className={`p-3 rounded-xl border text-xs space-y-1.5 ${
+                        className={`p-2.5 rounded-md border text-xs space-y-1 ${
                           s.verificationStatus === "VERIFIED"
-                            ? "bg-emerald-950/30 border-emerald-800/60 text-emerald-200"
+                            ? "bg-emerald-950/20 border-emerald-800/60 text-emerald-200"
                             : s.verificationStatus === "FALSE_ALARM"
-                            ? "bg-slate-950/60 border-slate-800 text-slate-500 line-through"
-                            : "bg-amber-950/30 border-amber-800/60 text-amber-200"
+                            ? "bg-[#0c1322] border-[#243656] text-slate-500 line-through"
+                            : "bg-[#16233b] border-[#243656] text-slate-300"
                         }`}
                       >
                         <div className="flex items-center justify-between font-semibold">
                           <span>Near {s.locationName}</span>
-                          <span className="text-[10px] uppercase font-bold px-1.5 py-0.2 rounded bg-slate-900 border">
+                          <span className="text-[9px] uppercase font-bold px-1.5 py-0.2 rounded bg-[#0c1322] border border-[#243656]">
                             {s.verificationStatus}
                           </span>
                         </div>
                         <p className="text-[11px] text-slate-300">{s.description}</p>
                         <div className="flex items-center justify-between text-[10px] text-slate-400 pt-1">
-                          <span>By: {s.reporterName}</span>
+                          <span>Reporter: {s.reporterName}</span>
                           {s.verificationStatus === "PENDING" && (
-                            <div className="flex gap-2">
+                            <div className="flex gap-1.5">
                               <button
                                 onClick={() => handleVerifySighting(selectedCase.id, s.id, "VERIFIED")}
                                 className="px-2 py-0.5 rounded bg-emerald-600 hover:bg-emerald-500 text-white font-bold"
                               >
-                                Verify Sighting
+                                Verify
                               </button>
                               <button
                                 onClick={() => handleVerifySighting(selectedCase.id, s.id, "FALSE_ALARM")}
-                                className="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300"
+                                className="px-2 py-0.5 rounded bg-[#16233b] hover:bg-[#1e2d48] text-slate-300 border border-[#243656]"
                               >
                                 False Alarm
                               </button>
@@ -465,7 +463,7 @@ export default function MissingPersonsPage() {
               </div>
             </>
           ) : (
-            <div className="p-12 text-center text-slate-500 text-xs">
+            <div className="p-10 text-center text-slate-500 text-xs">
               Select a missing person case to inspect dossier and search perimeter
             </div>
           )}
@@ -474,24 +472,24 @@ export default function MissingPersonsPage() {
 
       {/* SIGHTING SUBMISSION MODAL */}
       {sightingModalCase && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm">
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-4">
-            <div className="flex items-center justify-between pb-2 border-b border-slate-800">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#0a0f1d]/85 backdrop-blur-sm">
+          <div className="bg-[#111b2f] border border-[#243656] rounded-xl max-w-md w-full p-5 shadow-2xl space-y-3.5">
+            <div className="flex items-center justify-between pb-2 border-b border-[#243656]">
               <h3 className="font-bold text-white text-sm">
                 Submit Sighting for {sightingModalCase.fullName}
               </h3>
               <button onClick={() => setSightingModalCase(null)} className="text-slate-400 hover:text-white">
-                <X className="w-5 h-5" />
+                <X className="w-4 h-4" />
               </button>
             </div>
 
             <form onSubmit={handleSubmitSighting} className="space-y-3">
               <div>
-                <label className="text-xs font-semibold text-slate-300 block mb-1">Location of Sighting:</label>
+                <label className="text-xs font-semibold text-slate-300 block mb-1">Observed Location:</label>
                 <select
                   value={sightingLocation}
                   onChange={(e) => setSightingLocation(e.target.value)}
-                  className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-slate-100"
+                  className="w-full px-3 py-1.5 bg-[#0c1322] border border-[#243656] rounded-md text-xs text-slate-100"
                 >
                   {PRESET_LOCATIONS.map((l) => (
                     <option key={l.name} value={l.name}>
@@ -502,50 +500,50 @@ export default function MissingPersonsPage() {
               </div>
 
               <div>
-                <label className="text-xs font-semibold text-slate-300 block mb-1">What did you observe? *</label>
+                <label className="text-xs font-semibold text-slate-300 block mb-1">Sighting Description *</label>
                 <textarea
                   value={sightingDesc}
                   onChange={(e) => setSightingDesc(e.target.value)}
                   required
                   rows={3}
                   placeholder="Describe clothing, companions, direction of movement, child condition..."
-                  className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-slate-100"
+                  className="w-full px-3 py-2 bg-[#0c1322] border border-[#243656] rounded-md text-xs text-slate-100"
                 />
               </div>
 
               <div>
-                <label className="text-xs font-semibold text-slate-300 block mb-1">Your Name / Badge:</label>
+                <label className="text-xs font-semibold text-slate-300 block mb-1">Your Name / Volunteer ID:</label>
                 <input
                   type="text"
                   placeholder="Volunteer Vikram / Citizen"
                   value={sightingReporter}
                   onChange={(e) => setSightingReporter(e.target.value)}
-                  className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-slate-100"
+                  className="w-full px-3 py-1.5 bg-[#0c1322] border border-[#243656] rounded-md text-xs text-slate-100"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full py-2.5 rounded-xl bg-orange-500 hover:bg-orange-400 text-slate-950 font-bold text-xs shadow-lg shadow-orange-500/25"
+                className="w-full py-2.5 rounded-md bg-[#ea580c] hover:bg-[#c2410c] text-white font-bold text-xs shadow-sm"
               >
-                Submit Sighting for Admin Verification
+                Submit Sighting for Staff Verification
               </button>
             </form>
           </div>
         </div>
       )}
 
-      {/* REPORT MISSING MODAL */}
+      {/* REPORT MISSING CASE MODAL */}
       {isReportModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm">
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
-            <div className="flex items-center justify-between pb-2 border-b border-slate-800">
-              <h3 className="font-bold text-white text-base">
-                Report Missing {reportType === "CHILD" ? "Child" : "Elderly Person"}
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#0a0f1d]/85 backdrop-blur-sm">
+          <div className="bg-[#111b2f] border border-[#243656] rounded-xl max-w-lg w-full p-5 shadow-2xl space-y-3.5 max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between pb-2 border-b border-[#243656]">
+              <h3 className="font-bold text-white text-sm">
+                Register Missing {reportType === "CHILD" ? "Child" : "Elderly Person"} Dossier
               </h3>
               <button onClick={() => setIsReportModalOpen(false)} className="text-slate-400 hover:text-white">
-                <X className="w-5 h-5" />
+                <X className="w-4 h-4" />
               </button>
             </div>
 
@@ -559,7 +557,7 @@ export default function MissingPersonsPage() {
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
                     placeholder="E.g. Aarav Patel"
-                    className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-slate-100"
+                    className="w-full px-3 py-1.5 bg-[#0c1322] border border-[#243656] rounded-md text-xs text-slate-100"
                   />
                 </div>
                 <div>
@@ -570,17 +568,17 @@ export default function MissingPersonsPage() {
                     value={age}
                     onChange={(e) => setAge(e.target.value)}
                     placeholder={reportType === "CHILD" ? "6" : "74"}
-                    className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-slate-100"
+                    className="w-full px-3 py-1.5 bg-[#0c1322] border border-[#243656] rounded-md text-xs text-slate-100"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="text-xs font-semibold text-slate-300 block mb-1">Last Seen Location *</label>
+                <label className="text-xs font-semibold text-slate-300 block mb-1">Last Seen Landmark *</label>
                 <select
                   value={lastSeenLocation}
                   onChange={(e) => setLastSeenLocation(e.target.value)}
-                  className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-slate-100"
+                  className="w-full px-3 py-1.5 bg-[#0c1322] border border-[#243656] rounded-md text-xs text-slate-100"
                 >
                   {PRESET_LOCATIONS.map((l) => (
                     <option key={l.name} value={l.name}>
@@ -591,37 +589,37 @@ export default function MissingPersonsPage() {
               </div>
 
               <div>
-                <label className="text-xs font-semibold text-slate-300 block mb-1">Clothing Description *</label>
+                <label className="text-xs font-semibold text-slate-300 block mb-1">Clothing Details *</label>
                 <textarea
                   value={clothingDescription}
                   onChange={(e) => setClothingDescription(e.target.value)}
                   required
                   rows={2}
                   placeholder="Red cartoon t-shirt, blue denim shorts, white shoes..."
-                  className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-slate-100"
+                  className="w-full px-3 py-1.5 bg-[#0c1322] border border-[#243656] rounded-md text-xs text-slate-100"
                 />
               </div>
 
               <div>
-                <label className="text-xs font-semibold text-slate-300 block mb-1">Identifying Features / Medical Notes</label>
+                <label className="text-xs font-semibold text-slate-300 block mb-1">Distinguishing Marks / Medical Notes</label>
                 <input
                   type="text"
                   value={identifyingFeatures}
                   onChange={(e) => setIdentifyingFeatures(e.target.value)}
-                  placeholder="Birthmark, glasses, responsive to nickname 'Aaru'..."
-                  className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-slate-100"
+                  placeholder="Birthmark on cheek, glasses, responsive to nickname 'Aaru'..."
+                  className="w-full px-3 py-1.5 bg-[#0c1322] border border-[#243656] rounded-md text-xs text-slate-100"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-xs font-semibold text-slate-300 block mb-1">Contact Guardian</label>
+                  <label className="text-xs font-semibold text-slate-300 block mb-1">Contact Person</label>
                   <input
                     type="text"
                     value={contactPersonName}
                     onChange={(e) => setContactPersonName(e.target.value)}
                     placeholder="Sunita Patel (Mother)"
-                    className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-slate-100"
+                    className="w-full px-3 py-1.5 bg-[#0c1322] border border-[#243656] rounded-md text-xs text-slate-100"
                   />
                 </div>
                 <div>
@@ -631,7 +629,7 @@ export default function MissingPersonsPage() {
                     value={contactPhone}
                     onChange={(e) => setContactPhone(e.target.value)}
                     placeholder="+91 98201 55443"
-                    className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-slate-100"
+                    className="w-full px-3 py-1.5 bg-[#0c1322] border border-[#243656] rounded-md text-xs text-slate-100"
                   />
                 </div>
               </div>
@@ -639,9 +637,9 @@ export default function MissingPersonsPage() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full py-2.5 rounded-xl bg-gradient-to-r from-orange-500 to-amber-600 hover:from-orange-400 hover:to-amber-500 text-slate-950 font-bold text-xs shadow-lg shadow-orange-500/25 mt-2"
+                className="w-full py-2.5 rounded-md bg-[#ea580c] hover:bg-[#c2410c] text-white font-bold text-xs shadow-sm mt-1"
               >
-                Create Missing Case & Calculate Search Radius
+                Log Case & Initialize Search Perimeter
               </button>
             </form>
           </div>

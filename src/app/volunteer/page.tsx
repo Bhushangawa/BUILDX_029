@@ -7,11 +7,16 @@ import {
   MapPin,
   Clock,
   Shield,
-  CheckCircle,
+  CheckCircle2,
   Plus,
   X,
   Camera,
   Search,
+  AlertTriangle,
+  Send,
+  UserCheck,
+  Radio,
+  Sparkles,
 } from "lucide-react";
 import { PRESET_LOCATIONS } from "@/lib/geo-utils";
 
@@ -22,6 +27,7 @@ export default function VolunteerPage() {
   const [locationName, setLocationName] = useState(PRESET_LOCATIONS[0].name);
   const [description, setDescription] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [filterType, setFilterType] = useState<"ALL" | "CHILD" | "ELDERLY">("ALL");
 
   const fetchCases = async () => {
     try {
@@ -72,173 +78,370 @@ export default function VolunteerPage() {
     }
   };
 
+  const activeCases = cases.filter((c) => c.status !== "FOUND_SAFE");
+  const filteredCases = activeCases.filter((c) => {
+    if (filterType === "ALL") return true;
+    return c.type === filterType;
+  });
+
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-slate-900/60 p-5 rounded-2xl border border-slate-800">
-        <div>
-          <div className="flex items-center gap-2">
-            <HeartHandshake className="w-5 h-5 text-sky-400" />
-            <h1 className="text-xl sm:text-2xl font-black text-white">
-              Authorized Volunteer Coordination Portal
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+      {/* Top Operations Header */}
+      <div className="relative overflow-hidden rounded-2xl bg-[#111b2f] border border-[#243656] p-6 shadow-xl">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-sky-500/10 via-transparent to-transparent pointer-events-none rounded-full blur-3xl" />
+        
+        <div className="relative flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <div className="space-y-1.5">
+            <div className="flex items-center gap-2.5">
+              <span className="flex h-2 w-2 relative">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+              </span>
+              <span className="text-[11px] font-mono uppercase tracking-wider text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
+                Civic Field Network Active
+              </span>
+              <span className="text-[11px] font-mono text-slate-500">
+                AUTH_LEVEL: FIELD_REPORTER_V2
+              </span>
+            </div>
+            
+            <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight flex items-center gap-3">
+              <HeartHandshake className="w-7 h-7 text-sky-400" />
+              <span>Volunteer Coordination Portal</span>
             </h1>
+            
+            <p className="text-sm text-slate-300 max-w-2xl">
+              Coordinated ground search missions, verified citizen sightings, and safe perimeter scouting synchronized with Sentinel Control Room.
+            </p>
           </div>
-          <p className="text-xs text-slate-400 mt-1">
-            Logged in as: <strong className="text-slate-200">Vikram Jadhav (VOL-204)</strong> &bull; Youth Civic Volunteer Unit
-          </p>
+
+          {/* Volunteer Credential Badge */}
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 bg-[#16233b] border border-[#243656] p-3.5 rounded-xl">
+            <div className="w-10 h-10 rounded-lg bg-sky-500/20 border border-sky-500/40 flex items-center justify-center text-sky-400 font-bold text-sm">
+              VJ
+            </div>
+            <div>
+              <div className="flex items-center gap-1.5">
+                <span className="text-xs font-bold text-white">Vikram Jadhav</span>
+                <span className="font-mono text-[10px] text-sky-400 bg-sky-500/10 px-1.5 py-0.5 rounded border border-sky-500/20">
+                  VOL-204
+                </span>
+              </div>
+              <p className="text-[11px] text-slate-400">Youth Civic Volunteer Unit &bull; North Gate</p>
+            </div>
+            <div className="hidden sm:block pl-3 border-l border-[#243656]">
+              <span className="flex items-center gap-1 text-[11px] font-semibold text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded border border-emerald-500/20">
+                <Shield className="w-3.5 h-3.5" />
+                Vetted Badge
+              </span>
+            </div>
+          </div>
         </div>
 
-        <div className="text-xs px-3 py-1.5 rounded-xl bg-sky-500/10 border border-sky-500/30 text-sky-300 font-bold flex items-center gap-1.5">
-          <Shield className="w-3.5 h-3.5" />
-          <span>Vetted Civic Volunteer Badge Verified</span>
+        {/* Quick Metrics Bar */}
+        <div className="mt-6 pt-5 border-t border-[#243656]/60 grid grid-cols-2 sm:grid-cols-4 gap-3 text-left">
+          <div className="bg-[#0c1322]/80 border border-[#243656]/70 rounded-xl p-3">
+            <span className="text-[11px] font-mono text-slate-400 block uppercase">Active Search Missions</span>
+            <span className="text-xl font-bold text-white font-mono">{activeCases.length}</span>
+          </div>
+          <div className="bg-[#0c1322]/80 border border-[#243656]/70 rounded-xl p-3">
+            <span className="text-[11px] font-mono text-slate-400 block uppercase">Priority Children</span>
+            <span className="text-xl font-bold text-amber-400 font-mono">
+              {activeCases.filter((c) => c.type === "CHILD").length}
+            </span>
+          </div>
+          <div className="bg-[#0c1322]/80 border border-[#243656]/70 rounded-xl p-3">
+            <span className="text-[11px] font-mono text-slate-400 block uppercase">Elderly / Vulnerable</span>
+            <span className="text-xl font-bold text-sky-400 font-mono">
+              {activeCases.filter((c) => c.type === "ELDERLY").length}
+            </span>
+          </div>
+          <div className="bg-[#0c1322]/80 border border-[#243656]/70 rounded-xl p-3">
+            <span className="text-[11px] font-mono text-slate-400 block uppercase">Field Team Status</span>
+            <span className="text-sm font-bold text-emerald-400 flex items-center gap-1.5 mt-1">
+              <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+              Synchronized Live
+            </span>
+          </div>
         </div>
       </div>
 
-      {/* Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
-        {/* Active Missions (Left 6 Cols) */}
-        <div className="md:col-span-6 space-y-4">
-          <h2 className="text-xs font-bold text-slate-400 uppercase tracking-wider">
-            Active Ground Search Tasks ({cases.filter((c) => c.status !== "FOUND_SAFE").length})
-          </h2>
+      {/* Main Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        {/* Active Ground Search Tasks (Left 7 Cols) */}
+        <div className="lg:col-span-7 space-y-4">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <div className="flex items-center gap-2">
+              <Radio className="w-4 h-4 text-sky-400 animate-pulse" />
+              <h2 className="text-xs font-mono font-bold text-slate-300 uppercase tracking-wider">
+                Authorized Ground Search Targets ({filteredCases.length})
+              </h2>
+            </div>
 
-          {cases
-            .filter((c) => c.status !== "FOUND_SAFE")
-            .map((c) => {
+            {/* Filter Tabs */}
+            <div className="flex items-center gap-1 bg-[#111b2f] p-1 rounded-xl border border-[#243656]">
+              {(["ALL", "CHILD", "ELDERLY"] as const).map((t) => (
+                <button
+                  key={t}
+                  onClick={() => setFilterType(t)}
+                  className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-all ${
+                    filterType === t
+                      ? "bg-sky-500 text-slate-950 font-bold shadow-sm"
+                      : "text-slate-400 hover:text-white"
+                  }`}
+                >
+                  {t === "ALL" ? "All Targets" : t === "CHILD" ? "Children" : "Elderly"}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {filteredCases.length === 0 ? (
+            <div className="p-12 text-center rounded-2xl bg-[#111b2f] border border-[#243656] text-slate-400">
+              <CheckCircle2 className="w-10 h-10 text-emerald-400 mx-auto mb-2 opacity-80" />
+              <p className="font-semibold text-white">No pending search targets in this category</p>
+              <p className="text-xs text-slate-500 mt-1">All missing persons registered under this filter have been reunited safely.</p>
+            </div>
+          ) : (
+            filteredCases.map((c) => {
               const isSelected = selectedCase?.id === c.id;
               return (
                 <div
                   key={c.id}
                   onClick={() => setSelectedCase(c)}
-                  className={`p-5 rounded-2xl border text-left cursor-pointer transition-all ${
+                  className={`relative overflow-hidden rounded-2xl border transition-all cursor-pointer p-5 ${
                     isSelected
-                      ? "bg-slate-800/90 border-sky-500 ring-1 ring-sky-500 shadow-xl"
-                      : "bg-slate-900/70 border-slate-800 hover:border-slate-700"
+                      ? "bg-[#16233b] border-sky-500/80 shadow-lg shadow-sky-500/10 ring-1 ring-sky-500/50"
+                      : "bg-[#111b2f] border-[#243656] hover:bg-[#16233b]/70 hover:border-[#38bdf8]/40"
                   }`}
                 >
-                  <div className="flex items-center gap-3 mb-3">
-                    <img
-                      src={c.photoUrl}
-                      alt={c.fullName}
-                      className="w-12 h-12 rounded-xl object-cover border border-slate-700"
-                    />
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <span className="font-mono text-xs font-bold text-sky-400">
-                          {c.caseNumber}
-                        </span>
-                        <span className="text-[10px] font-bold px-1.5 py-0.2 rounded bg-slate-800 text-slate-300">
-                          {c.type} &bull; {c.age} yrs
+                  {isSelected && (
+                    <div className="absolute top-0 right-0 transform translate-x-4 -translate-y-4 w-16 h-16 bg-sky-500/20 rounded-full blur-xl pointer-events-none" />
+                  )}
+
+                  <div className="flex items-start gap-4">
+                    <div className="relative flex-shrink-0">
+                      <img
+                        src={c.photoUrl}
+                        alt={c.fullName}
+                        className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl object-cover border border-[#243656]"
+                      />
+                      <span
+                        className={`absolute -bottom-1 -right-1 text-[9px] font-mono font-bold px-1.5 py-0.5 rounded shadow ${
+                          c.type === "CHILD"
+                            ? "bg-amber-500 text-slate-950"
+                            : "bg-sky-500 text-slate-950"
+                        }`}
+                      >
+                        {c.type}
+                      </span>
+                    </div>
+
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between gap-2 mb-1">
+                        <div className="flex items-center gap-2">
+                          <span className="font-mono text-xs font-bold text-sky-400">
+                            {c.caseNumber}
+                          </span>
+                          <span className="text-[10px] font-mono text-slate-400 bg-[#0c1322] px-1.5 py-0.5 rounded border border-[#243656]">
+                            {c.age} yrs &bull; {c.gender}
+                          </span>
+                        </div>
+                        <span
+                          className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded border uppercase ${
+                            c.status === "SEARCHING"
+                              ? "bg-amber-500/10 text-amber-400 border-amber-500/30"
+                              : "bg-sky-500/10 text-sky-400 border-sky-500/30"
+                          }`}
+                        >
+                          {c.status}
                         </span>
                       </div>
-                      <h3 className="font-bold text-sm text-white">{c.fullName}</h3>
+
+                      <h3 className="font-bold text-base text-white truncate">{c.fullName}</h3>
+
+                      <div className="mt-2.5 grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs bg-[#0c1322]/70 p-2.5 rounded-xl border border-[#243656]/60">
+                        <div className="flex items-start gap-1.5">
+                          <MapPin className="w-3.5 h-3.5 text-slate-400 flex-shrink-0 mt-0.5" />
+                          <span className="text-slate-300 truncate">
+                            <span className="text-slate-500">Last: </span>
+                            {c.lastSeenLocation}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-1.5">
+                          <Clock className="w-3.5 h-3.5 text-amber-400 flex-shrink-0" />
+                          <span className="text-slate-300 font-mono">
+                            Radius: <strong className="text-amber-400">{c.searchRadiusMeters}m</strong>
+                          </span>
+                        </div>
+                        <div className="sm:col-span-2 text-slate-300 text-[11px] line-clamp-1">
+                          <span className="text-slate-500 font-medium">Clothing: </span>
+                          {c.clothingDescription}
+                        </div>
+                      </div>
+
+                      <div className="mt-3 flex items-center justify-between gap-3 pt-2 border-t border-[#243656]/40">
+                        <span className="text-[11px] text-slate-400 font-mono flex items-center gap-1">
+                          <Eye className="w-3 h-3 text-sky-400" />
+                          {c.sightings?.length || 0} Reported Sightings
+                        </span>
+                        
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectedCase(c);
+                            setIsSightingModalOpen(true);
+                          }}
+                          className="px-3 py-1.5 rounded-lg bg-sky-500/10 hover:bg-sky-500/20 text-sky-300 hover:text-white border border-sky-500/30 font-semibold text-xs transition-all flex items-center gap-1.5"
+                        >
+                          <Plus className="w-3.5 h-3.5" />
+                          <span>Submit Sighting</span>
+                        </button>
+                      </div>
                     </div>
                   </div>
-
-                  <div className="text-xs text-slate-300 bg-slate-950/60 p-2.5 rounded-xl border border-slate-800/80 space-y-1 mb-3">
-                    <div>
-                      <span className="text-slate-500">Clothing: </span>
-                      <span>{c.clothingDescription}</span>
-                    </div>
-                    <div>
-                      <span className="text-slate-500">Search Radius: </span>
-                      <strong className="text-orange-400">{c.searchRadiusMeters} meters</strong>
-                    </div>
-                  </div>
-
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setSelectedCase(c);
-                      setIsSightingModalOpen(true);
-                    }}
-                    className="w-full py-2 rounded-xl bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-400 hover:to-indigo-500 text-slate-950 font-bold text-xs shadow-md shadow-sky-500/20"
-                  >
-                    + Submit Vetted Sighting
-                  </button>
                 </div>
               );
-            })}
+            })
+          )}
         </div>
 
-        {/* Selected Task Details (Right 6 Cols) */}
-        <div className="md:col-span-6 bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-5 sticky top-24">
+        {/* Selected Target Tactical Dossier (Right 5 Cols) */}
+        <div className="lg:col-span-5 bg-[#111b2f] border border-[#243656] rounded-2xl p-6 shadow-xl space-y-5 sticky top-24">
           {selectedCase ? (
             <>
-              <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+              {/* Dossier Header */}
+              <div className="flex items-start justify-between pb-4 border-b border-[#243656]">
                 <div>
-                  <span className="text-xs font-mono font-bold text-sky-400">
-                    {selectedCase.caseNumber}
-                  </span>
-                  <h3 className="text-lg font-black text-white mt-1">
-                    {selectedCase.fullName} ({selectedCase.age}yo)
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-mono font-bold text-sky-400 bg-sky-500/10 px-2 py-0.5 rounded border border-sky-500/20">
+                      {selectedCase.caseNumber}
+                    </span>
+                    <span className="text-[10px] font-mono text-slate-400 uppercase">
+                      Ground Dossier
+                    </span>
+                  </div>
+                  <h3 className="text-xl font-bold text-white mt-1.5">
+                    {selectedCase.fullName}
                   </h3>
+                  <p className="text-xs text-slate-400 font-mono mt-0.5">
+                    {selectedCase.type} &bull; {selectedCase.age} Years &bull; Gender: {selectedCase.gender}
+                  </p>
                 </div>
-                <span className="text-xs font-bold px-2.5 py-1 rounded bg-orange-500/20 text-orange-400 border border-orange-500/30 uppercase">
+                
+                <span className="text-xs font-mono font-bold px-2.5 py-1 rounded bg-amber-500/10 text-amber-400 border border-amber-500/30 uppercase">
                   {selectedCase.status}
                 </span>
               </div>
 
-              <img
-                src={selectedCase.photoUrl}
-                alt={selectedCase.fullName}
-                className="w-full h-44 rounded-xl object-cover border border-slate-700"
-              />
-
-              <div className="p-4 rounded-xl bg-slate-950/60 border border-slate-800 text-xs space-y-2">
-                <div>
-                  <span className="text-slate-500 block">Last Seen Location:</span>
-                  <span className="font-semibold text-slate-200">{selectedCase.lastSeenLocation}</span>
+              {/* Photo Frame */}
+              <div className="relative rounded-xl overflow-hidden border border-[#243656] bg-[#0c1322] group">
+                <img
+                  src={selectedCase.photoUrl}
+                  alt={selectedCase.fullName}
+                  className="w-full h-52 object-cover object-center"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0c1322] via-transparent to-transparent opacity-80" />
+                <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-xs text-white">
+                  <span className="font-mono text-[11px] bg-black/60 backdrop-blur px-2 py-1 rounded border border-white/10 flex items-center gap-1.5">
+                    <Camera className="w-3 h-3 text-sky-400" />
+                    Verified Photo
+                  </span>
+                  <span className="font-mono text-[11px] bg-black/60 backdrop-blur px-2 py-1 rounded border border-white/10 text-amber-300">
+                    Radius: {selectedCase.searchRadiusMeters}m
+                  </span>
                 </div>
-                <div>
-                  <span className="text-slate-500 block">Clothing & Markings:</span>
-                  <span className="text-slate-300">{selectedCase.clothingDescription}</span>
-                </div>
-                {selectedCase.identifyingFeatures && (
-                  <div>
-                    <span className="text-slate-500 block">Identifying Details:</span>
-                    <span className="text-slate-300">{selectedCase.identifyingFeatures}</span>
-                  </div>
-                )}
               </div>
 
+              {/* Verified Details Sheet */}
+              <div className="p-4 rounded-xl bg-[#0c1322] border border-[#243656] text-xs space-y-3">
+                <div>
+                  <span className="text-slate-400 font-mono text-[10px] uppercase block mb-0.5">
+                    Last Known Location & Time
+                  </span>
+                  <span className="font-medium text-slate-200 flex items-center gap-1.5">
+                    <MapPin className="w-3.5 h-3.5 text-sky-400 flex-shrink-0" />
+                    {selectedCase.lastSeenLocation}
+                  </span>
+                </div>
+
+                <div className="pt-2 border-t border-[#243656]/50">
+                  <span className="text-slate-400 font-mono text-[10px] uppercase block mb-0.5">
+                    Clothing & Visual Description
+                  </span>
+                  <p className="text-slate-200 leading-relaxed">
+                    {selectedCase.clothingDescription}
+                  </p>
+                </div>
+
+                {selectedCase.identifyingFeatures && (
+                  <div className="pt-2 border-t border-[#243656]/50">
+                    <span className="text-slate-400 font-mono text-[10px] uppercase block mb-0.5">
+                      Identifying Marks / Features
+                    </span>
+                    <p className="text-slate-300 leading-relaxed">
+                      {selectedCase.identifyingFeatures}
+                    </p>
+                  </div>
+                )}
+
+                {/* Privacy Badge */}
+                <div className="p-2.5 rounded-lg bg-sky-500/10 border border-sky-500/20 text-sky-300 text-[11px] flex items-start gap-2">
+                  <Shield className="w-4 h-4 text-sky-400 flex-shrink-0 mt-0.5" />
+                  <p className="leading-snug">
+                    <strong className="text-white">Privacy Guard:</strong> Personal family phone numbers and sensitive child records are securely withheld. All volunteer sightings route to Police Control.
+                  </p>
+                </div>
+              </div>
+
+              {/* Action Button */}
               <button
                 onClick={() => setIsSightingModalOpen(true)}
-                className="w-full py-3 rounded-xl bg-orange-500 hover:bg-orange-400 text-slate-950 font-bold text-xs shadow-lg shadow-orange-500/25"
+                className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-400 hover:to-indigo-500 text-slate-950 font-bold text-sm shadow-lg shadow-sky-500/20 transition-all flex items-center justify-center gap-2"
               >
-                Log Person Sighting For Police Confirmation
+                <Plus className="w-4 h-4" />
+                <span>Log Person Sighting For Police Confirmation</span>
               </button>
             </>
           ) : (
             <div className="p-12 text-center text-slate-500 text-xs">
-              Select a task to review safe description
+              <Search className="w-8 h-8 text-slate-600 mx-auto mb-2" />
+              Select a target from the list to review search parameters
             </div>
           )}
         </div>
       </div>
 
-      {/* Sighting Modal */}
+      {/* Sighting Submission Dialog */}
       {isSightingModalOpen && selectedCase && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm">
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-4">
-            <div className="flex items-center justify-between pb-2 border-b border-slate-800">
-              <h3 className="font-bold text-white text-sm">
-                Log Sighting for {selectedCase.fullName}
-              </h3>
-              <button onClick={() => setIsSightingModalOpen(false)} className="text-slate-400 hover:text-white">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fadeIn">
+          <div className="bg-[#111b2f] border border-[#243656] rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-4">
+            <div className="flex items-center justify-between pb-3 border-b border-[#243656]">
+              <div>
+                <span className="text-[10px] font-mono uppercase text-sky-400 font-bold">
+                  Field Intelligence Intake
+                </span>
+                <h3 className="font-bold text-white text-base">
+                  Log Sighting: {selectedCase.fullName}
+                </h3>
+              </div>
+              <button
+                onClick={() => setIsSightingModalOpen(false)}
+                className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-[#16233b] transition-all"
+              >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            <form onSubmit={handleSubmitSighting} className="space-y-3">
+            <form onSubmit={handleSubmitSighting} className="space-y-4">
               <div>
-                <label className="text-xs font-semibold text-slate-300 block mb-1">
-                  Observed Landmark / Area:
+                <label className="text-xs font-semibold text-slate-300 block mb-1.5">
+                  Observed Landmark / Area
                 </label>
                 <select
                   value={locationName}
                   onChange={(e) => setLocationName(e.target.value)}
-                  className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-slate-100"
+                  className="w-full px-3.5 py-2.5 bg-[#0c1322] border border-[#243656] rounded-xl text-xs text-white focus:outline-none focus:border-sky-500"
                 >
                   {PRESET_LOCATIONS.map((l) => (
                     <option key={l.name} value={l.name}>
@@ -249,26 +452,52 @@ export default function VolunteerPage() {
               </div>
 
               <div>
-                <label className="text-xs font-semibold text-slate-300 block mb-1">
-                  Sighting Details (Condition, companions, direction):
+                <label className="text-xs font-semibold text-slate-300 block mb-1.5">
+                  Sighting Details (Condition, companions, clothing, heading)
                 </label>
                 <textarea
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   required
-                  rows={3}
-                  placeholder="E.g. Child sitting calmly near Information Booth 2 with booth lead..."
-                  className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-slate-100"
+                  rows={4}
+                  placeholder="E.g. Observed near Booth 2 drinking water with security volunteer. Wearing the yellow kurti, looks calm and unhurt..."
+                  className="w-full px-3.5 py-2.5 bg-[#0c1322] border border-[#243656] rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-sky-500"
                 />
               </div>
 
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full py-2.5 rounded-xl bg-orange-500 hover:bg-orange-400 text-slate-950 font-bold text-xs shadow-lg shadow-orange-500/25"
-              >
-                Submit Verified Sighting
-              </button>
+              <div className="p-3 rounded-xl bg-[#0c1322] border border-[#243656] text-[11px] text-slate-400 flex items-center gap-2">
+                <UserCheck className="w-4 h-4 text-emerald-400 flex-shrink-0" />
+                <span>
+                  Submitted as <strong className="text-slate-200">Vikram Jadhav (VOL-204)</strong>. Timestamp and geo-coordinates will be attached automatically.
+                </span>
+              </div>
+
+              <div className="flex items-center gap-3 pt-2">
+                <button
+                  type="button"
+                  onClick={() => setIsSightingModalOpen(false)}
+                  className="flex-1 py-2.5 rounded-xl bg-[#16233b] hover:bg-[#1c2d4a] text-slate-300 font-semibold text-xs border border-[#243656] transition-all"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-400 hover:to-indigo-500 text-slate-950 font-bold text-xs shadow-lg shadow-sky-500/20 transition-all flex items-center justify-center gap-1.5"
+                >
+                  {isSubmitting ? (
+                    <>
+                      <div className="w-3.5 h-3.5 border-2 border-slate-950 border-t-transparent rounded-full animate-spin" />
+                      <span>Transmitting...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-3.5 h-3.5" />
+                      <span>Submit Verified Sighting</span>
+                    </>
+                  )}
+                </button>
+              </div>
             </form>
           </div>
         </div>

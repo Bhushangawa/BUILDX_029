@@ -1,9 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { X, AlertTriangle, Sparkles, MapPin, Camera, UserX, CheckCircle, ArrowRight } from "lucide-react";
+import { X, AlertTriangle, Cpu, MapPin, Camera, UserX, CheckCircle, ArrowRight } from "lucide-react";
 import { PRESET_LOCATIONS } from "@/lib/geo-utils";
-import { IncidentCategory } from "@/lib/types";
 
 interface QuickReportModalProps {
   isOpen: boolean;
@@ -70,59 +69,68 @@ export default function QuickReportModal({ isOpen, onClose, onSuccess }: QuickRe
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm">
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl max-w-lg w-full p-6 shadow-2xl text-slate-100 relative">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#0a0f1d]/85 backdrop-blur-sm">
+      <div className="bg-[#111b2f] border border-[#243656] rounded-xl max-w-lg w-full p-5 shadow-2xl text-slate-100 relative">
         <button
           onClick={handleResetForm}
-          className="absolute top-4 right-4 p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800"
+          className="absolute top-4 right-4 p-1 rounded-md text-slate-400 hover:text-white hover:bg-[#16233b]"
         >
-          <X className="w-5 h-5" />
+          <X className="w-4 h-4" />
         </button>
 
         {result ? (
-          <div className="text-center py-4">
-            <div className="w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 mx-auto flex items-center justify-center mb-3">
-              <CheckCircle className="w-6 h-6" />
-            </div>
-            <h3 className="text-lg font-bold text-slate-100">Incident Reported & AI Triaged</h3>
-            <p className="text-xs text-slate-400 mt-1 mb-4">
-              Assigned ID: <span className="text-sky-400 font-mono font-bold">{result.incident.incidentNumber}</span>
-            </p>
-
-            {/* AI Intelligence Summary Card */}
-            <div className="bg-slate-800/80 border border-slate-700/80 rounded-xl p-4 text-left mb-5 space-y-2 text-xs">
-              <div className="flex items-center gap-2 font-bold text-sky-400">
-                <Sparkles className="w-4 h-4" />
-                <span>AI Incident Intelligence Triage</span>
+          <div className="text-left py-2 space-y-4">
+            <div className="flex items-center gap-3 pb-3 border-b border-[#243656]">
+              <div className="w-9 h-9 rounded-md bg-emerald-500/10 text-emerald-400 flex items-center justify-center border border-emerald-500/30">
+                <CheckCircle className="w-5 h-5" />
               </div>
+              <div>
+                <h3 className="text-base font-bold text-white">Incident Logged & Queued</h3>
+                <p className="text-xs text-slate-400">
+                  Tracking ID: <span className="text-[#38bdf8] font-mono font-bold">{result.incident.incidentNumber}</span>
+                </p>
+              </div>
+            </div>
+
+            {/* AI Incident Intelligence Review */}
+            <div className="bg-[#16233b] border border-[#243656] rounded-lg p-3.5 space-y-2.5 text-xs">
+              <div className="flex items-center justify-between pb-1 border-b border-[#243656]/60">
+                <div className="flex items-center gap-1.5 font-bold text-[#38bdf8]">
+                  <Cpu className="w-3.5 h-3.5" />
+                  <span>AI Incident Triage Analysis</span>
+                </div>
+                <span className="text-[10px] text-slate-400 font-mono">Assistance Only &bull; Staff Confirmed</span>
+              </div>
+
               <div className="grid grid-cols-2 gap-2 text-slate-300">
                 <div>
-                  <span className="text-slate-500 block">Category:</span>
+                  <span className="text-slate-500 text-[11px] block">Suggested Category:</span>
                   <span className="font-semibold text-slate-200">{result.incident.category}</span>
                 </div>
                 <div>
-                  <span className="text-slate-500 block">Assessed Priority:</span>
-                  <span className={`font-bold px-2 py-0.5 rounded text-[11px] ${
+                  <span className="text-slate-500 text-[11px] block">Assessed Priority:</span>
+                  <span className={`font-bold px-2 py-0.5 rounded text-[10px] uppercase ${
                     result.incident.priority === "CRITICAL"
-                      ? "bg-red-500/20 text-red-400 border border-red-500/30"
-                      : "bg-amber-500/20 text-amber-400 border border-amber-500/30"
+                      ? "bg-red-500/20 text-red-400 border border-red-500/40"
+                      : "bg-amber-500/20 text-amber-400 border border-amber-500/40"
                   }`}>
                     {result.incident.priority}
                   </span>
                 </div>
               </div>
-              <p className="text-slate-400 italic bg-slate-900/60 p-2 rounded border border-slate-800">
-                &ldquo;{result.aiTriage?.summary}&rdquo;
-              </p>
+
+              <div className="p-2.5 rounded bg-[#0c1322] border border-[#243656] text-[11px] text-slate-300">
+                {result.aiTriage?.summary}
+              </div>
 
               {result.duplicateCheck?.isDuplicate && (
                 <div className="bg-amber-500/10 border border-amber-500/30 text-amber-300 p-2 rounded text-[11px]">
-                  <strong>Possible Duplicate Flagged:</strong> {result.duplicateCheck.reason}
+                  <strong>Possible Duplicate Clustered:</strong> {result.duplicateCheck.reason}
                 </div>
               )}
 
               {result.teamRecommendation && (
-                <div className="text-emerald-400 font-medium">
+                <div className="text-emerald-400 text-[11px]">
                   Nearest Recommended Unit: <strong>{result.teamRecommendation.team.name}</strong> ({result.teamRecommendation.distanceMeters}m away)
                 </div>
               )}
@@ -130,46 +138,43 @@ export default function QuickReportModal({ isOpen, onClose, onSuccess }: QuickRe
 
             <button
               onClick={handleResetForm}
-              className="w-full py-2.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-sm shadow-lg shadow-sky-500/20"
+              className="w-full py-2.5 rounded-md bg-[#0ea5e9] hover:bg-[#0284c7] text-white font-bold text-xs shadow-sm transition-all"
             >
-              Done / Return to Platform
+              Close & Return to Dashboard
             </button>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="flex items-center gap-2 text-sky-400 font-bold text-base">
-              <AlertTriangle className="w-5 h-5 text-amber-400" />
-              <span>Quick Incident Report (Witness / Citizen)</span>
+          <form onSubmit={handleSubmit} className="space-y-3.5">
+            <div className="flex items-center gap-2 text-white font-bold text-sm pb-2 border-b border-[#243656]">
+              <AlertTriangle className="w-4 h-4 text-amber-400" />
+              <span>Quick Incident Intake Form</span>
             </div>
-            <p className="text-xs text-slate-400">
-              Submit reports in under 30 seconds. Multilingual English, Hindi, and Marathi natural language descriptions are automatically triaged by Sentinel AI.
-            </p>
 
             {/* Description */}
             <div>
               <label className="block text-xs font-semibold text-slate-300 mb-1">
-                What is happening? (Natural Language / विवरण) *
+                Incident Description (English, Hindi, or Marathi) *
               </label>
               <textarea
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 required
                 rows={3}
-                placeholder="E.g. 'Gate 3 ke paas bahut bheed ho rahi hai aur log dhakka de rahe hain' or 'Two men on bike snatched a gold necklace near Food Court'..."
-                className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-sky-500"
+                placeholder="E.g. 'Gate 3 ke paas bohot bheed ho rahi hai' or 'Two men on bike snatched a necklace near Food Court'..."
+                className="w-full px-3 py-2 bg-[#0c1322] border border-[#243656] rounded-md text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-[#0ea5e9]"
               />
             </div>
 
             {/* Location selector */}
             <div>
               <label className="block text-xs font-semibold text-slate-300 mb-1 flex items-center gap-1">
-                <MapPin className="w-3.5 h-3.5 text-sky-400" />
+                <MapPin className="w-3.5 h-3.5 text-[#38bdf8]" />
                 Event Zone / Landmark *
               </label>
               <select
                 value={locationName}
                 onChange={(e) => setLocationName(e.target.value)}
-                className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-slate-100 focus:outline-none focus:border-sky-500"
+                className="w-full px-3 py-2 bg-[#0c1322] border border-[#243656] rounded-md text-xs text-slate-100 focus:outline-none focus:border-[#0ea5e9]"
               >
                 {PRESET_LOCATIONS.map((loc) => (
                   <option key={loc.name} value={loc.name}>
@@ -179,21 +184,21 @@ export default function QuickReportModal({ isOpen, onClose, onSuccess }: QuickRe
               </select>
             </div>
 
-            {/* Category Override */}
-            <div className="grid grid-cols-2 gap-2">
+            {/* Category Override & Photo */}
+            <div className="grid grid-cols-2 gap-2.5">
               <div>
                 <label className="block text-xs font-semibold text-slate-300 mb-1">
-                  Category (Optional)
+                  Category Override
                 </label>
                 <select
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}
-                  className="w-full px-2.5 py-1.5 bg-slate-950 border border-slate-800 rounded-lg text-xs text-slate-100 focus:outline-none focus:border-sky-500"
+                  className="w-full px-2.5 py-1.5 bg-[#0c1322] border border-[#243656] rounded-md text-xs text-slate-100 focus:outline-none focus:border-[#0ea5e9]"
                 >
                   <option value="AUTO">AI Auto-Detect (Recommended)</option>
                   <option value="THEFT">Theft</option>
                   <option value="CHAIN_SNATCHING">Chain Snatching</option>
-                  <option value="CROWD_ISSUE">Crowd Management</option>
+                  <option value="CROWD_ISSUE">Crowd Issue</option>
                   <option value="PERSONAL_SAFETY">Personal Safety</option>
                   <option value="SUSPICIOUS_ACTIVITY">Suspicious Activity</option>
                   <option value="EMERGENCY">Emergency / Medical</option>
@@ -202,32 +207,32 @@ export default function QuickReportModal({ isOpen, onClose, onSuccess }: QuickRe
 
               <div>
                 <label className="block text-xs font-semibold text-slate-300 mb-1">
-                  Photo / Evidence
+                  Optional Media
                 </label>
                 <div className="flex items-center gap-2">
-                  <span className="px-3 py-1.5 rounded-lg bg-slate-800 text-[11px] text-slate-400 border border-slate-700 flex items-center gap-1.5 cursor-pointer hover:text-white">
+                  <span className="px-2.5 py-1.5 rounded-md bg-[#16233b] text-[11px] text-slate-400 border border-[#243656] flex items-center gap-1 cursor-pointer hover:text-white">
                     <Camera className="w-3.5 h-3.5" />
                     Attach Image
                   </span>
-                  <span className="text-[10px] text-slate-500">Demo active</span>
+                  <span className="text-[10px] text-slate-500">Camera Active</span>
                 </div>
               </div>
             </div>
 
             {/* Anonymous Toggle */}
-            <div className="flex items-center justify-between p-2.5 bg-slate-950/60 rounded-xl border border-slate-800">
+            <div className="flex items-center justify-between p-2.5 bg-[#0c1322] rounded-md border border-[#243656]">
               <div className="flex items-center gap-2">
-                <UserX className="w-4 h-4 text-indigo-400" />
+                <UserX className="w-4 h-4 text-[#38bdf8]" />
                 <div>
                   <div className="text-xs font-semibold text-slate-200">Submit Anonymously</div>
-                  <div className="text-[10px] text-slate-500">Protects witness identity from public exposure</div>
+                  <div className="text-[10px] text-slate-500">Protects witness identity in public records</div>
                 </div>
               </div>
               <input
                 type="checkbox"
                 checked={isAnonymous}
                 onChange={(e) => setIsAnonymous(e.target.checked)}
-                className="w-4 h-4 rounded text-sky-500 bg-slate-900 border-slate-700"
+                className="w-4 h-4 rounded text-[#0ea5e9] bg-[#16233b] border-[#243656]"
               />
             </div>
 
@@ -235,17 +240,17 @@ export default function QuickReportModal({ isOpen, onClose, onSuccess }: QuickRe
               <div className="grid grid-cols-2 gap-2">
                 <input
                   type="text"
-                  placeholder="Your Name (Optional)"
+                  placeholder="Reporter Name"
                   value={reporterName}
                   onChange={(e) => setReporterName(e.target.value)}
-                  className="px-2.5 py-1.5 bg-slate-950 border border-slate-800 rounded-lg text-xs text-slate-100"
+                  className="px-2.5 py-1.5 bg-[#0c1322] border border-[#243656] rounded-md text-xs text-slate-100"
                 />
                 <input
                   type="tel"
                   placeholder="Contact Phone"
                   value={reporterPhone}
                   onChange={(e) => setReporterPhone(e.target.value)}
-                  className="px-2.5 py-1.5 bg-slate-950 border border-slate-800 rounded-lg text-xs text-slate-100"
+                  className="px-2.5 py-1.5 bg-[#0c1322] border border-[#243656] rounded-md text-xs text-slate-100"
                 />
               </div>
             )}
@@ -253,15 +258,15 @@ export default function QuickReportModal({ isOpen, onClose, onSuccess }: QuickRe
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full py-2.5 rounded-xl bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-400 hover:to-indigo-500 text-white font-bold text-xs shadow-lg shadow-sky-500/25 flex items-center justify-center gap-2 transition-all"
+              className="w-full py-2.5 rounded-md bg-[#0ea5e9] hover:bg-[#0284c7] text-white font-bold text-xs shadow-sm flex items-center justify-center gap-1.5 transition-all"
             >
               {isSubmitting ? (
-                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                <div className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
               ) : (
-                <Sparkles className="w-4 h-4 text-white" />
+                <Cpu className="w-3.5 h-3.5" />
               )}
               <span>Submit & Run AI Incident Triage</span>
-              <ArrowRight className="w-4 h-4" />
+              <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </form>
         )}
