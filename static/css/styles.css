@@ -51,261 +51,182 @@ body {
 
 /* 2. Top Utility Strip */
 .gov-utility-bar {
-  background: #102a43;
-  color: #cbd5e1;
-  font-size: 12px;
-  padding: 5px 2rem;
+  background: #091728;
+  color: #94a3b8;
+  font-size: 11.5px;
+  padding: 4px 1.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
   gap: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .gov-utility-left {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 8px;
+  font-size: 11px;
 }
 
 .gov-utility-right {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
-.gov-text-resize button {
-  background: transparent;
-  border: 1px solid rgba(255,255,255,0.25);
-  color: #f1f5f9;
-  font-size: 11px;
-  padding: 1px 6px;
-  border-radius: 3px;
-  cursor: pointer;
+.gov-helpline-pills {
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
-.gov-text-resize button:hover {
-  background: rgba(255,255,255,0.15);
+
+.helpline-pill {
+  background: rgba(255, 255, 255, 0.07);
+  padding: 2px 8px;
+  border-radius: 9999px;
+  font-size: 10.5px;
+  color: #cbd5e1;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.helpline-pill strong {
+  color: #ffffff;
 }
 
 .gov-lang-group {
   display: inline-flex;
   align-items: center;
-  gap: 3px;
-  background: rgba(0, 0, 0, 0.25);
-  padding: 2px 4px;
-  border-radius: 4px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.08);
+  padding: 2px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  gap: 2px;
 }
 
 .gov-lang-btn {
   background: transparent;
-  color: #e2e8f0;
+  color: #cbd5e1;
   border: none;
-  font-size: 11px;
+  font-size: 10.5px;
   font-weight: 700;
   padding: 2px 7px;
-  border-radius: 3px;
+  border-radius: 4px;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .gov-lang-btn:hover {
-  background: rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.15);
   color: #ffffff;
 }
 
 .gov-lang-btn.active {
-  background: var(--gov-saffron);
+  background: var(--gov-blue);
   color: #ffffff;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.3);
-}
-
-.role-pill.lang-pill {
-  background: rgba(255, 255, 255, 0.12);
-  border-color: rgba(255, 255, 255, 0.25);
-  font-weight: 700;
-  padding: 3px 8px;
-}
-
-.role-pill.lang-pill:hover {
-  background: rgba(255, 255, 255, 0.25);
-}
-
-.role-pill.lang-pill.active {
-  background: #3b82f6;
-  border-color: #60a5fa;
-  color: #ffffff;
-  font-weight: 800;
-  box-shadow: 0 0 8px rgba(59, 130, 246, 0.4);
-}
-
-body.night-vision .gov-lang-btn.active {
-  background: #2563eb;
-  color: #ffffff;
-}
-
-.gov-lang-select {
-  background: #091a29;
-  color: white;
-  border: 1px solid #334e68;
-  padding: 2px 8px;
-  font-size: 12px;
-  border-radius: 3px;
-  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
 }
 
 .gov-theme-btn {
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.28);
-  color: #f8fafc;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #f1f5f9;
   font-size: 11px;
-  font-weight: 700;
-  padding: 2px 9px;
-  border-radius: 3px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 4px;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: 4px;
   transition: all 0.2s ease;
 }
 
 .gov-theme-btn:hover {
-  background: rgba(255, 255, 255, 0.24);
-  border-color: rgba(255, 255, 255, 0.5);
-  box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.4);
 }
 
-.role-pill.vision-pill {
-  background: rgba(255, 255, 255, 0.16);
-  border-color: rgba(255, 255, 255, 0.35);
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-}
-.role-pill.vision-pill:hover {
-  background: rgba(255, 255, 255, 0.28);
-}
-body.night-vision .role-pill.vision-pill {
-  background: #1e3a5f;
-  border-color: #3b82f6;
-  color: #93c5fd;
-  box-shadow: 0 0 8px rgba(59, 130, 246, 0.35);
+/* 3. Unified Sleek Navbar */
+.gov-navbar {
+  background: #0f233a;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
-/* 3. Official Government Header */
-.gov-header {
-  background: #ffffff;
-  border-bottom: 2px solid #cbd5e1;
-  padding: 0.8rem 2rem;
+.gov-nav-container {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 0.5rem 1.5rem;
   gap: 1rem;
 }
 
 .gov-brand {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 10px;
   cursor: pointer;
+  flex-shrink: 0;
 }
 
 .gov-emblem-badge {
-  width: 52px;
-  height: 52px;
-  background: #0b457b;
-  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #1e3a8a, #0b457b);
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
-  font-weight: 900;
-  font-size: 24px;
-  box-shadow: 0 2px 6px rgba(11, 69, 123, 0.3);
+  font-size: 20px;
   border: 2px solid #ffbe3b;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
-.gov-title-block h1 {
-  font-size: 1.45rem;
-  font-weight: 800;
-  color: var(--gov-blue-dark);
-  line-height: 1.2;
+.gov-title-block .brand-name {
+  font-size: 1.35rem;
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: 0.04em;
+  line-height: 1.1;
+  margin: 0;
 }
 
 .gov-title-block .gov-subtitle {
-  font-size: 0.85rem;
+  font-size: 0.68rem;
   color: var(--gov-saffron);
-  font-weight: 700;
-  letter-spacing: 0.04em;
+  font-weight: 800;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
-.gov-title-block .gov-dept {
-  font-size: 0.78rem;
-  color: var(--text-muted);
-}
-
-.gov-helpline-box {
-  display: flex;
-  align-items: center;
-  gap: 1.25rem;
-}
-
-.helpline-item {
-  display: flex;
-  flex-direction: column;
-  text-align: right;
-}
-
-.helpline-label {
-  font-size: 11px;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  font-weight: 600;
-}
-
-.helpline-number {
-  font-size: 1.2rem;
-  font-weight: 900;
-  color: var(--gov-blue);
-  letter-spacing: 0.05em;
-}
-
-/* 4. Main Navigation Menu */
-.gov-nav {
-  background: var(--gov-blue);
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.12);
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-}
-
-.gov-nav-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 2rem;
-  flex-wrap: wrap;
-}
-
+/* Navigation Links */
 .gov-nav-links {
   display: flex;
   align-items: center;
-  list-style: none;
+  gap: 4px;
   overflow-x: auto;
+  scrollbar-width: none;
+}
+.gov-nav-links::-webkit-scrollbar {
+  display: none;
 }
 
 .gov-nav-btn {
   background: transparent;
-  color: #ffffff;
+  color: #cbd5e1;
   border: none;
-  padding: 0.85rem 1.15rem;
-  font-size: 0.92rem;
+  padding: 0.55rem 0.85rem;
+  font-size: 0.88rem;
   font-weight: 600;
   cursor: pointer;
-  border-bottom: 4px solid transparent;
-  transition: all 0.2s;
+  border-radius: 6px;
+  transition: all 0.2s ease;
   white-space: nowrap;
 }
 
@@ -315,33 +236,52 @@ body.night-vision .role-pill.vision-pill {
 }
 
 .gov-nav-btn.active {
-  background: var(--gov-blue-dark);
-  border-bottom-color: var(--gov-gold);
+  background: rgba(255, 255, 255, 0.16);
   color: #ffffff;
+  border-bottom: 3px solid var(--gov-gold);
+  font-weight: 700;
 }
 
-.gov-role-controls {
+/* Controls Cluster */
+.gov-controls-cluster {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.gov-role-switcher {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 2px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  gap: 2px;
 }
 
 .role-pill {
-  background: rgba(255, 255, 255, 0.15);
-  color: white;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  padding: 3px 10px;
-  font-size: 12px;
+  background: transparent;
+  color: #cbd5e1;
+  border: none;
+  padding: 4px 9px;
+  font-size: 11px;
   font-weight: 600;
-  border-radius: var(--radius-sm);
+  border-radius: 4px;
   cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.role-pill:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
 }
 
 .role-pill.active {
   background: var(--gov-gold);
   color: #072a4a;
-  border-color: var(--gov-gold);
   font-weight: 800;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
 }
 
 .gov-demo-btn {
@@ -349,39 +289,90 @@ body.night-vision .role-pill.vision-pill {
   color: white;
   border: none;
   font-weight: 800;
-  font-size: 12px;
-  padding: 6px 14px;
-  border-radius: var(--radius-sm);
+  font-size: 11.5px;
+  padding: 5px 12px;
+  border-radius: 6px;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-}
-.gov-demo-btn:hover {
-  background: #d95e14;
+  gap: 4px;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(234, 88, 12, 0.35);
+  white-space: nowrap;
 }
 
-/* 5. Notice Ticker */
+.gov-demo-btn:hover {
+  background: #ea580c;
+  transform: translateY(-1px);
+}
+
+.gov-notif-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: white;
+  padding: 5px 9px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  position: relative;
+  transition: all 0.2s;
+}
+
+.gov-notif-btn:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.notif-badge {
+  background: var(--color-critical);
+  color: white;
+  border-radius: 9999px;
+  font-size: 9px;
+  padding: 1px 5px;
+  font-weight: 800;
+}
+
+/* 4. Modern Alert Ticker Banner */
 .gov-ticker {
-  background: #e2e8f0;
-  border-bottom: 1px solid #cbd5e1;
-  padding: 6px 2rem;
-  font-size: 13px;
-  color: #1e293b;
+  background: #f1f5f9;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 5px 1.5rem;
+  font-size: 12px;
+  color: #334155;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 12px;
+}
+
+body.night-vision .gov-ticker {
+  background: #091322;
+  border-bottom-color: #1a2c42;
+  color: #94a3b8;
+}
+
+.ticker-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .ticker-badge {
-  background: var(--gov-saffron);
+  background: var(--gov-blue);
   color: white;
-  font-size: 11px;
+  font-size: 9.5px;
   font-weight: 800;
-  padding: 2px 8px;
-  border-radius: 3px;
-  text-transform: uppercase;
-  margin-right: 8px;
+  padding: 2px 7px;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+}
+
+.ticker-disclaimer {
+  font-size: 10.5px;
+  color: var(--text-muted);
+  flex-shrink: 0;
 }
 
 /* 6. Layout Container */

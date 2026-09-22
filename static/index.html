@@ -16,126 +16,91 @@
   <!-- 1. Indian National Tricolor Strip -->
   <div class="gov-tricolor"></div>
 
-  <!-- 2. Official Utility Bar -->
+  <!-- 2. Clean Compact Government Utility Bar -->
   <div class="gov-utility-bar">
     <div class="gov-utility-left">
-      <span>🏛️ <strong>Government of Maharashtra Style</strong></span>
+      <span>🏛️ <strong>Government of Maharashtra</strong></span>
       <span>•</span>
-      <span>Nagpur Smart City Security Project</span>
+      <span>Nagpur Smart City Security Command</span>
     </div>
     <div class="gov-utility-right">
-      <div class="gov-text-resize">
-        <span style="font-size: 11px; margin-right: 4px;">Font:</span>
-        <button onclick="document.body.style.fontSize='14px'">A-</button>
-        <button onclick="document.body.style.fontSize='15px'">A</button>
-        <button onclick="document.body.style.fontSize='16.5px'">A+</button>
+      <div class="gov-helpline-pills">
+        <span class="helpline-pill">🚨 Police: <strong>112 / 100</strong></span>
+        <span class="helpline-pill">🛡️ Women Safety: <strong>1090</strong></span>
+        <span class="helpline-pill">🚑 Ambulance: <strong>108</strong></span>
+      </div>
+      <span>•</span>
+      <!-- Direct Language Switcher -->
+      <div class="gov-lang-group" title="Select Language">
+        <button class="gov-lang-btn active" data-lang="en" onclick="setLanguage('en')">EN</button>
+        <button class="gov-lang-btn" data-lang="hi" onclick="setLanguage('hi')">हिं</button>
+        <button class="gov-lang-btn" data-lang="mr" onclick="setLanguage('mr')">मरा</button>
       </div>
       <span>•</span>
       <!-- Day / Night Vision Toggle Button -->
       <button id="themeToggleBtn" class="gov-theme-btn" onclick="toggleTheme()" title="Switch Day / Night Vision Mode">
         <span id="themeIcon">🌙</span>
-        <span id="themeText">Night Vision</span>
+        <span id="themeText">Night Mode</span>
       </button>
-      <span>•</span>
-      <!-- Direct Language Buttons (English, Marathi, Hindi) -->
-      <div class="gov-lang-group">
-        <button class="gov-lang-btn active" data-lang="en" onclick="setLanguage('en')" title="Switch to English">English</button>
-        <button class="gov-lang-btn" data-lang="hi" onclick="setLanguage('hi')" title="हिंदी मध्ये बदला">हिंदी</button>
-        <button class="gov-lang-btn" data-lang="mr" onclick="setLanguage('mr')" title="मराठीत बदला">मराठी</button>
-      </div>
-      <span>•</span>
-      <!-- Language Selector Dropdown -->
-      <select id="langSelect" class="gov-lang-select" onchange="setLanguage(this.value)">
-        <option value="en">English (EN)</option>
-        <option value="hi">हिंदी (Hindi)</option>
-        <option value="mr">मराठी (Marathi)</option>
-      </select>
     </div>
   </div>
 
-  <!-- 3. Government Portal Header -->
-  <header class="gov-header">
-    <div class="gov-brand" onclick="switchView('home')">
-      <div class="gov-emblem-badge" title="Nagpur City Security Seal">
-        🛡️
+  <!-- 3. Unified Sleek Header & Navigation Bar -->
+  <header class="gov-navbar">
+    <div class="gov-nav-container">
+      <!-- Brand Logo & Title -->
+      <div class="gov-brand" onclick="switchView('home')">
+        <div class="gov-emblem-badge" title="Nagpur City Security Seal">
+          🛡️
+        </div>
+        <div class="gov-title-block">
+          <h1 data-i18n="brand_title" class="brand-name">RAKSHAK</h1>
+          <div class="gov-subtitle" data-i18n="brand_subtitle">NAGPUR SMART SECURITY</div>
+        </div>
       </div>
-      <div class="gov-title-block">
-        <div class="gov-subtitle" data-i18n="brand_subtitle">NAGPUR CITY SMART SECURITY PORTAL</div>
-        <h1 data-i18n="brand_title">RAKSHAK • Smart Security & Emergency Coordination Portal</h1>
-        <div class="gov-dept">Connecting Citizens, Volunteers, Help Desks, Security Staff & Control Room</div>
-      </div>
-    </div>
 
-    <!-- Emergency Helplines -->
-    <div class="gov-helpline-box">
-      <div class="helpline-item">
-        <span class="helpline-label">Emergency Helpline</span>
-        <span class="helpline-number">🚨 112 / 100</span>
-      </div>
-      <div class="helpline-item">
-        <span class="helpline-label">Women Safety</span>
-        <span class="helpline-number" style="color: #c5221f;">🛡️ 1090</span>
-      </div>
-      <div class="helpline-item">
-        <span class="helpline-label">GMCH Ambulance</span>
-        <span class="helpline-number" style="color: #15803d;">🚑 108</span>
-      </div>
-    </div>
-  </header>
-
-  <!-- 4. Main Navigation Menu -->
-  <nav class="gov-nav">
-    <div class="gov-nav-inner">
-      <div class="gov-nav-links">
+      <!-- Main Navigation Menu -->
+      <nav class="gov-nav-links">
         <button class="gov-nav-btn active" data-nav="home" data-i18n="nav_home">Overview</button>
-        <button class="gov-nav-btn" data-nav="cyber" data-i18n="nav_cyber">Cyber SOC & Simulator</button>
+        <button class="gov-nav-btn" data-nav="cyber" data-i18n="nav_cyber">Cyber SOC</button>
         <button class="gov-nav-btn" data-nav="command" data-i18n="nav_command">Command Center</button>
         <button class="gov-nav-btn" data-nav="citizen" data-i18n="nav_citizen">Citizen Services</button>
         <button class="gov-nav-btn" data-nav="volunteer" data-i18n="nav_volunteer">Volunteer Hub</button>
         <button class="gov-nav-btn" data-nav="security" data-i18n="nav_security">Security Staff</button>
         <button class="gov-nav-btn" data-nav="crowd" data-i18n="nav_crowd">Crowd Zones</button>
-        <button class="gov-nav-btn" data-nav="analytics" data-i18n="nav_analytics">Nagpur Analytics</button>
-      </div>
+        <button class="gov-nav-btn" data-nav="analytics" data-i18n="nav_analytics">Analytics</button>
+      </nav>
 
-      <!-- Quick Role Switcher for Hackathon Judging -->
-      <div class="gov-role-controls">
-        <span style="color: #cbd5e1; font-size: 11px; margin-right: 4px;">Role:</span>
-        <button class="role-pill active" data-role="ADMIN" title="Control Room Inspector">Admin</button>
-        <button class="role-pill" data-role="SECURITY_STAFF" title="Field Security Staff">Security</button>
-        <button class="role-pill" data-role="VOLUNTEER" title="Community Volunteer">Volunteer</button>
-        <button class="role-pill" data-role="CITIZEN" title="Nagpur Resident">Citizen</button>
+      <!-- Right Action Controls -->
+      <div class="gov-controls-cluster">
+        <!-- Quick Role Switcher -->
+        <div class="gov-role-switcher" title="Switch User Role Persona">
+          <button class="role-pill active" data-role="ADMIN">Admin</button>
+          <button class="role-pill" data-role="SECURITY_STAFF">Security</button>
+          <button class="role-pill" data-role="VOLUNTEER">Volunteer</button>
+          <button class="role-pill" data-role="CITIZEN">Citizen</button>
+        </div>
 
-        <!-- Direct Language Switcher in Nav -->
-        <span style="color: #cbd5e1; font-size: 11px; margin-left: 6px; margin-right: 2px;">🌐 Lang:</span>
-        <button class="role-pill lang-pill active" data-lang="en" onclick="setLanguage('en')" title="English">English</button>
-        <button class="role-pill lang-pill" data-lang="hi" onclick="setLanguage('hi')" title="हिंदी">हिंदी</button>
-        <button class="role-pill lang-pill" data-lang="mr" onclick="setLanguage('mr')" title="मराठी">मराठी</button>
-
-        <!-- Emergency Alert Button -->
-        <button class="gov-demo-btn" onclick="openDemoModal()" title="Emergency Alert Simulation & Scenario">
-          🚨 <span data-i18n="nav_demo">Emergency Alert</span>
-        </button>
-
-        <!-- Day / Night Vision Nav Pill -->
-        <button id="themeToggleNavBtn" class="role-pill vision-pill" onclick="toggleTheme()" title="Switch Day / Night Vision Mode">
-          <span id="themeNavIcon">🌙</span> <span id="themeNavText">Night Vision</span>
+        <!-- Emergency Demo Simulation Button -->
+        <button class="gov-demo-btn" onclick="openDemoModal()" title="Emergency Alert Simulation Scenario">
+          🚨 <span data-i18n="nav_demo">Demo Alert</span>
         </button>
 
         <!-- Notification Bell -->
-        <button class="btn btn-secondary btn-sm" onclick="toggleNotifDrawer()" style="padding: 4px 8px; margin-left: 6px;">
-          🔔 <span id="notifCountBadge" style="display: none; background: #c5221f; color: white; border-radius: 9999px; font-size: 10px; padding: 1px 5px;">0</span>
+        <button class="gov-notif-btn" onclick="toggleNotifDrawer()" title="View Notifications">
+          🔔 <span id="notifCountBadge" style="display: none;" class="notif-badge">0</span>
         </button>
       </div>
     </div>
-  </nav>
+  </header>
 
-  <!-- 5. Notice Ticker -->
+  <!-- 4. Modern Alert Ticker Banner -->
   <div class="gov-ticker">
-    <div style="display: flex; align-items: center;">
-      <span class="ticker-badge">Notice</span>
-      <span><strong>Nagpur City Security Live Status:</strong> Active coordination across Deekshabhoomi, Sitabuldi, Wardha Road, Futala Lake, and Sadar zones. Active: <span id="currentUserNameDisplay" style="color: var(--gov-blue); font-weight: bold;">Inspector Rajesh Shinde [ADMIN]</span></span>
+    <div class="ticker-content">
+      <span class="ticker-badge">LIVE OPS</span>
+      <span class="ticker-text"><strong>Nagpur Smart Security Status:</strong> Active coordination across Deekshabhoomi, Sitabuldi, Wardha Road, Futala Lake, and Sadar zones. Active Profile: <strong id="currentUserNameDisplay" style="color: var(--gov-blue-light);">Inspector Rajesh Shinde [ADMIN]</strong></span>
     </div>
-    <div style="font-size: 11px; color: var(--text-muted);" data-i18n="disclaimer">
+    <div class="ticker-disclaimer" data-i18n="disclaimer">
       SIMULATED DEMO DATA — Built for Nagpur City.
     </div>
   </div>
