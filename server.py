@@ -9,6 +9,11 @@ from datetime import datetime, timedelta
 
 from database import get_db, init_db, hash_pw
 from ai_engine import analyze_incident, detect_duplicates, haversine_distance, NAGPUR_LANDMARKS, extract_nagpur_location
+from cyber_engine import (
+    start_simulation, get_simulation_status, advance_simulation_step,
+    stop_simulation, reset_simulation, get_dashboard_stats, get_cyber_events,
+    get_cyber_incidents, get_cyber_incident_detail, get_cyber_assets
+)
 
 PORT = 8000
 STATIC_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "static")
@@ -380,6 +385,43 @@ class SentinelHandler(http.server.SimpleHTTPRequestHandler):
             cur.execute("SELECT * FROM audit_logs ORDER BY created_at DESC LIMIT 50")
             logs = rows_to_list(cur.fetchall())
             self.send_json({"audit_logs": logs})
+
+        # 11. Cyber SOC Endpoints
+        elif path == "/api/cyber/simulation/status":
+            conn.close()
+            self.send_json(get_simulation_status())
+            return
+
+        elif path == "/api/cyber/dashboard":
+            conn.close()
+            self.send_json(get_dashboard_stats())
+            return
+
+        elif path == "/api/cyber/events":
+            conn.close()
+            limit = int(query.get("limit", [50])[0])
+            self.send_json({"events": get_cyber_events(limit)})
+            return
+
+        elif path == "/api/cyber/incidents":
+            conn.close()
+            self.send_json({"incidents": get_cyber_incidents()})
+            return
+
+        elif path.startswith("/api/cyber/incidents/"):
+            inc_id = path.split("/")[-1]
+            conn.close()
+            inc_data = get_cyber_incident_detail(inc_id)
+            if inc_data:
+                self.send_json({"incident": inc_data})
+            else:
+                self.send_json({"error": "Cyber incident not found"}, status=404)
+            return
+
+        elif path == "/api/cyber/assets":
+            conn.close()
+            self.send_json({"assets": get_cyber_assets()})
+            return
 
         else:
             self.send_json({"error": f"Path '{path}' not found"}, status=404)
@@ -953,16 +995,32 @@ class SentinelHandler(http.server.SimpleHTTPRequestHandler):
                 "message": "SOS Emergency signal broadcasted to Nagpur Central Command. Response units alerted."
             })
 
-        # 15. Reset Demo Database
-        elif path == "/api/demo/reset":
-            import database
+        # 16. Cyber Simulation Trigger Endpoints
+        elif path == "/api/cyber/simulation/start":
             conn.close()
-            try:
-                os.remove(database.DB_PATH)
-            except Exception:
-                pass
-            database.init_db()
-            self.send_json({"success": True, "message": "Database reset to clean seeded Nagpur demo state."})
+            scenario = body.get("scenario_type", "RANSOMWARE")
+            auto_play = body.get("auto_play", True)
+            step_delay = float(body.get("step_delay", 3.0))
+            res = start_simulation(scenario, auto_play, step_delay)
+            self.send_json(res)
+            return
+
+        elif path == "/api/cyber/simulation/next-step":
+            conn.close()
+            res = advance_simulation_step()
+            self.send_json(res)
+            return
+
+        elif path == "/api/cyber/simulation/stop":
+            conn.close()
+            res = stop_simulation()
+            self.send_json(res)
+            return
+
+        elif path == "/api/cyber/simulation/reset":
+            conn.close()
+            res = reset_simulation()
+            self.send_json(res)
             return
 
         else:

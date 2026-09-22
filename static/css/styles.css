@@ -1180,3 +1180,515 @@ body.night-vision .leaflet-popup-content div {
   color: #cbd5e1 !important;
 }
 
+/* =========================================================
+   20. CYBER ATTACK SIMULATION & SOC DASHBOARD STYLES
+   ========================================================= */
+.cyber-soc-banner {
+  background: linear-gradient(135deg, #0b2239 0%, #071526 100%);
+  color: #ffffff;
+  border-radius: var(--radius-md);
+  padding: 1.5rem 1.75rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+  border-left: 6px solid #2563eb;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+}
+
+.cyber-live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(37, 99, 235, 0.25);
+  border: 1px solid rgba(59, 130, 246, 0.5);
+  color: #93c5fd;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 2px 10px;
+  border-radius: 9999px;
+  letter-spacing: 0.05em;
+  margin-bottom: 6px;
+}
+
+.cyber-pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 8px #10b981;
+  animation: cyberPulse 1.6s infinite ease-in-out;
+}
+
+@keyframes cyberPulse {
+  0% { transform: scale(0.9); opacity: 0.7; }
+  50% { transform: scale(1.3); opacity: 1; box-shadow: 0 0 12px #10b981; }
+  100% { transform: scale(0.9); opacity: 0.7; }
+}
+
+.cyber-soc-title-wrap h2 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.2;
+}
+
+.cyber-soc-title-wrap p {
+  font-size: 0.88rem;
+  color: #94a3b8;
+  margin-top: 4px;
+}
+
+.cyber-soc-status-badge {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-sm);
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.status-shield {
+  font-size: 26px;
+}
+
+.soc-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: #94a3b8;
+  letter-spacing: 0.05em;
+}
+
+.soc-val {
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: #10b981;
+}
+
+/* Simulation Controls */
+.cyber-mode-toggle-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.cyber-toggle-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-dark);
+  cursor: pointer;
+  margin-right: 6px;
+}
+
+.cyber-sim-btn-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 0.85rem;
+  margin-top: 0.5rem;
+}
+
+.cyber-sim-btn {
+  background: #ffffff;
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-sm);
+  padding: 0.85rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cyber-sim-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.cyber-sim-btn.active-sim {
+  border-color: #2563eb;
+  background: #eff6ff;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.25);
+}
+
+.sim-btn-icon {
+  font-size: 24px;
+  width: 38px;
+  height: 38px;
+  background: #f1f5f9;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.sim-btn-title {
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: var(--gov-blue-dark);
+}
+
+.sim-btn-desc {
+  font-size: 0.76rem;
+  color: var(--text-muted);
+  line-height: 1.35;
+  margin-top: 2px;
+}
+
+/* Pipeline Flow */
+.cyber-flow-active-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gov-blue);
+  background: #e0f2fe;
+  padding: 3px 10px;
+  border-radius: 4px;
+}
+
+.cyber-pipeline-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  margin-top: 0.5rem;
+}
+
+.pipeline-node {
+  background: #ffffff;
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 0.5rem;
+  text-align: center;
+  position: relative;
+  transition: all 0.2s;
+}
+
+.pipeline-node.node-completed {
+  border-color: #10b981;
+  background: #f0fdf4;
+}
+.pipeline-node.node-active {
+  border-color: #ef4444;
+  background: #fef2f2;
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.25);
+  animation: nodePulse 1.2s infinite alternate;
+}
+@keyframes nodePulse {
+  from { transform: scale(1); }
+  to { transform: scale(1.02); }
+}
+
+.node-step-badge {
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+.pipeline-node.node-completed .node-step-badge { color: #15803d; }
+.pipeline-node.node-active .node-step-badge { color: #b91c1c; }
+
+.node-title {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--text-dark);
+  margin: 4px 0 2px;
+}
+
+.node-status-chip {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 3px;
+  display: inline-block;
+  text-transform: uppercase;
+}
+
+/* Split layout */
+.cyber-soc-split-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+/* AI Meta Cards */
+.cyber-ai-meta-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.meta-box {
+  background: #f8fafc;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+}
+
+.meta-label {
+  display: block;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.meta-value {
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: var(--gov-blue-dark);
+}
+
+.cyber-ai-reason-box {
+  background: #fffbeb;
+  border: 1px solid #fef3c7;
+  border-left: 4px solid #f59e0b;
+  border-radius: var(--radius-sm);
+  padding: 10px;
+  margin-bottom: 10px;
+  font-size: 0.84rem;
+}
+.reason-title { font-weight: 800; color: #92400e; margin-bottom: 2px; }
+.reason-text { color: #78350f; line-height: 1.4; }
+
+.cyber-ai-action-box {
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-left: 4px solid #10b981;
+  border-radius: var(--radius-sm);
+  padding: 10px;
+  margin-bottom: 10px;
+  font-size: 0.84rem;
+}
+.action-title { font-weight: 800; color: #166534; margin-bottom: 2px; }
+.action-text { color: #14532d; line-height: 1.4; }
+
+.cyber-ai-status-row {
+  font-size: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--border-light);
+  padding-top: 8px;
+}
+
+/* User Protection */
+.protection-banner {
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  color: #065f46;
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 12px;
+}
+
+.protection-metrics-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  text-align: center;
+}
+
+.prot-metric {
+  background: #ffffff;
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-sm);
+  padding: 10px 6px;
+}
+.prot-num {
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: var(--gov-blue-dark);
+}
+.prot-label {
+  font-size: 10px;
+  color: var(--text-muted);
+  font-weight: 700;
+  margin-top: 2px;
+}
+
+/* Asset Topology Grid */
+.cyber-assets-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px;
+}
+
+.asset-node-card {
+  background: #f8fafc;
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-sm);
+  padding: 10px;
+  border-top: 3px solid #3b82f6;
+  transition: all 0.2s;
+}
+
+.asset-node-card.asset-isolated {
+  border-top-color: #ef4444;
+  background: #fef2f2;
+  box-shadow: 0 0 8px rgba(239, 68, 68, 0.2);
+}
+.asset-node-card.asset-suspicious {
+  border-top-color: #f59e0b;
+  background: #fffbeb;
+}
+.asset-node-card.asset-recovering {
+  border-top-color: #06b6d4;
+  background: #ecfeff;
+}
+
+.asset-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  margin-bottom: 4px;
+}
+.asset-name { font-weight: 800; font-size: 0.85rem; color: var(--gov-blue-dark); }
+.asset-ip { font-family: monospace; font-size: 11px; color: var(--text-muted); }
+.asset-location { font-size: 10px; color: var(--text-muted); margin-top: 2px; }
+
+/* Response Log Stream */
+.cyber-response-log-stream {
+  max-height: 280px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cyber-response-item {
+  background: #f8fafc;
+  border-left: 3px solid #10b981;
+  border-radius: 3px;
+  padding: 8px 10px;
+  font-size: 12px;
+}
+
+.cyber-resp-header {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 700;
+  margin-bottom: 3px;
+}
+.cyber-resp-time { color: var(--text-muted); font-size: 11px; font-family: monospace; }
+.cyber-resp-action { color: #166534; font-weight: 800; }
+.cyber-resp-impact { color: var(--text-body); font-size: 11.5px; }
+
+/* Night Vision Overrides for Cyber SOC */
+body.night-vision .cyber-sim-btn {
+  background: #0f1d31;
+  border-color: #1f3656;
+}
+body.night-vision .sim-btn-icon {
+  background: #172a45;
+}
+body.night-vision .sim-btn-title {
+  color: #f8fafc;
+}
+body.night-vision .sim-btn-desc {
+  color: #94a3b8;
+}
+body.night-vision .cyber-sim-btn.active-sim {
+  background: #162844;
+  border-color: #3b82f6;
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.4);
+}
+body.night-vision .pipeline-node {
+  background: #0f1d31;
+  border-color: #1f3656;
+}
+body.night-vision .pipeline-node.node-completed {
+  background: #062316;
+  border-color: #10b981;
+}
+body.night-vision .pipeline-node.node-active {
+  background: #2a0a10;
+  border-color: #ef4444;
+  box-shadow: 0 0 12px rgba(239, 68, 68, 0.4);
+}
+body.night-vision .node-title {
+  color: #f8fafc;
+}
+body.night-vision .meta-box {
+  background: #0b1525;
+  border-color: #1f3656;
+}
+body.night-vision .meta-value {
+  color: #60a5fa;
+}
+body.night-vision .cyber-ai-reason-box {
+  background: #261706;
+  border-color: #78350f;
+  color: #fef3c7;
+}
+body.night-vision .reason-title { color: #fbbf24; }
+body.night-vision .reason-text { color: #fde68a; }
+body.night-vision .cyber-ai-action-box {
+  background: #062316;
+  border-color: #14532d;
+  color: #d1fae5;
+}
+body.night-vision .action-title { color: #34d399; }
+body.night-vision .action-text { color: #a7f3d0; }
+body.night-vision .protection-banner {
+  background: #062316;
+  border-color: #10b981;
+  color: #a7f3d0;
+}
+body.night-vision .prot-metric {
+  background: #0f1d31;
+  border-color: #1f3656;
+}
+body.night-vision .prot-num {
+  color: #f8fafc;
+}
+body.night-vision .asset-node-card {
+  background: #0f1d31;
+  border-color: #1f3656;
+}
+body.night-vision .asset-node-card.asset-isolated {
+  background: #2a0a10;
+  border-top-color: #ef4444;
+}
+body.night-vision .asset-node-card.asset-suspicious {
+  background: #261706;
+  border-top-color: #f59e0b;
+}
+body.night-vision .asset-name {
+  color: #f8fafc;
+}
+body.night-vision .cyber-response-item {
+  background: #0b1525;
+  border-left-color: #10b981;
+}
+body.night-vision .cyber-resp-action {
+  color: #34d399;
+}
+body.night-vision .cyber-resp-impact {
+  color: #cbd5e1;
+}
+
+@media (max-width: 992px) {
+  .cyber-pipeline-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .cyber-soc-split-grid {
+    grid-template-columns: 1fr;
+  }
+  .protection-metrics-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+

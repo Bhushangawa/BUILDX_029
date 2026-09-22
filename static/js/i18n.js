@@ -11,6 +11,7 @@ const TRANSLATIONS = {
     nav_security: "Security Staff",
     nav_crowd: "Crowd Zones",
     nav_analytics: "Nagpur Analytics",
+    nav_cyber: "Cyber SOC & Simulator",
     nav_demo: "Emergency Alert",
     admin_emergency_alert: "Emergency Alert",
     
@@ -97,6 +98,7 @@ const TRANSLATIONS = {
     nav_security: "सुरक्षा पथक",
     nav_crowd: "गर्दी व्यवस्थापन",
     nav_analytics: "नागपूर विश्लेषण",
+    nav_cyber: "सायबर सुरक्षा कक्ष (SOC)",
     nav_demo: "आणीबाणी अलर्ट",
     admin_emergency_alert: "आणीबाणी अलर्ट",
 
@@ -183,6 +185,7 @@ const TRANSLATIONS = {
     nav_security: "सुरक्षा दल",
     nav_crowd: "गर्दी नियंत्रण",
     nav_analytics: "नागपूर विश्लेषण",
+    nav_cyber: "सायबर सुरक्षा केंद्र (SOC)",
     nav_demo: "आपत्कालीन अलर्ट",
     admin_emergency_alert: "आपत्कालीन अलर्ट",
 

@@ -218,8 +218,81 @@ def init_db():
     );
     """)
 
+    # 11. Cyber Assets Inventory table
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS cyber_assets (
+        id TEXT PRIMARY KEY,
+        name TEXT NOT NULL,
+        asset_type TEXT NOT NULL CHECK(asset_type IN ('GATEWAY', 'AUTH_SERVER', 'DB_CLUSTER', 'CCTV_STORAGE', 'WORKSTATION', 'EMERGENCY_PORTAL')),
+        ip_address TEXT NOT NULL,
+        subnet TEXT NOT NULL,
+        status TEXT NOT NULL CHECK(status IN ('NORMAL', 'SUSPICIOUS', 'ISOLATED', 'RECOVERING')),
+        location TEXT NOT NULL,
+        health_score INTEGER NOT NULL DEFAULT 100,
+        active_threat_id TEXT,
+        last_updated TEXT NOT NULL
+    );
+    """)
+
+    # 12. Cyber Incidents table
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS cyber_incidents (
+        id TEXT PRIMARY KEY,
+        simulation_type TEXT NOT NULL,
+        title TEXT NOT NULL,
+        severity TEXT NOT NULL CHECK(severity IN ('LOW', 'MEDIUM', 'HIGH', 'CRITICAL')),
+        risk_score INTEGER NOT NULL,
+        status TEXT NOT NULL CHECK(status IN ('DETECTING', 'ANALYZING', 'CRITICAL', 'CONTAINED', 'RECOVERING', 'RESOLVED')),
+        current_step INTEGER NOT NULL DEFAULT 1,
+        total_steps INTEGER NOT NULL DEFAULT 7,
+        affected_asset_id TEXT,
+        affected_asset_name TEXT,
+        attack_source_ip TEXT,
+        detection_reason TEXT,
+        ai_confidence REAL DEFAULT 0.94,
+        recommended_action TEXT,
+        actions_taken TEXT,
+        legitimate_users_protected INTEGER DEFAULT 1420,
+        service_availability REAL DEFAULT 99.98,
+        created_at TEXT NOT NULL,
+        contained_at TEXT,
+        recovered_at TEXT,
+        FOREIGN KEY(affected_asset_id) REFERENCES cyber_assets(id)
+    );
+    """)
+
+    # 13. Cyber Security Events Stream table
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS cyber_events (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        incident_id TEXT,
+        timestamp TEXT NOT NULL,
+        event_name TEXT NOT NULL,
+        source_ip TEXT NOT NULL,
+        severity TEXT NOT NULL,
+        asset_name TEXT NOT NULL,
+        action_taken TEXT NOT NULL,
+        status TEXT NOT NULL,
+        details TEXT
+    );
+    """)
+
+    # 14. Cyber Response Actions Log table
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS cyber_response_logs (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        incident_id TEXT,
+        timestamp TEXT NOT NULL,
+        action_type TEXT NOT NULL,
+        target_asset TEXT NOT NULL,
+        status TEXT NOT NULL,
+        impact_summary TEXT NOT NULL
+    );
+    """)
+
     conn.commit()
     seed_data(conn)
+    seed_cyber_data(conn)
     conn.close()
     print("Database initialized & seeded successfully at", DB_PATH)
 
@@ -448,6 +521,34 @@ def seed_data(conn):
         ("Officer Amit Deshmukh", "SECURITY_STAFF", "STATUS_UPDATE", "Updated INC-NGP-2026-000101 to IN_PROGRESS.", t_minus(30))
     ]
     cursor.executemany("INSERT INTO audit_logs (user_name, user_role, action, details, created_at) VALUES (?, ?, ?, ?, ?)", audit_data)
+
+    conn.commit()
+
+def seed_cyber_data(conn):
+    cursor = conn.cursor()
+    cursor.execute("SELECT COUNT(*) FROM cyber_assets")
+    if cursor.fetchone()[0] > 0:
+        return
+
+    now = datetime.now()
+    t_minus = lambda mins: (now - timedelta(minutes=mins)).strftime("%Y-%m-%d %H:%M:%S")
+
+    # Seed Enterprise Assets
+    assets_data = [
+        ("ASSET-NGP-01", "Nagpur Smart Grid Auth Gateway", "AUTH_SERVER", "10.20.1.10", "10.20.1.0/24", "NORMAL", "Sitabuldi Data Center Rack A1", 100, None, t_minus(1)),
+        ("ASSET-NGP-02", "Central Traffic & Incident DB Cluster", "DB_CLUSTER", "10.20.2.15", "10.20.2.0/24", "NORMAL", "Deekshabhoomi Secure Vault", 100, None, t_minus(1)),
+        ("ASSET-NGP-03", "Nagpur Metro CCTV Video Gateway", "CCTV_STORAGE", "10.20.3.40", "10.20.3.0/24", "NORMAL", "Zero Mile Command Post", 100, None, t_minus(1)),
+        ("ASSET-NGP-04", "Command Room SOC Dispatch Terminal", "WORKSTATION", "10.20.4.102", "10.20.4.0/24", "NORMAL", "Civil Lines Control Desk 4", 100, None, t_minus(1)),
+        ("ASSET-NGP-05", "Citizen Public API & SOS Proxy", "GATEWAY", "10.20.5.80", "10.20.5.0/24", "NORMAL", "Cloud DMZ Cluster", 100, None, t_minus(1)),
+        ("ASSET-NGP-06", "GMCH Emergency Trauma Link", "EMERGENCY_PORTAL", "10.20.6.22", "10.20.6.0/24", "NORMAL", "Medical Square Hospital Node", 100, None, t_minus(1))
+    ]
+    cursor.executemany("INSERT INTO cyber_assets VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", assets_data)
+
+    # Seed initial baseline clean event
+    baseline_events = [
+        (None, t_minus(10), "System Integrity Scan", "10.20.1.1", "LOW", "All Assets", "Baseline Verification", "Completed", "All 6 critical infrastructure nodes operating in nominal state. Zero active vulnerabilities detected.")
+    ]
+    cursor.executemany("INSERT INTO cyber_events (incident_id, timestamp, event_name, source_ip, severity, asset_name, action_taken, status, details) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", baseline_events)
 
     conn.commit()
 

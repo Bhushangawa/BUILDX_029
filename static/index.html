@@ -81,6 +81,7 @@
     <div class="gov-nav-inner">
       <div class="gov-nav-links">
         <button class="gov-nav-btn active" data-nav="home" data-i18n="nav_home">Overview (मुख्य)</button>
+        <button class="gov-nav-btn" data-nav="cyber" data-i18n="nav_cyber">Cyber SOC & Simulator (सायबर सुरक्षा)</button>
         <button class="gov-nav-btn" data-nav="command" data-i18n="nav_command">Command Center (नियंत्रण कक्ष)</button>
         <button class="gov-nav-btn" data-nav="citizen" data-i18n="nav_citizen">Citizen Services (नागरिक सेवा)</button>
         <button class="gov-nav-btn" data-nav="volunteer" data-i18n="nav_volunteer">Volunteer Hub (स्वयंसेवक)</button>
@@ -246,6 +247,16 @@
           </div>
           <div class="service-link">कमांड सेंटर उघडा / Open Center ➔</div>
         </div>
+
+        <!-- 7. Cyber SOC & Attack Simulator -->
+        <div class="gov-service-card" onclick="switchView('cyber')" style="border-top-color: #2563eb;">
+          <div class="service-icon" style="background: #eff6ff; color: #2563eb;">💻</div>
+          <div class="service-title">सायबर सुरक्षा केंद्र (Cyber SOC & Attack Simulator)</div>
+          <div class="service-desc">
+            Live cyber attack simulation (Ransomware, Phishing, Malware, Data Exfiltration), AI threat risk scoring, automated asset isolation & self-healing recovery.
+          </div>
+          <div class="service-link" style="color: #2563eb;">सायबर सिम्युलेटर उघडा / Open Cyber SOC ➔</div>
+        </div>
       </div>
 
       <!-- Nagpur Scope Disclaimer -->
@@ -392,7 +403,350 @@
       </div>
     </section>
 
-    <!-- VIEW 3: CITIZEN SERVICES PORTAL -->
+    <!-- VIEW 3: CYBER ATTACK SIMULATION & AUTOMATED RESPONSE SOC CENTER -->
+    <section id="view-cyber" class="view-section">
+      <!-- 1. SOC Control & Banner Header -->
+      <div class="cyber-soc-banner">
+        <div class="cyber-soc-title-wrap">
+          <div class="cyber-live-badge">
+            <span class="cyber-pulse-dot"></span>
+            <span data-i18n="cyber_live_indicator">LIVE SOC MONITORING</span>
+          </div>
+          <h2 data-i18n="cyber_soc_title">Nagpur Smart City SOC & Cyber Defense Simulator</h2>
+          <p data-i18n="cyber_soc_subtitle">Real-time attack detection, explainable AI risk scoring, automated asset isolation, legitimate user protection, and self-healing recovery engine.</p>
+        </div>
+        <div class="cyber-soc-status-badge" id="cyberTopStatusBadge">
+          <span class="status-shield">🛡️</span>
+          <div>
+            <div class="soc-label" data-i18n="cyber_sys_status">SYSTEM DEFENSE STATUS</div>
+            <div class="soc-val" id="cyberTopStatusVal">NORMAL (SECURE)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Simulation Control Panel -->
+      <div class="gov-panel cyber-control-panel">
+        <div class="gov-panel-header">
+          <div class="gov-panel-title">
+            <span>⚡</span> <span data-i18n="cyber_control_title">Live Attack Scenario Simulation Console</span>
+          </div>
+          <div class="cyber-mode-toggle-wrap">
+            <label class="cyber-toggle-label">
+              <input type="checkbox" id="cyberAutoPlayToggle" checked onchange="toggleCyberAutoPlay(this.checked)">
+              <span data-i18n="cyber_autoplay_label">Auto-Progress (Real-Time)</span>
+            </label>
+            <button class="btn btn-secondary btn-sm" onclick="advanceCyberStep()" id="cyberNextStepBtn" style="display: none;">
+              ⏭️ <span data-i18n="cyber_next_step">Next Step</span>
+            </button>
+            <button class="btn btn-danger btn-sm" onclick="stopCyberSimulation()" id="cyberStopBtn">
+              ⏹️ <span data-i18n="cyber_stop">Stop</span>
+            </button>
+            <button class="btn btn-secondary btn-sm" onclick="resetCyberSimulation()">
+              🔄 <span data-i18n="cyber_reset">Reset Baseline</span>
+            </button>
+            <button class="btn btn-primary btn-sm" onclick="openForensicReportModal()" id="cyberViewReportBtn">
+              📄 <span data-i18n="cyber_view_report">Forensic Report</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 6 Simulation Action Buttons -->
+        <div class="cyber-sim-btn-grid">
+          <button class="cyber-sim-btn sim-btn-ransomware" onclick="triggerCyberSimulation('RANSOMWARE')">
+            <span class="sim-btn-icon">🔒</span>
+            <div class="sim-btn-content">
+              <div class="sim-btn-title">Simulate Ransomware</div>
+              <div class="sim-btn-desc">High-entropy mass file encryption attempt & shadow snapshot restore</div>
+            </div>
+          </button>
+
+          <button class="cyber-sim-btn sim-btn-phishing" onclick="triggerCyberSimulation('PHISHING')">
+            <span class="sim-btn-icon">🎣</span>
+            <div class="sim-btn-content">
+              <div class="sim-btn-title">Simulate Phishing</div>
+              <div class="sim-btn-desc">AiTM credential harvesting attempt, cookie revocation & FIDO2 challenge</div>
+            </div>
+          </button>
+
+          <button class="cyber-sim-btn sim-btn-unauth" onclick="triggerCyberSimulation('UNAUTHORIZED_ACCESS')">
+            <span class="sim-btn-icon">🚪</span>
+            <div class="sim-btn-content">
+              <div class="sim-btn-title">Simulate Unauthorized Access</div>
+              <div class="sim-btn-desc">SSH/RDP brute force burst, Tor exit IP null-routing & port quarantine</div>
+            </div>
+          </button>
+
+          <button class="cyber-sim-btn sim-btn-login" onclick="triggerCyberSimulation('SUSPICIOUS_LOGIN')">
+            <span class="sim-btn-icon">🌍</span>
+            <div class="sim-btn-content">
+              <div class="sim-btn-title">Simulate Suspicious Login</div>
+              <div class="sim-btn-desc">Impossible travel velocity hijack, rogue session purge & biometric OTP</div>
+            </div>
+          </button>
+
+          <button class="cyber-sim-btn sim-btn-malware" onclick="triggerCyberSimulation('MALWARE')">
+            <span class="sim-btn-icon">🦠</span>
+            <div class="sim-btn-content">
+              <div class="sim-btn-title">Simulate Malware Behavior</div>
+              <div class="sim-btn-desc">Process injection, Trojan C2 beaconing, thread termination & hash audit</div>
+            </div>
+          </button>
+
+          <button class="cyber-sim-btn sim-btn-exfil" onclick="triggerCyberSimulation('DATA_EXFILTRATION')">
+            <span class="sim-btn-icon">📤</span>
+            <div class="sim-btn-content">
+              <div class="sim-btn-title">Simulate Data Exfiltration</div>
+              <div class="sim-btn-desc">Covert DNS tunneling burst, DLP egress cutoff & cryptographic zero-leak</div>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <!-- 3. Top SOC KPI Counter Row -->
+      <div class="gov-kpi-row cyber-kpi-row">
+        <div class="gov-kpi-card cyber-card" id="kpiCardStatus">
+          <div class="gov-kpi-title" data-i18n="cyber_kpi_security_status">Security Posture</div>
+          <div class="gov-kpi-num" id="cyberKpiStatus">NORMAL</div>
+          <div class="gov-kpi-sub" id="cyberKpiStatusSub">Active Threat Protection</div>
+        </div>
+
+        <div class="gov-kpi-card cyber-card kpi-critical" id="kpiCardThreat">
+          <div class="gov-kpi-title" data-i18n="cyber_kpi_threat_level">Threat Severity</div>
+          <div class="gov-kpi-num" id="cyberKpiThreat" style="color: var(--color-critical);">NORMAL</div>
+          <div class="gov-kpi-sub" id="cyberKpiActiveIncidents">0 Active Incidents</div>
+        </div>
+
+        <div class="gov-kpi-card cyber-card kpi-high">
+          <div class="gov-kpi-title" data-i18n="cyber_kpi_risk_score">AI Risk Score</div>
+          <div class="gov-kpi-num" id="cyberKpiRiskScore" style="color: var(--color-high);">0/100</div>
+          <div class="gov-kpi-sub">Behavioral anomaly index</div>
+        </div>
+
+        <div class="gov-kpi-card cyber-card kpi-yellow">
+          <div class="gov-kpi-title" data-i18n="cyber_kpi_isolated">Isolated Devices</div>
+          <div class="gov-kpi-num" id="cyberKpiIsolated" style="color: #b45309;">0</div>
+          <div class="gov-kpi-sub" id="cyberKpiTotalAssets">6 Total Infrastructure Nodes</div>
+        </div>
+
+        <div class="gov-kpi-card cyber-card kpi-success">
+          <div class="gov-kpi-title" data-i18n="cyber_kpi_blocked">Blocked Requests</div>
+          <div class="gov-kpi-num" id="cyberKpiBlocked" style="color: var(--color-success);">12</div>
+          <div class="gov-kpi-sub">Firewall & WAF drops</div>
+        </div>
+
+        <div class="gov-kpi-card cyber-card">
+          <div class="gov-kpi-title" data-i18n="cyber_kpi_availability">System Availability</div>
+          <div class="gov-kpi-num" id="cyberKpiAvailability">99.98%</div>
+          <div class="gov-kpi-sub">High SLA guaranteed</div>
+        </div>
+
+        <div class="gov-kpi-card cyber-card">
+          <div class="gov-kpi-title" data-i18n="cyber_kpi_response_time">Avg Response Time</div>
+          <div class="gov-kpi-num" id="cyberKpiResponseTime">1.4s</div>
+          <div class="gov-kpi-sub">Automated mitigation</div>
+        </div>
+      </div>
+
+      <!-- 4. Visual Attack-Flow Pipeline (7 Stages) -->
+      <div class="gov-panel cyber-flow-panel">
+        <div class="gov-panel-header">
+          <div class="gov-panel-title">
+            <span>🔄</span> <span data-i18n="cyber_flow_title">Live Attack-Flow & Automated Mitigation Pipeline</span>
+          </div>
+          <div class="cyber-flow-active-title" id="cyberFlowActiveTitle">Scenario: System Nominal (Idle Monitoring)</div>
+        </div>
+
+        <div class="cyber-pipeline-grid" id="cyberPipelineGrid">
+          <!-- 7 Stage Nodes rendered dynamically by JS -->
+        </div>
+      </div>
+
+      <!-- 5. Main 2-Column Split View -->
+      <div class="cyber-soc-split-grid">
+        <!-- LEFT COLUMN: AI Threat Analysis, User Protection & Asset Topology -->
+        <div class="cyber-left-col">
+          <!-- AI Threat Analysis & Explainability Card -->
+          <div class="gov-panel cyber-ai-panel">
+            <div class="gov-panel-header">
+              <div class="gov-panel-title">
+                <span>🧠</span> <span data-i18n="cyber_ai_title">AI Threat Detection & Explainable Analysis</span>
+              </div>
+              <span class="badge badge-status" id="cyberAiConfidenceBadge">Confidence: 98%</span>
+            </div>
+            
+            <div class="cyber-ai-content">
+              <div class="cyber-ai-meta-row">
+                <div class="meta-box">
+                  <span class="meta-label">Detected Threat</span>
+                  <strong class="meta-value" id="cyberAiThreatType">None Detected</strong>
+                </div>
+                <div class="meta-box">
+                  <span class="meta-label">Target Asset</span>
+                  <strong class="meta-value" id="cyberAiAffectedAsset">All Assets Nominal</strong>
+                </div>
+                <div class="meta-box">
+                  <span class="meta-label">Adversary Source IP</span>
+                  <strong class="meta-value" id="cyberAiSourceIP">N/A</strong>
+                </div>
+                <div class="meta-box">
+                  <span class="meta-label">MITRE ATT&CK</span>
+                  <strong class="meta-value" id="cyberAiMitre">N/A</strong>
+                </div>
+              </div>
+
+              <div class="cyber-ai-reason-box">
+                <div class="reason-title">🔍 Explainable Detection Reason:</div>
+                <div class="reason-text" id="cyberAiDetectionReason">Continuous baseline scanning active. Zero anomalies detected across Nagpur city smart infrastructure.</div>
+              </div>
+
+              <div class="cyber-ai-action-box">
+                <div class="action-title">🛡️ Automated Playbook Recommendation:</div>
+                <div class="action-text" id="cyberAiRecommendedAction">Maintain standard defensive posture and automated intrusion prevention monitoring.</div>
+              </div>
+
+              <div class="cyber-ai-status-row">
+                <span>Execution Status:</span>
+                <strong id="cyberAiExecutionStatus" style="color: var(--color-success);">Nominal Monitoring Active</strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- Legitimate User Protection Live Monitor -->
+          <div class="gov-panel cyber-protection-panel">
+            <div class="gov-panel-header">
+              <div class="gov-panel-title">
+                <span>👥</span> <span data-i18n="cyber_protection_title">Legitimate User Protection & Service Continuity</span>
+              </div>
+              <span class="badge badge-success" id="cyberProtectionBadge">PROTECTED (100%)</span>
+            </div>
+
+            <div class="cyber-protection-content">
+              <div class="protection-banner" id="cyberProtectionBanner">
+                ✅ All systems operating normally. Zero active disruptions to Nagpur citizens or emergency services.
+              </div>
+
+              <div class="protection-metrics-row">
+                <div class="prot-metric">
+                  <div class="prot-num" id="cyberActiveUsersCount">1,420</div>
+                  <div class="prot-label">Active Citizen Users</div>
+                </div>
+                <div class="prot-metric">
+                  <div class="prot-num" style="color: var(--color-success);" id="cyberVerifiedPercent">100%</div>
+                  <div class="prot-label">Verified Legitimate Sessions</div>
+                </div>
+                <div class="prot-metric">
+                  <div class="prot-num" style="color: var(--color-critical);" id="cyberBlockedSessions">0</div>
+                  <div class="prot-label">Adversary Sessions Isolated</div>
+                </div>
+                <div class="prot-metric">
+                  <div class="prot-num" style="color: var(--gov-blue);" id="cyberUptimeStat">99.98%</div>
+                  <div class="prot-label">Portal Service Continuity</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Enterprise Asset Topology Grid -->
+          <div class="gov-panel cyber-assets-panel">
+            <div class="gov-panel-header">
+              <div class="gov-panel-title">
+                <span>🖥️</span> <span data-i18n="cyber_assets_title">Critical Infrastructure Asset Topology (Nagpur City)</span>
+              </div>
+              <button class="btn btn-secondary btn-sm" onclick="loadCyberAssets()">↻ Refresh Assets</button>
+            </div>
+
+            <div class="cyber-assets-grid" id="cyberAssetsGrid">
+              <!-- Rendered dynamically -->
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN: Automated Response Log & Security Event Audit Stream -->
+        <div class="cyber-right-col">
+          <!-- Automated Response Engine Log -->
+          <div class="gov-panel cyber-response-panel">
+            <div class="gov-panel-header">
+              <div class="gov-panel-title">
+                <span>🤖</span> <span data-i18n="cyber_response_title">Automated Defense Playbook Execution Feed</span>
+              </div>
+              <span class="badge badge-status">Auto-Mitigation Active</span>
+            </div>
+
+            <div class="cyber-response-log-stream" id="cyberResponseLogStream">
+              <!-- Dynamically populated stream -->
+            </div>
+          </div>
+
+          <!-- Incident Management History Table -->
+          <div class="gov-panel cyber-incidents-panel">
+            <div class="gov-panel-header">
+              <div class="gov-panel-title">
+                <span>📁</span> <span data-i18n="cyber_incidents_title">Cyber Incident Tickets & Post-Mortem Records</span>
+              </div>
+              <button class="btn btn-secondary btn-sm" onclick="loadCyberIncidents()">↻ Refresh Tickets</button>
+            </div>
+
+            <div style="overflow-x: auto;">
+              <table class="gov-table">
+                <thead>
+                  <tr>
+                    <th>Incident ID</th>
+                    <th>Threat Scenario</th>
+                    <th>Severity</th>
+                    <th>Risk</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="cyberIncidentsTableBody">
+                  <!-- Rendered dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. Real-Time Security Event Log Table -->
+      <div class="gov-panel cyber-events-panel">
+        <div class="gov-panel-header">
+          <div class="gov-panel-title">
+            <span>📜</span> <span data-i18n="cyber_events_title">Real-Time Security Event Audit Stream (SIEM / Syslog)</span>
+          </div>
+          <div style="display: flex; gap: 8px;">
+            <select id="filterCyberEventSeverity" class="filter-select" onchange="filterCyberEvents()">
+              <option value="ALL">All Severities</option>
+              <option value="CRITICAL">CRITICAL</option>
+              <option value="HIGH">HIGH</option>
+              <option value="MEDIUM">MEDIUM</option>
+              <option value="LOW">LOW</option>
+            </select>
+            <button class="btn btn-secondary btn-sm" onclick="loadCyberEvents()">↻ Live Stream Refresh</button>
+          </div>
+        </div>
+
+        <div style="overflow-x: auto;">
+          <table class="gov-table cyber-events-table">
+            <thead>
+              <tr>
+                <th>Timestamp</th>
+                <th>Event</th>
+                <th>Source IP</th>
+                <th>Severity</th>
+                <th>Affected Asset</th>
+                <th>Automated Action</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="cyberEventsTableBody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 4: CITIZEN SERVICES PORTAL -->
     <section id="view-citizen" class="view-section">
       <!-- 1-Click SOS Box -->
       <div class="gov-sos-box">
@@ -734,6 +1088,16 @@
         <button id="demoStepActionBtn" class="btn btn-saffron" style="font-weight: 700;">
           Execute Step
         </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: CYBER FORENSIC INCIDENT REPORT -->
+  <div id="cyberForensicModal" class="modal-backdrop">
+    <div class="modal-content" style="max-width: 820px;">
+      <button class="modal-close" onclick="closeModal('cyberForensicModal')">✕</button>
+      <div id="cyberForensicModalBody">
+        <!-- Rendered dynamically by app.js -->
       </div>
     </div>
   </div>
